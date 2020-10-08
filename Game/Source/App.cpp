@@ -63,6 +63,7 @@ void App::AddModule(Module* module)
 bool App::Awake()
 {
 	// TODO 3: Load config from XML
+
 	bool ret = LoadConfig();
 
 	if(ret == true)
