@@ -33,7 +33,7 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* character;
 };
 
 #endif // __SCENE_H__
