@@ -45,6 +45,10 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	// L02: DONE 1: Create methods to request Load / Save
+	void LoadGameRequest();
+	void SaveGameRequest() const;
+
 private:
 
 	// Load config file
@@ -64,6 +68,10 @@ private:
 
 	// Call modules after each loop iteration
 	bool PostUpdate();
+
+	// Load / Save
+	bool LoadGame();
+	bool SaveGame() const;
 
 public:
 
@@ -93,6 +101,12 @@ private:
 
 	uint frames;
 	float dt;
+
+	mutable bool saveGameRequested;
+	bool loadGameRequested;
+
+	pugi::xml_document saveLoadFile;
+	pugi::xml_node saveLoadNode;
 };
 
 extern App* app;

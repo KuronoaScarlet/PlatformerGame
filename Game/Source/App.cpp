@@ -86,6 +86,12 @@ bool App::Awake()
 		}
 	}
 
+	pugi::xml_parse_result result = saveLoadFile.load_file("savegame.xml");
+	if (result != NULL)
+	{
+		saveLoadNode = saveLoadFile.child("save");
+	}
+
 	return ret;
 }
 
@@ -158,7 +164,9 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// This is a good place to call Load / Save functions
+	// Load / Save Calls
+	if (loadGameRequested == true) LoadGame();
+	if (saveGameRequested == true) SaveGame();
 }
 
 // Call modules before each loop iteration
@@ -269,4 +277,58 @@ const char* App::GetOrganization() const
 	return organization.GetString();
 }
 
+// Load / Save
+void App::LoadGameRequest()
+{
+	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
+	loadGameRequested = true;
+}
 
+// ---------------------------------------
+void App::SaveGameRequest() const
+{
+	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
+	saveGameRequested = true;
+}
+
+// ---------------------------------------
+// L02: TODO 5: Create a method to actually load an xml file
+// then call all the modules to load themselves
+bool App::LoadGame()
+{
+	bool ret = true;
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	while (item != NULL && ret == true)
+	{
+		ret = item->data->LoadState(saveLoadNode.child(item->data->name.GetString()));
+		item = item->next;
+	}
+	saveLoadFile.reset();
+
+	loadGameRequested = false;
+
+	return ret;
+}
+
+// L02: TODO 7: Implement the xml save method for current state
+bool App::SaveGame() const
+{
+	bool ret = true;
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	while (item != NULL && ret == true)
+	{
+		ret = item->data->SaveState(saveLoadNode.child(item->data->name.GetString()));
+		item = item->next;
+	}
+	saveLoadFile.save_file("savegame.xml");
+
+	saveGameRequested = false;
+
+	return ret;
+}

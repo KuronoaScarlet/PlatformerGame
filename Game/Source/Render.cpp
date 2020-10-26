@@ -89,10 +89,27 @@ bool Render::CleanUp()
 }
 
 // TODO 6: Create a method to load the state
-// for now it will be camera's x and y
+// Load Game State
+bool Render::LoadState(pugi::xml_node& data)
+{
+	pugi::xml_node cam = data.child("camera");
+	camera.x = cam.attribute("x").as_int(0);
+	camera.y = cam.attribute("y").as_int(0);
+
+	return true;
+}
 
 // TODO 8: Create a method to save the state of the renderer
-// using append_child and append_attribute
+// Save Game State
+
+bool Render::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node cam = data.child("camera");
+	cam.attribute("x").set_value(camera.x);
+	cam.attribute("y").set_value(camera.y);
+
+	return true;
+}
 
 void Render::SetBackgroundColor(SDL_Color color)
 {
