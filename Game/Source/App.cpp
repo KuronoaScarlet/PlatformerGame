@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -23,6 +24,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
+	map = new Map();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -31,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(map);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -69,7 +72,7 @@ bool App::Awake()
 	if(ret == true)
 	{
 		// TODO 4: Read the title from the config file
-		title.create(configApp.child("title").child_value());
+		title.Create(configApp.child("title").child_value());
 		win->SetTitle(title.GetString());
 
 		ListItem<Module*>* item;

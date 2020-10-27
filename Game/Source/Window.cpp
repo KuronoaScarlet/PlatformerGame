@@ -11,7 +11,7 @@ Window::Window() : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
-	name.create("window");
+	name.Create("window");
 }
 
 // Destructor
@@ -68,7 +68,7 @@ bool Window::Awake(pugi::xml_node& config)
 
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG("Window could not be Created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
 		else
@@ -100,7 +100,7 @@ bool Window::CleanUp()
 // Set new window title
 void Window::SetTitle(const char* new_title)
 {
-	//title.create(new_title);
+	//title.Create(new_title);
 	SDL_SetWindowTitle(window, new_title);
 }
 

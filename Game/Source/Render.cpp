@@ -9,7 +9,7 @@
 
 Render::Render() : Module()
 {
-	name.create("renderer");
+	name.Create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
@@ -38,7 +38,7 @@ bool Render::Awake(pugi::xml_node& config)
 
 	if(renderer == NULL)
 	{
-		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
+		LOG("Could not Create the renderer! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	else

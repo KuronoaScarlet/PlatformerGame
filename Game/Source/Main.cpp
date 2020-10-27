@@ -14,7 +14,7 @@
 
 enum MainState
 {
-	CREATE = 1,
+	Create = 1,
 	AWAKE,
 	START,
 	LOOP,
@@ -29,7 +29,7 @@ int main(int argc, char* args[])
 {
 	LOG("Engine starting ...");
 
-	MainState state = CREATE;
+	MainState state = Create;
 	int result = EXIT_FAILURE;
 
 	while(state != EXIT)
@@ -38,7 +38,7 @@ int main(int argc, char* args[])
 		{
 
 			// Allocate the engine --------------------------------------------
-			case CREATE:
+			case Create:
 			LOG("CREATION PHASE ===============================");
 
 			app = new App(argc, args);
