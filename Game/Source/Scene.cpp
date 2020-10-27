@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -31,6 +32,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	character = app->tex->Load("Assets/textures/test.png");
+	app->map->Load("hello2.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
 }
@@ -62,6 +64,8 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
 
+	
+	app->map->Draw();
 	app->render->DrawTexture(character, 600, 500);//380 100
 
 	return true;

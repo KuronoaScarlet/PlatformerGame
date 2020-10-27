@@ -32,11 +32,12 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-	if (mapLoaded == false) return;
+	if (mapLoaded == false) 
+		return;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	MapLayer* layer = data.layers.start->data;
-
+	iPoint pos;
 	for (int y = 0; y < data.height; ++y)
 	{
 		for (int x = 0; x < data.width; ++x)
@@ -45,6 +46,9 @@ void Map::Draw()
 			if (tileId > 0)
 			{
 				// L04: TODO 9: Complete the draw function
+				pos = MapToWorld(x, y);
+				app->render->DrawTexture(data.tilesets.At(0)->data->texture, pos.x, pos.y, &data.tilesets.At(0)->data->GetTileRect(tileId));
+
 			}
 		}
 	}
@@ -228,8 +232,10 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->name = tileset_node.attribute("name").as_string();
 	set->margin = tileset_node.attribute("margin").as_int(0);
 	set->spacing = tileset_node.attribute("spacing").as_int(0);
-	set->texHeight = tileset_node.attribute("tileheight").as_int(0);
-	set->texWidth = tileset_node.attribute("tilewidth").as_int(0);
+	set->tileHeight = tileset_node.attribute("tileheight").as_int(0);
+	set->tileWidth = tileset_node.attribute("tilewidth").as_int(0);
+	set->numTilesWidth = tileset_node.attribute("columms").as_int(0);
+	set->numTilesHeight = tileset_node.attribute("numtiles").as_int(0)/set->numTilesWidth;
 
 	return ret;
 }
@@ -239,6 +245,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 	pugi::xml_node image = tileset_node.child("image");
+	
 
 	if (image == NULL)
 	{
@@ -248,7 +255,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	else
 	{
 		// L03: TODO: Load Tileset image
-		set->texture = app->tex->Load(image.attribute("source").as_string());
+		set->texture = app->tex->Load(PATH(folder.GetString(),image.attribute("source").as_string()));
 	}
 
 	return ret;
@@ -260,6 +267,20 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	bool ret = true;
 
 	// L04: TODO 3: Load a single layer
+	layer->name = node.attribute("name").as_string("");
+	layer->width = node.attribute("width").as_int(0);
+	layer->height = node.attribute("height").as_int(0);
+	int size = layer->height * layer->width;
+	layer->data = new uint[size];
+
+	pugi::xml_node tile = node.child("data").child("tile");
+	for (int i = 0; i < size; i++)
+	{
+		layer->data[i] = tile.attribute("gid").as_int(0);
+		tile = tile.next_sibling("tile");
+	}
 
 	return ret;
 }
+
+
