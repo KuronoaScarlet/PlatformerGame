@@ -234,7 +234,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->spacing = tileset_node.attribute("spacing").as_int(0);
 	set->tileHeight = tileset_node.attribute("tileheight").as_int(0);
 	set->tileWidth = tileset_node.attribute("tilewidth").as_int(0);
-	set->numTilesWidth = tileset_node.attribute("columms").as_int(0);
+	set->numTilesWidth = tileset_node.attribute("columns").as_int(0);
 	set->numTilesHeight = tileset_node.attribute("numtiles").as_int(0)/set->numTilesWidth;
 
 	return ret;

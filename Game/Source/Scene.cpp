@@ -32,7 +32,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	character = app->tex->Load("Assets/textures/test.png");
-	app->map->Load("hello2.tmx");
+	app->map->Load("Map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
 }
@@ -66,7 +66,7 @@ bool Scene::Update(float dt)
 
 	
 	app->map->Draw();
-	app->render->DrawTexture(character, 600, 500);//380 100
+	app->render->DrawTexture(character, 600, 300);//380 100
 
 	return true;
 }
