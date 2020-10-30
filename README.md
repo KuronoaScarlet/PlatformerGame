@@ -2,8 +2,9 @@
 
 ## Description
 
-A simple but incredible Platformer Game made by TDM Studios! 
-This is a Project for Videogames Development subject in CITM University, hope you like it!
+A simple yet amazing platform game created by TDM Studios! 
+This project is created according to the Videogame Development subject at CITM university. 
+We hope you like it!
 
 ## Key Features
 
