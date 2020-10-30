@@ -1,27 +1,25 @@
-# {Project Name}
+# LOST
 
 ## Description
 
-{project description}
+A simple but incredible Platformer Game made by TDM Studios! 
+This is a Project for Videogames Development subject in CITM University, hope you like it!
 
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - Load & Save Feature
+ - Map Navigation
  
 ## Controls
 
- - {ControlsScheme}
+ - WASD - Movement controls.
+ - Space Bar - Jump.
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
+ - Ignasi Pardo - Mechanics and Systems Programmer
+ - Oriol Valverde - Art Designer and Mechanics Programmer
+ - Marc Ruiz - Game Designer and Debugging
 
 ## License
 
