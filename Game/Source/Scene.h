@@ -35,6 +35,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//For saving and loading player position
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	struct Player
 	{
 	public:

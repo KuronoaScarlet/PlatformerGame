@@ -95,3 +95,21 @@ bool Scene::CleanUp()
 
 	return true;
 }
+
+bool Scene::LoadState(pugi::xml_node& data)
+{
+	pugi::xml_node play = data.child("position");
+	player->posx = play.attribute("x").as_int(0);
+	player->posy = play.attribute("y").as_int(0);
+
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node play = data.child("position");
+	play.attribute("x").set_value(player->posx);
+	play.attribute("y").set_value(player->posy);
+
+	return true;
+}
