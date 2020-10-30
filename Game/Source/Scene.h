@@ -3,7 +3,10 @@
 
 #include "Module.h"
 
+#define grav = -0.1f
+
 struct SDL_Texture;
+struct Player;
 
 class Scene : public Module
 {
@@ -32,8 +35,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	struct Player
+	{
+	public:
+		SString name;
+		float posx, posy;
+		float vely = 0.0f;
+		SDL_Texture* texture;
+	};
+
 private:
+	Player* player = new Player;
 	SDL_Texture* character;
 };
+
 
 #endif // __SCENE_H__
