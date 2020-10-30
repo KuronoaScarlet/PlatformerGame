@@ -31,12 +31,12 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	player->texture = app->tex->Load("Assets/textures/test.png");
+	player->texture = app->tex->Load("Assets/textures/player.png");
 	app->map->Load("Map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
-	player->posx = 380.0f;
-	player->posy = 100.0f;
+	player->posx = 100.0f;
+	player->posy = 257.0f;
 
 	return true;
 }
