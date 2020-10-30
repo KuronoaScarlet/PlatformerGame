@@ -56,23 +56,20 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
+	//PlayerMovement
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		player->posx -= 1;
+
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		player->posx += 1;
+
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		player->vely = -6.0f;
-
 		player->posy += player->vely;
 	}
-
 	/*if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += 1;*/
-
-	if(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		player->posx -= 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		player->posx += 1;
-	
-
 
 	app->map->Draw();
 	app->render->DrawTexture(player->texture, player->posx, player->posy);//380 100
