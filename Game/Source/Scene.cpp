@@ -60,6 +60,12 @@ bool Scene::Update(float dt)
 		player->posy += player->vely;
 	}
 
+	if (player->posy >= 689.0f && godmode == false)
+	{
+		playerjumping = true;
+	}
+
+
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
 		player->posx = 50.0f;
@@ -139,9 +145,17 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		player->vely = -6.0f;
-		player->posy += player->vely;
-		//player->vely - 15;
+		if (doublejump == true) {
+			player->vely = -4.0f;
+			doublejump = false;
+		}
+		if (playerjumping == true) {
+			playerjumping = false;
+			player->vely = -6.0f;
+			player->posy += player->vely;
+			doublejump = true;
+			//player->vely - 15;
+		}	
 		
 
 	}

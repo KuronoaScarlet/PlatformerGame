@@ -39,11 +39,12 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	bool playerjumping = false;
+	bool playerjumping = true;
 	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
 	bool godmode = false;
+	bool doublejump = false;
 
 	struct Player
 	{
