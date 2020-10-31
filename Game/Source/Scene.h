@@ -39,13 +39,19 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
+	bool playerjumping = false;
+	float MAX_FALL_SPEED = 1.0f;
+	float gravity = 0.2f;
+	float delta = 1.5f;
+
 	struct Player
 	{
 	public:
 		SString name;
 		float posx, posy;
 		float vely = 0.0f;
-		SDL_Texture* texture;
+		float velx = 0.0f;
+		SDL_Texture* texture;		
 	};
 
 private:

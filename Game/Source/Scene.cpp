@@ -50,6 +50,13 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (player->posy < 257.0f) {
+		player->vely += gravity;
+		player->posx += player->velx;
+		player->posy += player->vely;
+	}
+	
+
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
@@ -67,6 +74,9 @@ bool Scene::Update(float dt)
 	{
 		player->vely = -6.0f;
 		player->posy += player->vely;
+		//player->vely - 15;
+		
+
 	}
 	/*if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += 1;*/
