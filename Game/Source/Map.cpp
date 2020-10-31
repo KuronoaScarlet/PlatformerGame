@@ -33,7 +33,8 @@ void Map::Draw()
 {
 	if (mapLoaded == false) 
 		return;
-
+	bool exit = false;
+	TileSet* tileset;
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	MapLayer* layer = data.layers.start->data;
 	iPoint pos;
@@ -45,9 +46,30 @@ void Map::Draw()
 			if (tileId > 0)
 			{
 				// L04: TODO 9: Complete the draw function
-				pos = MapToWorld(x, y);
-				app->render->DrawTexture(data.tilesets.At(0)->data->texture, pos.x, pos.y, &data.tilesets.At(0)->data->GetTileRect(tileId));
+				tileset = GetTilesetFromTileId(tileId);
+				if (tileset->name == "Colliders")
+				{
+					ListItem<MapLayer*>* cLayer;
+					cLayer = data.layers.start;
+					if (cLayer->data->properties.property.value)
+					{
+						exit = true;
+						break;
+					}
+				}
 
+				if (exit == false)
+				{
+					pos = MapToWorld(x, y);
+
+					for (int i = 0; i < data.tilesets.count(); i++)
+					{
+						app->render->DrawTexture(data.tilesets.At(i)->data->texture, pos.x, pos.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
+						/*if (data.layers.At(i)->data->properties.GetProperty("Draw", 0) == 0) {
+							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, pos.x, pos.y, &GetTilesetFromTileId(tileId)->GetTileRect(tileId));
+						}*/
+					}
+				}
 			}
 		}
 	}
@@ -75,6 +97,30 @@ iPoint Map::WorldToMap(int x, int y) const
 
 	return ret;
 }
+
+TileSet* Map::GetTilesetFromTileId(int id) const
+{
+	ListItem<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item->data != nullptr)
+	{
+		if (item->next == nullptr) 
+		{
+			set = item->data;
+			break;
+		}
+		if ((item->data->firstgid < id) && item->next->data->firstgid > id) 
+		{
+			set = item->data;
+			break;
+		}
+		item= item->next;
+	}
+
+	return set;
+}
+
 
 // Get relative Tile rectangle
 SDL_Rect TileSet::GetTileRect(int id) const
