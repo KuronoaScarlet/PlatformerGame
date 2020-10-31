@@ -31,48 +31,30 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-	if (mapLoaded == false) 
-		return;
-	bool exit = false;
-	TileSet* tileset;
-	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
-	MapLayer* layer = data.layers.start->data;
-	iPoint pos;
-	for (int y = 0; y < data.height; ++y)
-	{
-		for (int x = 0; x < data.width; ++x)
-		{
-			int tileId = layer->Get(x, y);
-			if (tileId > 0)
-			{
-				// L04: TODO 9: Complete the draw function
-				tileset = GetTilesetFromTileId(tileId);
-				if (tileset->name == "Colliders")
-				{
-					ListItem<MapLayer*>* cLayer;
-					cLayer = data.layers.start;
-					if (cLayer->data->properties.property.value)
-					{
-						exit = true;
-						break;
-					}
-				}
+    if (mapLoaded == false) return;
+    
+    iPoint point;
 
-				if (exit == false)
-				{
-					pos = MapToWorld(x, y);
-
-					for (int i = 0; i < data.tilesets.count(); i++)
-					{
-						app->render->DrawTexture(data.tilesets.At(i)->data->texture, pos.x, pos.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
-						/*if (data.layers.At(i)->data->properties.GetProperty("Draw", 0) == 0) {
-							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, pos.x, pos.y, &GetTilesetFromTileId(tileId)->GetTileRect(tileId));
-						}*/
+    for (int y = 0; y < data.height; ++y)
+    {
+        for (int x = 0; x < data.width; ++x)
+        {
+            for (ListItem<MapLayer*>* layer = data.layers.start; layer; layer = layer->next)
+            {
+                int tileId = layer->data->Get(x, y);
+                if (tileId > 0)
+                {
+                    // L04: TODO 9: Complete the draw function       
+                    iPoint point = MapToWorld(x, y);
+                    for (int i = 0; i < data.tilesets.count(); i++)
+                    {
+                        if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0)
+							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, point.x, point.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
 					}
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -103,19 +85,9 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	while (item->data != nullptr)
+	for (set; set; item = item->next, set = item->data)
 	{
-		if (item->next == nullptr) 
-		{
-			set = item->data;
-			break;
-		}
-		if ((item->data->firstgid < id) && item->next->data->firstgid > id) 
-		{
-			set = item->data;
-			break;
-		}
-		item= item->next;
+		if (id >= set->firstgid && id < set->firstgid + (set->numTilesWidth * set->numTilesHeight)) return set;
 	}
 
 	return set;
@@ -328,4 +300,37 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
+bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+{
+	bool ret = true;
 
+
+	pugi::xml_node property_ = node.child("property");
+
+	Properties::Property* Prop = new Properties::Property();
+
+	//if (property_ != NULL) return false;
+
+	for (property_; property_ && ret; property_ = property_.next_sibling("property"))
+	{
+		Prop->name = property_.attribute("name").as_string("");
+		Prop->value = property_.attribute("value").as_int(0);
+		properties.list.add(Prop);
+	}
+
+	return ret;
+}
+
+int Properties::GetProperty(const char* value, int defaultValue) const
+{
+	for (int i = 0; i < list.count(); i++)
+	{
+		if (strcmp(list.At(i)->data->name.GetString(), value) == 0)
+		{
+			if (list.At(i)->data->value != defaultValue) return list.At(i)->data->value;
+			else return defaultValue;
+		}
+	}
+
+	return defaultValue;
+}
