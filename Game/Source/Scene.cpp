@@ -33,10 +33,13 @@ bool Scene::Start()
 {
 	player->texture = app->tex->Load("Assets/textures/player.png");
 	app->map->Load("Map.tmx");
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/audio/music/music_spy3.ogg");
 
-	player->posx = 100.0f;
-	player->posy = 257.0f;
+	
+	player->posx = 50.0f;
+	player->posy = 689.0f;
+	app->render->camera.x = -10;
+	app->render->camera.y = -1416.0f;
 
 	return true;
 }
@@ -50,12 +53,14 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (player->posy < 257.0f) {
+	if (player->posy < 689.0f)
+	{
 		player->vely += gravity;
 		player->posx += player->velx;
 		player->posy += player->vely;
 	}
-	
+
+
 
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
@@ -65,10 +70,20 @@ bool Scene::Update(float dt)
 
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
 		player->posx -= 1;
+		if (player->posx >= 200.0f) {
+			app->render->camera.x += 3;
+		}
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
 		player->posx += 1;
+		if (player->posx >= 200.0f) {
+			app->render->camera.x -= 3;
+		}
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
