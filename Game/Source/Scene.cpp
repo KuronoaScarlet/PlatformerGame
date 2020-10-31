@@ -33,7 +33,7 @@ bool Scene::Start()
 {
 	player->texture = app->tex->Load("Assets/textures/player.png");
 	app->map->Load("Map.tmx");
-	app->audio->PlayMusic("Assets/audio/music/music_spy3.ogg");
+	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	
 	player->posx = 50.0f;
@@ -53,28 +53,63 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (player->posy < 689.0f)
+	if (player->posy < 689.0f && godmode == false)
 	{
 		player->vely += gravity;
 		player->posx += player->velx;
 		player->posy += player->vely;
 	}
 
-
-
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		app->SaveGameRequest();
-
-	//PlayerMovement
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
+	{
+		player->posx = 50.0f;
+		player->posy = 689.0f;
+		app->render->camera.x = -10;
+		app->render->camera.y = -1416.0f;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
 	{
 		player->posx -= 1;
 		if (player->posx >= 200.0f) {
 			app->render->camera.x += 3;
 		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
+	{
+		player->posx = 50.0f;
+		player->posy = 689.0f;
+		app->render->camera.x = -10;
+		app->render->camera.y = -1416.0f;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		app->LoadGameRequest();
+
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		app->SaveGameRequest();
+
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT)
+	{		
+		if (godmode == true) 
+		{
+			godmode = false;
+		} else
+		{
+			godmode = true;
+			app->render->camera.x = player->posx;
+			app->render->camera.x = player->posy;
+		}
+
+	}
+
+	//PlayerMovement
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{		
+		player->posx -= 1;
+		if (player->posx >= 200.0f) 
+			{
+			app->render->camera.x += 3;
+			}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -83,6 +118,20 @@ bool Scene::Update(float dt)
 		if (player->posx >= 200.0f) {
 			app->render->camera.x -= 3;
 		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godmode == true)
+	{
+		player->posy -= 1;
+		app->render->camera.y += 3;
+
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godmode == true)
+	{
+		player->posy += 1;
+		app->render->camera.y -= 3;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
