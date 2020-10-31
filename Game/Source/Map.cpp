@@ -35,26 +35,27 @@ void Map::Draw()
     
     iPoint point;
 
-    for (int y = 0; y < data.height; ++y)
-    {
-        for (int x = 0; x < data.width; ++x)
-        {
-            for (ListItem<MapLayer*>* layer = data.layers.start; layer; layer = layer->next)
-            {
-                int tileId = layer->data->Get(x, y);
-                if (tileId > 0)
-                {
-                    // L04: TODO 9: Complete the draw function       
-                    iPoint point = MapToWorld(x, y);
-                    for (int i = 0; i < data.tilesets.count(); i++)
-                    {
-                        if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0)
-							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, point.x, point.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
+    
+	for (ListItem<MapLayer*>* layer = data.layers.start; layer; layer = layer->next)
+	{
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int tileId = layer->data->Get(x, y);
+				if (tileId > 0)
+				{
+					// L04: TODO 9: Complete the draw function       
+					iPoint vec = MapToWorld(x, y);
+					for (int i = 0; i < data.tilesets.count(); i++)
+					{
+						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 1)
+							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, vec.x, vec.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
 					}
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+	}
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -85,7 +86,7 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	for (set; set; item = item->next, set = item->data)
+	for (set; item->next != nullptr; item = item->next, set = item->data)
 	{
 		if (id >= set->firstgid && id < set->firstgid + (set->numTilesWidth * set->numTilesHeight)) return set;
 	}
@@ -249,10 +250,8 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->name = tileset_node.attribute("name").as_string();
 	set->margin = tileset_node.attribute("margin").as_int(0);
 	set->spacing = tileset_node.attribute("spacing").as_int(0);
-	set->tileHeight = tileset_node.attribute("tileheight").as_int(0);
-	set->tileWidth = tileset_node.attribute("tilewidth").as_int(0);
-	set->numTilesWidth = tileset_node.attribute("columns").as_int(0);
-	set->numTilesHeight = tileset_node.attribute("numtiles").as_int(0)/set->numTilesWidth;
+	set->texHeight = tileset_node.attribute("tileheight").as_int(0);
+	set->texWidth = tileset_node.attribute("tilewidth").as_int(0);
 
 	return ret;
 }
@@ -308,8 +307,6 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	pugi::xml_node property_ = node.child("property");
 
 	Properties::Property* Prop = new Properties::Property();
-
-	//if (property_ != NULL) return false;
 
 	for (property_; property_ && ret; property_ = property_.next_sibling("property"))
 	{
