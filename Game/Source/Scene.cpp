@@ -39,7 +39,7 @@ bool Scene::Start()
 	player->posx = 50.0f;
 	player->posy = 689.0f;
 	app->render->camera.x = -10;
-	app->render->camera.y = -1416.0f;
+	app->render->camera.y = player->posy - 2105.0f;
 
 	return true;
 }
@@ -87,6 +87,9 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
+
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		app->map->ShowCollider();
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT)
 	{		

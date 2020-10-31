@@ -57,6 +57,7 @@ struct Properties
 	int GetProperty(const char* name, int default_value = 0) const;
 
 	List<Property*> list;
+	Property property;
 };
 
 // L04: DONE 1: Create a struct for the map layer
@@ -127,6 +128,8 @@ public:
 	// L05: TODO 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	void ShowCollider() { DrawColliders = !DrawColliders; }
+
 private:
 
 	// L03: Methods to load all required map data
@@ -136,6 +139,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	TileSet* GetTilesetFromTileId(int id) const;
+	
 
 public:
 
@@ -147,6 +151,7 @@ private:
 	pugi::xml_document mapFile;
 	SString folder;
 	bool mapLoaded;
+	bool DrawColliders = false;
 };
 
 #endif // __MAP_H__

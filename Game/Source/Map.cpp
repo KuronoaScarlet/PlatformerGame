@@ -31,16 +31,20 @@ bool Map::Awake(pugi::xml_node& config)
 // Draw the map (all requried layers)
 void Map::Draw()
 {
-    if (mapLoaded == false) return;
-    
-    iPoint point;
+	if (mapLoaded == false) return;
 
-    
-	for (ListItem<MapLayer*>* layer = data.layers.start; layer; layer = layer->next)
+	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
+	MapLayer* layer = data.layers.start->data;
+
+	// L06: TODO 4: Make sure we draw all the layers and not just the first one
+
+	iPoint point;
+
+	for (int y = 0; y < data.height; ++y)
 	{
-		for (int y = 0; y < data.height; ++y)
+		for (int x = 0; x < data.width; ++x)
 		{
-			for (int x = 0; x < data.width; ++x)
+			for (ListItem<MapLayer*>* layer = data.layers.start; layer; layer = layer->next)
 			{
 				int tileId = layer->data->Get(x, y);
 				if (tileId > 0)
@@ -49,8 +53,9 @@ void Map::Draw()
 					iPoint vec = MapToWorld(x, y);
 					for (int i = 0; i < data.tilesets.count(); i++)
 					{
-						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 1)
-							app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, vec.x, vec.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
+						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0 || DrawColliders)
+							app->render->DrawTexture(data.tilesets.At(i)->data->texture, vec.x, vec.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
+							//app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, vec.x, vec.y, &GetTilesetFromTileId(tileId)->GetTileRect(tileId));
 					}
 				}
 			}
@@ -83,12 +88,31 @@ iPoint Map::WorldToMap(int x, int y) const
 
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
-	ListItem<TileSet*>* item = data.tilesets.start;
+	/*ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
 	for (set; item->next != nullptr; item = item->next, set = item->data)
 	{
 		if (id >= set->firstgid && id < set->firstgid + (set->numTilesWidth * set->numTilesHeight)) return set;
+	}
+
+	return set;*/
+	ListItem<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item->data != nullptr)
+	{
+		if (item->next == nullptr)
+		{
+			set = item->data;
+			break;
+		}
+		if ((item->data->firstgid < id) && item->next->data->firstgid > id)
+		{
+			set = item->data;
+			break;
+		}
+		item = item->next;
 	}
 
 	return set;
@@ -191,6 +215,17 @@ bool Map::Load(const char* filename)
 
 		if (ret == true)
 			data.layers.add(lay);
+
+		pugi::xml_node propertiesNode;
+		for (propertiesNode = layer.child("properties"); propertiesNode && ret; propertiesNode = propertiesNode.next_sibling("properties"))
+		{
+			Properties* property = new Properties();
+
+			ret = LoadProperties(propertiesNode, *property);
+
+			//data.layers.At(0)->data->properties.list.add();
+			lay->properties = *property;
+		}
 	}
 
 	if (ret == true)
@@ -250,9 +285,10 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->name = tileset_node.attribute("name").as_string();
 	set->margin = tileset_node.attribute("margin").as_int(0);
 	set->spacing = tileset_node.attribute("spacing").as_int(0);
-	set->texHeight = tileset_node.attribute("tileheight").as_int(0);
-	set->texWidth = tileset_node.attribute("tilewidth").as_int(0);
-
+	set->tileHeight = tileset_node.attribute("tileheight").as_int(0);
+	set->tileWidth = tileset_node.attribute("tilewidth").as_int(0);
+	set->numTilesWidth = tileset_node.attribute("columns").as_int(0);
+	set->numTilesHeight = tileset_node.attribute("tilecount").as_int(0) / set->numTilesWidth;
 	return ret;
 }
 
@@ -261,7 +297,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 	pugi::xml_node image = tileset_node.child("image");
-	
+
 
 	if (image == NULL)
 	{
@@ -271,7 +307,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	else
 	{
 		// L03: TODO: Load Tileset image
-		set->texture = app->tex->Load(PATH(folder.GetString(),image.attribute("source").as_string()));
+		set->texture = app->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 	}
 
 	return ret;
