@@ -14,6 +14,28 @@
 Player::Player() : Module()
 {
 	name.Create("player");
+	idleAnim.loop = true;
+	idleAnim.PushBack({ 0, 0, 12, 11 });
+
+	
+    walkAnimRight.PushBack({ 11,0, 12, 11 });
+	walkAnimRight.PushBack({ 23,0, 12, 11 });
+	walkAnimRight.PushBack({ 35,0, 12, 11 });
+	walkAnimRight.PushBack({ 47,0, 12, 11 });
+	walkAnimRight.loop = true;
+	walkAnimRight.speed = 0.1f;
+
+	walkAnimLeft.PushBack({ 11,11, 12, 11 });
+	walkAnimLeft.PushBack({ 23,11, 12, 11 });
+	walkAnimLeft.PushBack({ 35,11, 12, 11 });
+	walkAnimLeft.PushBack({ 47,11, 12, 11 });
+	walkAnimLeft.loop = true;
+	walkAnimLeft.speed = 0.1f;
+
+	jumpAnim.PushBack({ 0, 22, 12, 12 });
+	jumpAnim.loop = true;
+	
+	
 }
 
 // Destructor
@@ -24,15 +46,10 @@ Player::~Player()
 bool Player::Start()
 {
 	playerd.texture = app->tex->Load("Assets/textures/Player.png");
+	playerd.currentAnim = &idleAnim;
 
-
-	/*
-		for (int i = 0; i < 6; i++)
-		{
-			walkAnim->PushBack({ 0 + (12 * i),0, 12, 11 });
-		}*/
-
-
+	
+	
 
 	playerd.posx = 50.0f;
 	playerd.posy = 689.0f;
@@ -48,10 +65,7 @@ bool Player::Start()
 bool Player::Awake()
 {
 	LOG("Loading Player");
-	idleAnim.loop = true;
-	idleAnim.speed = 0.04f;
-	idleAnim.PushBack({ 0, 0, 12, 11 });
-	playerd.currentAnim = &idleAnim;
+	
 	bool ret = true;
 
 	return ret;
@@ -68,7 +82,12 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	//playerd.currentAnim->Update();
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
+		playerd.currentAnim = &idleAnim;
+	}
+	
 
 	if (playerd.posy < 689.0f && godmode == false)
 	{
@@ -134,17 +153,27 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerd.posx -= 1;
+		if (playerd.currentAnim != &walkAnimLeft) {
+			walkAnimLeft.Reset();
+			playerd.currentAnim = &walkAnimLeft;
+		}
 		if (playerd.posx >= 200.0f)
 		{
 			app->render->camera.x += 3;
+			
 		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerd.posx += 1;
+
+		if (playerd.currentAnim != &walkAnimRight) {
+			walkAnimRight.Reset();
+			playerd.currentAnim = &walkAnimRight;
+		}
 		if (playerd.posx >= 200.0f) {
-			app->render->camera.x -= 3;
+			app->render->camera.x -= 3;			
 		}
 	}
 
@@ -167,6 +196,10 @@ bool Player::Update(float dt)
 		if (doublejump == true) {
 			playerd.vely = -4.0f;
 			doublejump = false;
+			if (playerd.currentAnim != &jumpAnim) {
+				jumpAnim.Reset();
+				playerd.currentAnim = &jumpAnim;
+			}
 		}
 		if (playerjumping == true) {
 			playerjumping = false;
@@ -182,8 +215,8 @@ bool Player::Update(float dt)
 		app->render->camera.y += 1;*/
 
 	
-	app->render->DrawTexture(playerd.texture, playerd.posx, playerd.posy);
-
+	
+	playerd.currentAnim->Update();
 
 
 	return true;
@@ -193,7 +226,9 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	bool ret = true;
-
+	SDL_Rect rectPlayer;
+	rectPlayer = playerd.currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(playerd.texture, playerd.posx, playerd.posy, &rectPlayer);
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 

@@ -62,7 +62,9 @@ public:
 private:
 
 	SDL_Texture* character;
-	Animation* walkAnim = new Animation();
+	Animation walkAnimRight;
+	Animation walkAnimLeft;
+	Animation jumpAnim;
 	Animation idleAnim;
 };
 
