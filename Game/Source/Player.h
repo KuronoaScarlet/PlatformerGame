@@ -15,7 +15,7 @@ public:
 	float vely = 0.0f;
 	float velx = 0.0f;
 	SDL_Texture* texture;
-	Animation* currentanim;
+	Animation* currentAnim = nullptr;
 };
 
 
@@ -56,8 +56,7 @@ public:
 	float delta = 1.5f;
 	bool godmode = false;
 	bool doublejump = false;
-
-	Playerd Playerd;
+	Playerd playerd;
 	
 
 private:

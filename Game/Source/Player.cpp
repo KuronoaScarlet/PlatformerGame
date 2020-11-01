@@ -20,22 +20,10 @@ Player::Player() : Module()
 Player::~Player()
 {}
 
-// Called before render is available
-bool Player::Awake()
-{
-	LOG("Loading Player");
-	bool ret = true;
-
-	return ret;
-}
-
 // Called before the first frame
 bool Player::Start()
 {
-	Playerd.texture = app->tex->Load("Assets/textures/Player.png");
-
-	idleAnim.loop = true;
-	idleAnim.speed = 0.04f;
+	playerd.texture = app->tex->Load("Assets/textures/Player.png");
 
 
 	/*
@@ -43,18 +31,33 @@ bool Player::Start()
 		{
 			walkAnim->PushBack({ 0 + (12 * i),0, 12, 11 });
 		}*/
-	idleAnim.PushBack({ 0, 0, 12, 11 });
 
 
-	Playerd.posx = 50.0f;
-	Playerd.posy = 689.0f;
+
+	playerd.posx = 50.0f;
+	playerd.posy = 689.0f;
 	app->render->camera.x = -10;
-	app->render->camera.y = Playerd.posy - 2105.0f;
+	app->render->camera.y = playerd.posy - 2105.0f;
 
-	Playerd.currentanim = &idleAnim;
+
 
 	return true;
 }
+
+// Called before render is available
+bool Player::Awake()
+{
+	LOG("Loading Player");
+	idleAnim.loop = true;
+	idleAnim.speed = 0.04f;
+	idleAnim.PushBack({ 0, 0, 12, 11 });
+	playerd.currentAnim = &idleAnim;
+	bool ret = true;
+
+	return ret;
+}
+
+
 
 // Called each loop iteration
 bool Player::PreUpdate()
@@ -65,17 +68,17 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	
+	//playerd.currentAnim->Update();
 
-	if (Playerd.posy < 689.0f && godmode == false)
+	if (playerd.posy < 689.0f && godmode == false)
 	{
-		Playerd.vely += gravity;
-		Playerd.posx += Playerd.velx;
-		Playerd.posy += Playerd.vely;
+		playerd.vely += gravity;
+		playerd.posx += playerd.velx;
+		playerd.posy += playerd.vely;
 	}
 
 
-	if (Playerd.posy >= 689.0f && godmode == false)
+	if (playerd.posy >= 689.0f && godmode == false)
 	{
 		playerjumping = true;
 	}
@@ -83,22 +86,22 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
-		Playerd.posx = 50.0f;
-		Playerd.posy = 689.0f;
+		playerd.posx = 50.0f;
+		playerd.posy = 689.0f;
 		app->render->camera.x = -10;
 		app->render->camera.y = -1416.0f;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
 	{
-		Playerd.posx -= 1;
-		if (Playerd.posx >= 200.0f) {
+		playerd.posx -= 1;
+		if (playerd.posx >= 200.0f) {
 			app->render->camera.x += 3;
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
-		Playerd.posx = 50.0f;
-		Playerd.posy = 689.0f;
+		playerd.posx = 50.0f;
+		playerd.posy = 689.0f;
 		app->render->camera.x = -10;
 		app->render->camera.y = -1416.0f;
 	}
@@ -121,8 +124,8 @@ bool Player::Update(float dt)
 		else
 		{
 			godmode = true;
-			app->render->camera.x = Playerd.posx;
-			app->render->camera.x = Playerd.posy;
+			app->render->camera.x = playerd.posx;
+			app->render->camera.x = playerd.posy;
 		}
 
 	}
@@ -130,8 +133,8 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		Playerd.posx -= 1;
-		if (Playerd.posx >= 200.0f)
+		playerd.posx -= 1;
+		if (playerd.posx >= 200.0f)
 		{
 			app->render->camera.x += 3;
 		}
@@ -139,22 +142,22 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		Playerd.posx += 1;
-		if (Playerd.posx >= 200.0f) {
+		playerd.posx += 1;
+		if (playerd.posx >= 200.0f) {
 			app->render->camera.x -= 3;
 		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godmode == true)
 	{
-		Playerd.posy -= 1;
+		playerd.posy -= 1;
 		app->render->camera.y += 3;
 
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godmode == true)
 	{
-		Playerd.posy += 1;
+		playerd.posy += 1;
 		app->render->camera.y -= 3;
 
 	}
@@ -162,13 +165,13 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		if (doublejump == true) {
-			Playerd.vely = -4.0f;
+			playerd.vely = -4.0f;
 			doublejump = false;
 		}
 		if (playerjumping == true) {
 			playerjumping = false;
-			Playerd.vely = -6.0f;
-			Playerd.posy += Playerd.vely;
+			playerd.vely = -6.0f;
+			playerd.posy += playerd.vely;
 			doublejump = true;
 			//Player->vely - 15;
 		}
@@ -178,8 +181,9 @@ bool Player::Update(float dt)
 	/*if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += 1;*/
 
-	app->render->DrawTexture(Playerd.texture, Playerd.posx, Playerd.posy);//380 100
-	Playerd.currentanim = &idleAnim;
+	
+	app->render->DrawTexture(playerd.texture, playerd.posx, playerd.posy);
+
 
 
 	return true;
@@ -207,8 +211,8 @@ bool Player::CleanUp()
 bool Player::LoadState(pugi::xml_node& data)
 {
 	pugi::xml_node play = data.child("position");
-	Playerd.posx = play.attribute("x").as_int(0);
-	Playerd.posy = play.attribute("y").as_int(0);
+	playerd.posx = play.attribute("x").as_int(0);
+	playerd.posy = play.attribute("y").as_int(0);
 
 	return true;
 }
@@ -216,8 +220,8 @@ bool Player::LoadState(pugi::xml_node& data)
 bool Player::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node play = data.child("position");
-	play.attribute("x").set_value(Playerd.posx);
-	play.attribute("y").set_value(Playerd.posy);
+	play.attribute("x").set_value(playerd.posx);
+	play.attribute("y").set_value(playerd.posy);
 
 	return true;
 }
