@@ -2,11 +2,10 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 #define grav = -0.1f
 
-struct SDL_Texture;
-struct Player;
 
 class Scene : public Module
 {
@@ -35,30 +34,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//For saving and loading player position
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
 
-	bool playerjumping = true;
-	float MAX_FALL_SPEED = 1.0f;
-	float gravity = 0.2f;
-	float delta = 1.5f;
-	bool godmode = false;
-	bool doublejump = false;
 
-	struct Player
-	{
-	public:
-		SString name;
-		float posx, posy;
-		float vely = 0.0f;
-		float velx = 0.0f;
-		SDL_Texture* texture;		
-	};
 
 private:
-	Player* player = new Player;
-	SDL_Texture* character;
 };
 
 

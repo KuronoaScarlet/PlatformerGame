@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene />
-	<scene>
+	<player>
 		<position x="162" y="257" />
-	</scene>
+	</player>
 	<renderer>
 		<camera x="150" y="-1300" />
 	</renderer>
