@@ -78,6 +78,7 @@ private:
 	bool onGround = false;
 	bool isDead;
 	bool debug = false;
+	bool cameraControl = true;
 };
 
 

@@ -260,6 +260,7 @@ bool Player::Update(float dt)
 
 	playerd.currentAnim->Update();
 	collider->SetPos(playerd.position.x, playerd.position.y + 2);
+	cameraControl = true;
 
 	return true;
 }
@@ -327,6 +328,16 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			onGround = true;
 			playerd.position.y = playerd.position.y;
+		}
+		if (b->type == Collider::Type::LEFT_WALL)
+		{
+			playerd.position.x -= 1;
+			cameraControl = false;
+		}
+		if (b->type == Collider::Type::RIGHT_WALL)
+		{
+			playerd.position.x += 1;
+			cameraControl = false;
 		}
 	}
 }

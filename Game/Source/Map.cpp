@@ -399,11 +399,15 @@ void Map::LoadColliders()
 				int u = layer->Get(x, y);
 				iPoint pos = MapToWorld(x, y);
 				SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
+				SDL_Rect n2 = { pos.x-1, pos.y+7, 2, 6 };
+				SDL_Rect n3 = { pos.x + 15, pos.y + 7, 2, 6 };
 				if (u != 0)
 				{
 					if (layer->properties.GetProperty("Collisions", 1) == 1)
 					{
 							app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
+							app->collisions->AddCollider(n2, Collider::Type::LEFT_WALL, this);
+							app->collisions->AddCollider(n3, Collider::Type::RIGHT_WALL, this);
 					}
 				}
 

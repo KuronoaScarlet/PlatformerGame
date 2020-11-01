@@ -144,6 +144,7 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 		{
 			ret = colliders[i] = new Collider(rect, type, listener);
 			break;
+			LOG("%d ", i);
 		}
 	}
 
@@ -179,6 +180,12 @@ void Collisions::DebugDraw()
 
 		case Collider::Type::FLOOR:
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		case Collider::Type::LEFT_WALL:
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
+			break;
+		case Collider::Type::RIGHT_WALL:
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 		case Collider::Type::PLAYER:
 			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);

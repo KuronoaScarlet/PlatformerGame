@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +33,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	app->collisions->CleanUp();
 	app->map->Load("Map.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -50,9 +52,10 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	app->map->Draw();
 	app->map->LoadColliders();
-
+	
 	return true;
 }
 
