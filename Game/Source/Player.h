@@ -10,12 +10,16 @@ struct SDL_Texture;
 struct Playerd
 {
 public:
+	fPoint position;
 	SString name;
 	float posx, posy;
 	float vely = 0.0f;
 	float velx = 0.0f;
 	SDL_Texture* texture;
 	Animation* currentAnim = nullptr;
+
+
+	
 };
 
 
@@ -50,12 +54,14 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	bool playerjumping = true;
+	bool CheckCollision(int x, int y);
+
+	bool playerJumping = true;
 	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
-	bool godmode = false;
-	bool doublejump = false;
+	bool godMode = false;
+	bool doubleJump = false;
 	Playerd playerd;
 	
 
