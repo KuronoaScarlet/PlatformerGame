@@ -377,6 +377,7 @@ void Map::LoadColliders()
 	ListItem<MapLayer*>* L = data.layers.start;
 	ListItem<TileSet*>* T = data.tilesets.start;
 	TileSet* tileSet = data.tilesets.start->data;
+	uint num = 401;
 	while (L != nullptr)
 	{
 		MapLayer* layer = L->data;
@@ -402,7 +403,7 @@ void Map::LoadColliders()
 				{
 					if (layer->properties.GetProperty("Collisions", 1) == 1)
 					{
-						app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
+							app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
 					}
 					/*if (layer->properties.GetProperty("Collisions", 1) == 2)
 					{

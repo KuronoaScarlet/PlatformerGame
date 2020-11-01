@@ -100,7 +100,7 @@ bool Player::Update(float dt)
 
 	
 
-	if (godMode == false || onGround == false)
+	if(onGround == false)
 	{
 		playerd.vely += gravity;
 		playerd.position.x += playerd.velx;
@@ -108,7 +108,9 @@ bool Player::Update(float dt)
 	}
 
 
-	if (playerd.position.y >= 689.0f && godMode == false)
+
+
+	if (onGround == true && godMode == false)
 	{
 		playerJumping = true;
 	}
@@ -178,6 +180,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerd.position.x -= 1;
+		onGround = false;
 		if (playerd.currentAnim != &walkAnimLeft) {
 			walkAnimLeft.Reset();
 			playerd.currentAnim = &walkAnimLeft;
@@ -197,6 +200,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerd.position.x += 1;
+		onGround = false;
 
 		if (playerd.currentAnim != &walkAnimRight) {
 			walkAnimRight.Reset();
@@ -223,7 +227,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (doubleJump == true) 
+		if (doubleJump == true && onGround == false) 
 		{
 			playerd.vely = -4.0f;
 			doubleJump = false;
@@ -233,17 +237,19 @@ bool Player::Update(float dt)
 				playerd.currentAnim = &jumpAnim;
 			}
 		}
-		if (playerJumping == true) 
+		if (playerJumping == true ) 
 		{
+			
 			playerJumping = false;
 			playerd.vely = -6.0f;
-			playerd.position.y += playerd.vely;
+			playerd.position.y += playerd.vely;			
 			doubleJump = true;
 			if (playerd.currentAnim != &jumpAnim)
 			{
 				jumpAnim.Reset();
 				playerd.currentAnim = &jumpAnim;
 			}
+			onGround = false;
 			//Player->vely - 15;
 		}
 		
@@ -344,15 +350,31 @@ bool Player::CheckCollision(int x, int y)
 	return false;
 }
 
-void Player::OnCollision(Collider* a, Collider* b) {
-	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
+void Player::OnCollision(Collider* a, Collider* b) 
+{
+	if (a == collider)
 	{
-		playerd.position.y -= 1;
+		if (b->type == Collider::Type::FLOOR)
+		{
+			onGround = true;
+			playerd.position.y = playerd.position.y;
+		}
+		if (b->type == Collider::Type::NONE)
+		{
+			onGround = false;
+		}
+	}
+
+	/*if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
+	{
 		onGround = true;
+		playerd.position.y = playerd.position.y;
+		
+		
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{
 		isDead = true;
-	}
+	}*/
 
 }
