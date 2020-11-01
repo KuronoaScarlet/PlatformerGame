@@ -18,21 +18,21 @@ Player::Player() : Module()
 	idleAnim.PushBack({ 0, 0, 12, 11 });
 
 	
-    walkAnimRight.PushBack({ 11,0, 12, 11 });
-	walkAnimRight.PushBack({ 23,0, 12, 11 });
-	walkAnimRight.PushBack({ 35,0, 12, 11 });
-	walkAnimRight.PushBack({ 47,0, 12, 11 });
+    walkAnimRight.PushBack({ 13,0, 12, 11 });
+	walkAnimRight.PushBack({ 26,0, 12, 11 });
+	walkAnimRight.PushBack({ 39,0, 12, 11 });
+	walkAnimRight.PushBack({ 53,0, 14, 11 });
 	walkAnimRight.loop = true;
 	walkAnimRight.speed = 0.1f;
 
-	walkAnimLeft.PushBack({ 11,11, 12, 11 });
-	walkAnimLeft.PushBack({ 23,11, 12, 11 });
-	walkAnimLeft.PushBack({ 35,11, 12, 11 });
-	walkAnimLeft.PushBack({ 47,11, 12, 11 });
+	walkAnimLeft.PushBack({ 13,12, 12, 11 });
+	walkAnimLeft.PushBack({ 26,12, 12, 11 });
+	walkAnimLeft.PushBack({ 39,12, 12, 11 });
+	walkAnimLeft.PushBack({ 53,12, 14, 11 });
 	walkAnimLeft.loop = true;
 	walkAnimLeft.speed = 0.1f;
 
-	jumpAnim.PushBack({ 0, 22, 12, 12 });
+	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
 	
 	
@@ -52,7 +52,7 @@ bool Player::Start()
 	
 
 	playerd.posx = 50.0f;
-	playerd.posy = 689.0f;
+	playerd.posy = 694.0f;
 	app->render->camera.x = -10;
 	app->render->camera.y = playerd.posy - 2105.0f;
 
