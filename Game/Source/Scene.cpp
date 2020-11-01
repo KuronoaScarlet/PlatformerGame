@@ -34,8 +34,10 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	app->collisions->CleanUp();
-	app->map->Load("Map.tmx");
+	app->map->Load("Map1.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	//26 4
+	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
 
 	app->player->Init();
 	app->player->Start();

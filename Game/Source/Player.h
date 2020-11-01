@@ -57,6 +57,7 @@ public:
 
 	bool CheckCollision(int x, int y);
 	void OnCollision(Collider* a, Collider* b);
+	void InitialPos();
 
 	bool playerJumping = true;
 	float MAX_FALL_SPEED = 1.0f;

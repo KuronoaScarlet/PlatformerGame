@@ -52,11 +52,7 @@ bool Player::Start()
 	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 
-	playerd.position.x = 50.0f;
-	playerd.position.y = 670.0f;
-
-	app->render->camera.x = -10;
-	app->render->camera.y = -playerd.position.y;
+	InitialPos();
 
 
 
@@ -87,7 +83,7 @@ bool Player::Update(float dt)
 	
 	int cameraPositionPlayerY = 360 + (playerd.position.y * -3) + 200;
 
-	app->render->camera.y = -2*(playerd.position.y)-50;
+	app->render->camera.y = -(playerd.position.y)+50; //-2*(playerd.position.y)-50
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
@@ -121,24 +117,15 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
-		playerd.position.x = 50.0f;
-		playerd.position.y = 689.0f;
-		app->render->camera.x = -10;
-		app->render->camera.y = -1416.0f;
+		InitialPos();
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
 	{
-		playerd.position.x -= 1;
-		if (playerd.position.x >= 200.0f) {
-			app->render->camera.x += 3;
-		}
+		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
-		playerd.position.x = 50.0f;
-		playerd.position.y = 689.0f;
-		app->render->camera.x = -10;
-		app->render->camera.y = -1416.0f;
+		InitialPos();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -188,9 +175,9 @@ bool Player::Update(float dt)
 			walkAnimLeft.Reset();
 			playerd.currentAnim = &walkAnimLeft;
 		}
-		if (playerd.position.x >= 200.0f)
+		if (playerd.position.x >= 176.0f && playerd.position.x <= 192.0f)
 		{
-			app->render->camera.x += 3;
+			app->render->camera.x += 2;
 
 		}
 	}
@@ -207,8 +194,9 @@ bool Player::Update(float dt)
 			walkAnimRight.Reset();
 			playerd.currentAnim = &walkAnimRight;
 		}
-		if (playerd.position.x >= 200.0f) {
-			app->render->camera.x -= 3;
+		if (playerd.position.x >= 176.0f && playerd.position.x <= 192.0f) 
+		{
+			app->render->camera.x -= 2;
 		}
 	}
 
@@ -331,13 +319,31 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
-			playerd.position.x -= 1;
+			playerd.position.x -= 2;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
 		{
-			playerd.position.x += 1;
+			playerd.position.x += 2;
 			cameraControl = false;
 		}
+		if (b->type == Collider::Type::ROOF)
+		{
+			playerd.position.y += 1;
+			cameraControl = false;
+		}
+		if (b->type == Collider::Type::WIN)
+		{
+			InitialPos();
+
+		}
 	}
+}
+void Player::InitialPos() 
+{
+	playerd.position.x = 50.0f;//50
+	playerd.position.y = 200.0f;//670.0
+
+	app->render->camera.x = 0;//-10
+	app->render->camera.y = -playerd.position.y;
 }

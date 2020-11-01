@@ -16,7 +16,8 @@ struct Collider
 		RIGHT_WALL,
 		FLOOR,
 		PLAYER,
-		DEATH,
+		WIN,
+		ROOF,
 	
 		MAX
 	};
