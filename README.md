@@ -8,9 +8,11 @@ We hope you like it!
 
 ## Key Features
 
- - Load & Save Feature
- - Map Navigation
- - Player Animations
+ - Load & Save Feature.
+ - Map Navigation.
+ - Player Animations.
+ - Collitions Added.
+ - Win Condition! (Find the torch!)
  
 ## Controls
 
