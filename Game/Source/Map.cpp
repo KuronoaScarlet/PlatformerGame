@@ -380,7 +380,7 @@ void Map::LoadColliders()
 	while (L != nullptr)
 	{
 		MapLayer* layer = L->data;
-		if (layer->properties.GetProperty("Colliders", 1) == 0)
+		if (layer->properties.GetProperty("Collisions", 1) == 0)
 		{
 
 			L = L->next;
@@ -398,18 +398,16 @@ void Map::LoadColliders()
 				int u = layer->Get(x, y);
 				iPoint pos = MapToWorld(x, y);
 				SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
-
-
 				if (u != 0)
 				{
-					if (layer->properties.GetProperty("Colliders", 1) == 1)
+					if (layer->properties.GetProperty("Collisions", 1) == 1)
 					{
 						app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
 					}
-					if (layer->properties.GetProperty("Colliders", 1) == 2)
+					/*if (layer->properties.GetProperty("Collisions", 1) == 2)
 					{
 						app->collisions->AddCollider(n, Collider::Type::DEATH, this);
-					}
+					}*/
 				}
 
 			}

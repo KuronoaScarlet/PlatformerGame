@@ -75,7 +75,7 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	Collider* collider;
-	bool flat = false;
+	bool onGround = false;
 	bool isDead;
 	bool debug = false;
 };

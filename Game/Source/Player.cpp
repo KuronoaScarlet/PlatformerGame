@@ -100,7 +100,7 @@ bool Player::Update(float dt)
 
 	
 
-	if (playerd.position.y < 689.0f && godMode == false)
+	if (godMode == false || onGround == false)
 	{
 		playerd.vely += gravity;
 		playerd.position.x += playerd.velx;
@@ -144,11 +144,13 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		app->map->ShowCollider();
-		if (debug == false) {
+		//app->map->ShowCollider();
+		if (debug == false) 
+		{
 			debug = true;
 		}
-		else {
+		else 
+		{
 			debug = false;
 		}
 	}
@@ -345,7 +347,8 @@ bool Player::CheckCollision(int x, int y)
 void Player::OnCollision(Collider* a, Collider* b) {
 	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
 	{
-		flat = true;
+		playerd.position.y -= 1;
+		onGround = true;
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{

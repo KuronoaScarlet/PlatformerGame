@@ -8,6 +8,7 @@
  </tileset>
  <layer id="1" name="Capa de patrones 1" width="80" height="45">
   <properties>
+   <property name="Collisions" type="int" value="0"/>
    <property name="Nodraw" type="int" value="0"/>
   </properties>
   <data>
@@ -3615,6 +3616,7 @@
  </layer>
  <layer id="2" name="Colliders" width="80" height="45">
   <properties>
+   <property name="Collisions" type="int" value="1"/>
    <property name="Nodraw" type="int" value="1"/>
   </properties>
   <data>

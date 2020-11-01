@@ -10,35 +10,35 @@ Collisions::Collisions(bool startEnabled) : Module()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[Collider::Type::WALL_A][Collider::Type::WALL_A] = false;
-	matrix[Collider::Type::WALL_A][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::WALL_A][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::WALL_A][Collider::Type::WALL_D] = false;
-	matrix[Collider::Type::WALL_A][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::LEFT_WALL][Collider::Type::LEFT_WALL] = false;
+	matrix[Collider::Type::LEFT_WALL][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::LEFT_WALL][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::LEFT_WALL][Collider::Type::RIGHT_WALL] = false;
+	matrix[Collider::Type::LEFT_WALL][Collider::Type::DEATH] = false;
 
-	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::LEFT_WALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::RIGHT_WALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
 
-	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::LEFT_WALL] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::FLOOR][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::RIGHT_WALL] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::DEATH] = false;
 
-	matrix[Collider::Type::WALL_D][Collider::Type::WALL_A] = false;
-	matrix[Collider::Type::WALL_D][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::WALL_D][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
-	matrix[Collider::Type::WALL_D][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::RIGHT_WALL][Collider::Type::LEFT_WALL] = false;
+	matrix[Collider::Type::RIGHT_WALL][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::RIGHT_WALL][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::RIGHT_WALL][Collider::Type::RIGHT_WALL] = false;
+	matrix[Collider::Type::RIGHT_WALL][Collider::Type::DEATH] = false;
 
 
-	matrix[Collider::Type::DEATH][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::LEFT_WALL] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::RIGHT_WALL] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::DEATH] = false;
 
 }
