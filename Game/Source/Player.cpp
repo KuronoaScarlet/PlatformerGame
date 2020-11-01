@@ -319,12 +319,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
-			playerd.position.x -= 2;
+			playerd.position.x -= 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
 		{
-			playerd.position.x += 2;
+			playerd.position.x += 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::ROOF)
