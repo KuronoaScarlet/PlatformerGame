@@ -9,6 +9,6 @@
 		<position x="0" y="0" />
 	</player>
 	<renderer>
-		<camera x="-10" y="-1416" />
+		<camera x="-313" y="-351" />
 	</renderer>
 </save>

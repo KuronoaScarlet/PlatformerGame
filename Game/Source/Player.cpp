@@ -53,7 +53,7 @@ bool Player::Start()
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 
 	playerd.position.x = 50.0f;
-	playerd.position.y = 670.0f;//694.0f
+	playerd.position.y = 670.0f;
 
 	app->render->camera.x = -10;
 	app->render->camera.y = -playerd.position.y;
@@ -87,10 +87,7 @@ bool Player::Update(float dt)
 	
 	int cameraPositionPlayerY = 360 + (playerd.position.y * -3) + 200;
 
-
 	app->render->camera.y = -2*(playerd.position.y)-50;
-
-
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
@@ -98,7 +95,13 @@ bool Player::Update(float dt)
 		playerd.currentAnim = &idleAnim;
 	}
 
-	
+	if (playerd.position.x == 300 && playerd.position.y == 150)
+	{
+		playerd.position.x = 50.0f;
+		playerd.position.y = 670.0f;
+		app->render->camera.x = -10;
+		app->render->camera.y = -playerd.position.y;
+	}
 
 	if(onGround == false)
 	{
