@@ -405,10 +405,6 @@ void Map::LoadColliders()
 					{
 							app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
 					}
-					/*if (layer->properties.GetProperty("Collisions", 1) == 2)
-					{
-						app->collisions->AddCollider(n, Collider::Type::DEATH, this);
-					}*/
 				}
 
 			}

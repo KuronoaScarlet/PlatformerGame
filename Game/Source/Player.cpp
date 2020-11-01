@@ -146,7 +146,6 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		//app->map->ShowCollider();
 		if (debug == false) 
 		{
 			debug = true;
@@ -160,7 +159,7 @@ bool Player::Update(float dt)
 		app->collisions->DebugDraw();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		if (godMode == true)
 		{
@@ -170,8 +169,6 @@ bool Player::Update(float dt)
 		else
 		{
 			godMode = true;
-			
-			//app->render->camera.y = playerd.position.y - 2105.0f;
 		}
 
 	}
@@ -180,7 +177,10 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerd.position.x -= 1;
-		onGround = false;
+		if (godMode == false)
+		{
+			onGround = false;
+		}
 		if (playerd.currentAnim != &walkAnimLeft) {
 			walkAnimLeft.Reset();
 			playerd.currentAnim = &walkAnimLeft;
@@ -190,17 +190,15 @@ bool Player::Update(float dt)
 			app->render->camera.x += 3;
 
 		}
-		/*if (CheckCollision(playerd.position.x, playerd.position.y))
-		{
-			playerd.position.x += 1;
-			
-		}*/
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerd.position.x += 1;
-		onGround = false;
+		if (godMode == false)
+		{
+			onGround = false;
+		}
 
 		if (playerd.currentAnim != &walkAnimRight) {
 			walkAnimRight.Reset();
@@ -256,13 +254,9 @@ bool Player::Update(float dt)
 
 
 	}
-	/*if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;*/
 
-	
-	
 	playerd.currentAnim->Update();
-	collider->SetPos(playerd.position.x, playerd.position.y);
+	collider->SetPos(playerd.position.x, playerd.position.y + 2);
 
 	return true;
 }
@@ -307,34 +301,6 @@ bool Player::SaveState(pugi::xml_node& data) const
 	return true;
 }
 
-
-
-/*bool Player::CheckCollision(int x, int y)
-{
-	if (godMode == false)
-	{
-
-		ListItem<MapLayer*>* tiles;
-		
-		for (int i = 0; i < app->map->data.tilesets.count(); i++)
-		{
-			if (app->map->data.layers.At(2)->data->Get(x, y) != 0) {
-				
-			}
-				
-		}
-
-		
-	}
-
-	return false;
-}*/
-
-
-///////////////////////////////////////////////////
-
-
-
 bool Player::CheckCollision(int x, int y)
 {
 	iPoint posMapPlayer;
@@ -364,17 +330,4 @@ void Player::OnCollision(Collider* a, Collider* b)
 			onGround = false;
 		}
 	}
-
-	/*if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
-	{
-		onGround = true;
-		playerd.position.y = playerd.position.y;
-		
-		
-	}
-	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
-	{
-		isDead = true;
-	}*/
-
 }
