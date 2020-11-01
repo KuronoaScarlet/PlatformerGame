@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Player.h"
 #include "Map.h"
+#include "Collisions.h"
 
 
 #include "Defs.h"
@@ -48,8 +49,8 @@ bool Player::Start()
 	playerd.texture = app->tex->Load("Assets/textures/Player.png");
 	playerd.currentAnim = &idleAnim;
 
-	
-	
+	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
+	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 
 	playerd.position.x = 50.0f;
 	playerd.position.y = 670.0f;//694.0f
@@ -96,6 +97,7 @@ bool Player::Update(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 		playerd.currentAnim = &idleAnim;
 	}
+
 	
 
 	if (playerd.position.y < 689.0f && godMode == false)
@@ -141,7 +143,18 @@ bool Player::Update(float dt)
 		app->SaveGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
 		app->map->ShowCollider();
+		if (debug == false) {
+			debug = true;
+		}
+		else {
+			debug = false;
+		}
+	}
+	if (debug == true) {
+		app->collisions->DebugDraw();
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_REPEAT)
 	{
@@ -224,6 +237,11 @@ bool Player::Update(float dt)
 			playerd.vely = -6.0f;
 			playerd.position.y += playerd.vely;
 			doubleJump = true;
+			if (playerd.currentAnim != &jumpAnim)
+			{
+				jumpAnim.Reset();
+				playerd.currentAnim = &jumpAnim;
+			}
 			//Player->vely - 15;
 		}
 		
@@ -236,7 +254,7 @@ bool Player::Update(float dt)
 	
 	
 	playerd.currentAnim->Update();
-
+	collider->SetPos(playerd.position.x, playerd.position.y);
 
 	return true;
 }
@@ -322,4 +340,16 @@ bool Player::CheckCollision(int x, int y)
 	}
 
 	return false;
+}
+
+void Player::OnCollision(Collider* a, Collider* b) {
+	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
+	{
+		flat = true;
+	}
+	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
+	{
+		isDead = true;
+	}
+
 }

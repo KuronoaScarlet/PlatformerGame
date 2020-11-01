@@ -7,6 +7,7 @@
 #define grav = -0.1f
 
 struct SDL_Texture;
+struct Collider;
 struct Playerd
 {
 public:
@@ -55,6 +56,7 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	bool CheckCollision(int x, int y);
+	void OnCollision(Collider* a, Collider* b);
 
 	bool playerJumping = true;
 	float MAX_FALL_SPEED = 1.0f;
@@ -72,6 +74,10 @@ private:
 	Animation walkAnimLeft;
 	Animation jumpAnim;
 	Animation idleAnim;
+	Collider* collider;
+	bool flat = false;
+	bool isDead;
+	bool debug = false;
 };
 
 

@@ -130,6 +130,8 @@ public:
 
 	void ShowCollider() { DrawColliders = !DrawColliders; }
 
+	void LoadColliders();
+
 private:
 
 	// L03: Methods to load all required map data
