@@ -35,4 +35,25 @@ We hope you like it!
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-{AdditionalLicenses}
+1-Bit Platformer Pack License:
+
+    Created/distributed by Kenney (www.kenney.nl)
+    Creation date: 05-06-2020
+
+            ------------------------------
+
+    License: (Creative Commons Zero, CC0)
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+    This content is free to use in personal, educational and commercial projects.
+
+    Support us by crediting Kenney or www.kenney.nl (this is not mandatory)
+
+            ------------------------------
+
+    Donate:   http://support.kenney.nl/
+    Request:  http://request.kenney.nl/
+    Patreon:  http://patreon.com/kenney/
+
+    Follow on Twitter for updates:
+    http://twitter.com/KenneyNL
