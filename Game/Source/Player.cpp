@@ -328,9 +328,5 @@ void Player::OnCollision(Collider* a, Collider* b)
 			onGround = true;
 			playerd.position.y = playerd.position.y;
 		}
-		if (b->type == Collider::Type::NONE)
-		{
-			onGround = false;
-		}
 	}
 }
