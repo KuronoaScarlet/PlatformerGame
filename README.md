@@ -10,11 +10,20 @@ We hope you like it!
 
  - Load & Save Feature
  - Map Navigation
+ - Player Animations
  
 ## Controls
 
  - WASD - Movement controls.
  - Space Bar - Jump.
+ 
+ The game also supports a debug mode!
+ - F1 - Start from Level 1.
+ - F3 - Start from the beggining of the current Level.
+ - F5 - Save the current game state.
+ - F6 - Load the previous state.
+ - F9 - View colliders.
+ - F10 - God Mode.
 
 ## Developers
 
