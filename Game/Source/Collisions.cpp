@@ -206,6 +206,9 @@ void Collisions::DebugDraw()
 		case Collider::Type::ROOF:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 65, 86, alpha);
 			break;
+		case Collider::Type::ENEMY:
+			app->render->DrawRectangle(colliders[i]->rect, 85, 72, 15, alpha);
+			break;
 		}
 	}
 }

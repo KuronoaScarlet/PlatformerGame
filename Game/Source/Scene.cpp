@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemies.h"
 #include "Collisions.h"
 
 #include "Defs.h"
@@ -39,8 +40,8 @@ bool Scene::Start()
 	//26 4
 	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
 
-	app->player->Init();
-	app->player->Start();
+	/*app->player->Init();
+	app->enemy->Init();*/
 
 	return true;
 }

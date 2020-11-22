@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Collisions.h"
+#include "FadeToBlack.h"
 
 
 #include "Defs.h"
@@ -83,7 +84,7 @@ bool Player::Update(float dt)
 	
 	int cameraPositionPlayerY = 360 + (playerd.position.y * -3) + 200;
 
-	app->render->camera.y = -(playerd.position.y)+50; //-2*(playerd.position.y)-50
+	//app->render->camera.y = -(playerd.position.y)+50; //-2*(playerd.position.y)-50
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
@@ -334,7 +335,9 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::WIN)
 		{
-			InitialPos();
+			
+			//app->fade->FadetoBlack(this, (Module*)app->scene,50);
+			//InitialPos();
 
 		}
 	}

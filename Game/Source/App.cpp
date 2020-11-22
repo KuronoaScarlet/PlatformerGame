@@ -7,7 +7,9 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemies.h"
 #include "Collisions.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,8 +30,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
+	enemy = new Enemies();
+	fade = new FadeToBlack(false);
 	collisions = new Collisions(false);
-
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -39,10 +42,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
-
+	AddModule(enemy);
+	//AddModule(fade);
 	// Render last to swap buffer
-	AddModule(render);
 	AddModule(collisions);
+	AddModule(render);
+	
 }
 
 // Destructor
@@ -64,7 +69,9 @@ App::~App()
 
 void App::AddModule(Module* module)
 {
+
 	module->Init();
+	
 	modules.add(module);
 }
 

@@ -1,5 +1,5 @@
-#ifndef __PLAYER_H__
-#define __PLAYER_H__
+#ifndef __ENEMIES_H__
+#define __ENEMIES_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -8,7 +8,7 @@
 
 struct SDL_Texture;
 struct Collider;
-struct Playerd
+struct Enemy
 {
 public:
 	fPoint position;
@@ -21,14 +21,13 @@ public:
 };
 
 
-class Player : public Module
+class Enemies : public Module
 {
 public:
-
-	Player();
+	Enemies();
 
 	// Destructor
-	virtual ~Player();
+	virtual ~Enemies();
 
 	// Called before render is available
 	bool Awake();
@@ -56,14 +55,14 @@ public:
 	void OnCollision(Collider* a, Collider* b);
 	void InitialPos();
 
-	bool playerJumping = true;
+	bool enemyJumping = true;
 	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
 	bool godMode = false;
 	bool doubleJump = false;
-	Playerd playerd;
-	
+	Enemy enemyd;
+
 
 private:
 
@@ -79,5 +78,4 @@ private:
 	bool cameraControl = true;
 };
 
-
-#endif // __SCENE_H__
+#endif // __MODULE_ENEMIES_H__

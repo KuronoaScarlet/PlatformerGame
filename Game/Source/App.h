@@ -15,6 +15,8 @@ class Audio;
 class Scene;
 class Map;
 class Player;
+class Enemies;
+class FadeToBlack;
 class Collisions;
 
 class App
@@ -87,6 +89,8 @@ public:
 	Scene* scene;
 	Map* map;
 	Player* player;
+	Enemies* enemy;
+	FadeToBlack* fade;
 	Collisions* collisions;
 
 private:

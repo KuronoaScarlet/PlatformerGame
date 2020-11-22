@@ -18,6 +18,8 @@ struct Collider
 		PLAYER,
 		WIN,
 		ROOF,
+		ENEMY,
+
 	
 		MAX
 	};
