@@ -23,6 +23,9 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -64,6 +67,9 @@
     <ClInclude Include="Source\Enemies.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Intro.h">
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>

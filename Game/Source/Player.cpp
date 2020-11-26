@@ -52,6 +52,8 @@ bool Player::Start()
 
 	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
+	
+	winCondition = false;
 
 	InitialPos();
 
@@ -333,11 +335,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerd.position.y += 1;
 			cameraControl = false;
 		}
-		if (b->type == Collider::Type::WIN)
+		if (b->type == Collider::Type::WIN && winCondition == false)
 		{
 			
 			//app->fade->FadetoBlack(this, (Module*)app->scene,50);
 			//InitialPos();
+			winCondition= true;
 
 		}
 	}

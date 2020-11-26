@@ -77,6 +77,7 @@ private:
 	bool isDead;
 	bool debug = false;
 	bool cameraControl = true;
+	bool winCondition;
 };
 
 

@@ -12,6 +12,7 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Intro;
 class Scene;
 class Map;
 class Player;
@@ -86,6 +87,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Intro* intro;
 	Scene* scene;
 	Map* map;
 	Player* player;
@@ -100,7 +102,7 @@ private:
 	SString title;
 	SString organization;
 
-	List<Module *> modules;
+	List<Module*> modules;
 
 	// TODO 2: Create new variables from pugui namespace:
 	// a xml_document to store the config file and
