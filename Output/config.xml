@@ -18,6 +18,6 @@
     <folder>Assets/map/</folder>
   </map>
   <player>
-    <folder>Assets/textures/player</folder>
+    <folder>Assets/Textures/player</folder>
   </player>
 </config>

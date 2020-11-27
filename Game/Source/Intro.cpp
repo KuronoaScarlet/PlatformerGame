@@ -43,7 +43,7 @@ bool Intro::Start()
 
     bool ret = true;
 
-    screen = app->tex->Load("Assets/textures/Title.png");
+    screen = app->tex->Load("Assets/Textures/title.png");
 
 
     return ret;
@@ -69,8 +69,7 @@ bool Intro::PostUpdate()
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
         app->fade->Fade(this, (Module*)app->scene, 60);
-        scene1 = true;
-
+   
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
         ret = false;

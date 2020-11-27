@@ -38,7 +38,7 @@ Enemies::~Enemies()
 // Called before the first frame
 bool Enemies::Start()
 {
-	enemyd.texture = app->tex->Load("Assets/textures/enemy.png");
+	enemyd.texture = app->tex->Load("Assets/Textures/Enemy.png");
 	enemyd.currentAnim = &idleAnim;
 
 	SDL_Rect colE = { enemyd.position.x, enemyd.position.y, 10, 12 };
@@ -71,6 +71,7 @@ bool Enemies::PreUpdate()
 // Called each loop iteration
 bool Enemies::Update(float dt)
 {
+	enemyd.position.x += 1;
 	enemyd.currentAnim = &walkAnimRight;
 	enemyd.currentAnim->Update();
 	collider->SetPos(enemyd.position.x, enemyd.position.y + 2);

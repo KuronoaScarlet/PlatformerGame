@@ -14,6 +14,7 @@ class Textures;
 class Audio;
 class Intro;
 class Scene;
+class Scene2;
 class Map;
 class Player;
 class Enemies;
@@ -89,6 +90,7 @@ public:
 	Audio* audio;
 	Intro* intro;
 	Scene* scene;
+	Scene2* scene2;
 	Map* map;
 	Player* player;
 	Enemies* enemy;

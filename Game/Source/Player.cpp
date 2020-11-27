@@ -47,7 +47,7 @@ Player::~Player()
 // Called before the first frame
 bool Player::Start()
 {
-	playerd.texture = app->tex->Load("Assets/textures/Player.png");
+	playerd.texture = app->tex->Load("Assets/Textures/player.png");
 	playerd.currentAnim = &idleAnim;
 
 	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
@@ -55,7 +55,7 @@ bool Player::Start()
 	
 	winCondition = false;
 
-	InitialPos();
+
 
 
 

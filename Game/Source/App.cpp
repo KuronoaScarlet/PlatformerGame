@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Intro.h"
 #include "Scene.h"
+#include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
 #include "Enemies.h"
@@ -30,6 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	intro = new Intro();
 	scene = new Scene();
+	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
 	enemy = new Enemies();
@@ -44,6 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(intro);
 	AddModule(scene);
+	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
 	AddModule(enemy);
@@ -57,6 +60,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene->active = false;
 	player->active = false;
 	enemy->active = false;
+	scene2->active = false;
 	//collisions->active = false;
 }
 
