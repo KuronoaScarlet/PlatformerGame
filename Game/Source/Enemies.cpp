@@ -42,8 +42,9 @@ bool Enemies::Start()
 	enemyd.currentAnim = &idleAnim;
 
 	SDL_Rect colE = { enemyd.position.x, enemyd.position.y, 10, 12 };
-	//SDL_Rect colenemyUp = { enemyd.position.x+2, enemyd.position.y+15, 6, 2 };
+	SDL_Rect colenemyUp = { enemyd.position.x+2, enemyd.position.y+15, 6, 2 };
 	collider = app->collisions->AddCollider(colE, Collider::Type::ENEMY, this);
+	killEnemy = app->collisions->AddCollider(colenemyUp, Collider::Type::ENEMY_UP, this);
 
 	InitialPos();
 
@@ -71,10 +72,11 @@ bool Enemies::PreUpdate()
 // Called each loop iteration
 bool Enemies::Update(float dt)
 {
-	enemyd.position.x += 1;
+	//enemyd.position.x += 1;
 	enemyd.currentAnim = &walkAnimRight;
 	enemyd.currentAnim->Update();
-	collider->SetPos(enemyd.position.x, enemyd.position.y + 2);
+	collider->SetPos(enemyd.position.x, enemyd.position.y);
+//	killEnemy->SetPos(enemyd.position.x, enemyd.position.y + 2);
 	
 	return true;
 }
@@ -123,13 +125,13 @@ bool Enemies::CheckCollision(int x, int y)
 {
 	iPoint posMapPlayer;
 
-	if (godMode == false)
+	/*if (godMode == false)
 	{
 		if (app->map->data.layers.At(2)->data->Get(posMapPlayer.x, posMapPlayer.y) != 0)
 		{
 			return true;
 		}
-	}
+	}*/
 
 	return false;
 }

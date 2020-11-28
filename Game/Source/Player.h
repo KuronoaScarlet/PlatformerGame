@@ -64,6 +64,8 @@ public:
 	bool doubleJump = false;
 	Playerd playerd;
 	
+	bool scene1;
+	bool scene2;
 
 private:
 
@@ -78,6 +80,9 @@ private:
 	bool debug = false;
 	bool cameraControl = true;
 	bool winCondition;
+
+
+
 };
 
 

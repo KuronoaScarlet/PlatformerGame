@@ -40,10 +40,12 @@ bool Scene2::Start()
 	app->player->Start();
 
 	app->player->playerd.position.x = 50.0f;//50
-	app->player->playerd.position.y = 200.0f;//670.0
+	app->player->playerd.position.y = 278.0f;//670.0
+
+	app->player->scene2 = true;
 
 	app->render->camera.x = 0;//-10
-	app->render->camera.y = (-app->player->playerd.position.y) - 20;
+	app->render->camera.y = (-app->player->playerd.position.y)+100;
 
 	/*app->enemy->Init();
 	app->enemy->Start();*/
@@ -100,6 +102,8 @@ bool Scene2::CleanUp()
 	app->map->CleanUp();
 	app->player->CleanUp();
 	app->collisions->CleanUp();
+
+	app->player->scene2 = false;
 
 	app->scene2->active = false;
 

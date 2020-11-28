@@ -39,12 +39,16 @@ bool Scene::Start()
 	app->player->Init();
 	app->player->Start();
 
+	app->player->scene1 = true;
+
+	//Player start
 	app->player->playerd.position.x = 50.0f;//50
 	app->player->playerd.position.y = 200.0f;//670.0
 
 	app->render->camera.x = 0;//-10
 	app->render->camera.y = -app->player->playerd.position.y;
 
+	//Enemies start
 	app->enemy->Init();
 	app->enemy->Start();
 
@@ -101,6 +105,8 @@ bool Scene::CleanUp()
 	app->map->CleanUp();
 	app->player->CleanUp();
 	app->collisions->CleanUp();
+
+	app->player->scene1 = false;
 
 	app->scene->active = false;
 

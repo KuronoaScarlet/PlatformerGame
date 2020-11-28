@@ -19,6 +19,7 @@ struct Collider
 		WIN,
 		ROOF,
 		ENEMY,
+		ENEMY_UP,
 
 	
 		MAX

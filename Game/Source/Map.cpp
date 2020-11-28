@@ -398,10 +398,10 @@ void Map::LoadColliders()
 
 				int u = layer->Get(x, y);
 				iPoint pos = MapToWorld(x, y);
-				SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight-3 };
+				SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight-15 };
 				SDL_Rect n2 = { pos.x-1, pos.y+7, 2, 6 };
 				SDL_Rect n3 = { pos.x + 15, pos.y + 7, 2, 6 };
-				SDL_Rect n4 = { pos.x+2, pos.y+15, 6, 2 };
+				SDL_Rect n4 = { pos.x+6, pos.y+10, 6, 7 };
 				if (u != 0)
 				{
 					if (layer->properties.GetProperty("Collisions", 1) == 1)

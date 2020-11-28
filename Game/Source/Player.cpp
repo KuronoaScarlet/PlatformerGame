@@ -85,7 +85,7 @@ bool Player::Update(float dt)
 {
 	
 	int cameraPositionPlayerY = 360 + (playerd.position.y * -3) + 200;
-
+	
 	//app->render->camera.y = -(playerd.position.y)+50; //-2*(playerd.position.y)-50
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
@@ -93,14 +93,21 @@ bool Player::Update(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 		playerd.currentAnim = &idleAnim;
 	}
-
-	if (playerd.position.x == 300 && playerd.position.y == 150)
+	if (scene1 == true) 
 	{
-		playerd.position.x = 50.0f;
-		playerd.position.y = 670.0f;
-		app->render->camera.x = -10;
-		app->render->camera.y = -playerd.position.y;
+		if (playerd.position.x == 300 && playerd.position.y == 150)
+		{
+			playerd.position.x = 50.0f;
+			playerd.position.y = 670.0f;
+			app->render->camera.x = -10;
+			app->render->camera.y = -playerd.position.y;
+		}
 	}
+	if (scene2 == true)
+	{
+
+	}
+	
 
 	if(onGround == false)
 	{
@@ -221,7 +228,7 @@ bool Player::Update(float dt)
 	{
 		if (doubleJump == true && onGround == false) 
 		{
-			playerd.vely = -4.0f;
+			playerd.vely = -4.5f;
 			doubleJump = false;
 			if (playerd.currentAnim != &jumpAnim) 
 			{
@@ -233,7 +240,7 @@ bool Player::Update(float dt)
 		{
 			
 			playerJumping = false;
-			playerd.vely = -6.0f;
+			playerd.vely = -5.5f;
 			playerd.position.y += playerd.vely;			
 			doubleJump = true;
 			if (playerd.currentAnim != &jumpAnim)
@@ -318,6 +325,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::FLOOR)
 		{
 			onGround = true;
+			playerd.vely = 0;
 			playerd.position.y = playerd.position.y;
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
@@ -334,14 +342,17 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			playerd.position.y += 1;
 			cameraControl = false;
+			doubleJump = false;
 		}
 		if (b->type == Collider::Type::WIN && winCondition == false)
 		{
-			
-			//app->fade->FadetoBlack(this, (Module*)app->scene,50);
-			//InitialPos();
+			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 			winCondition= true;
 
+		}
+		if (b->type == Collider::Type::ENEMY)
+		{
+			InitialPos();
 		}
 	}
 }
@@ -349,6 +360,7 @@ void Player::InitialPos()
 {
 	playerd.position.x = 50.0f;//50
 	playerd.position.y = 200.0f;//670.0
+	playerd.vely = 0;
 
 	app->render->camera.x = 0;//-10
 	app->render->camera.y = -playerd.position.y;

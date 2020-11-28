@@ -59,8 +59,6 @@ public:
 	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
-	bool godMode = false;
-	bool doubleJump = false;
 	Enemy enemyd;
 
 
@@ -72,6 +70,7 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	Collider* collider;
+	Collider* killEnemy;
 	bool onGround = false;
 	bool isDead;
 	bool debug = false;
