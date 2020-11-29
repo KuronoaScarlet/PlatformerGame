@@ -36,19 +36,16 @@ bool Scene2::Awake()
 // Called before the first frame
 bool Scene2::Start()
 {
-	app->player->Init();
-	app->player->Start();
 
-	app->player->playerd.position.x = 50.0f;//50
-	app->player->playerd.position.y = 278.0f;//670.0
-
+	
 	app->player->scene2 = true;
 
-	app->render->camera.x = 0;//-10
-	app->render->camera.y = (-app->player->playerd.position.y)+100;
+	app->player->Init();
+	app->player->Start();
+	
 
-	/*app->enemy->Init();
-	app->enemy->Start();*/
+	app->enemy->Init();
+	app->enemy->Start();
 
 	app->collisions->active = true;
 	app->map->active = true;
@@ -58,6 +55,8 @@ bool Scene2::Start()
 	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
 
 	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
+
+	app->collisions->AddCollider({ 20, 278, 15, 15 }, Collider::Type::DEATH, this); 
 	
 	
 

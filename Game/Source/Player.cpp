@@ -54,8 +54,9 @@ bool Player::Start()
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 	
 	winCondition = false;
+	deathCondition = false;
 
-
+	InitialPos();
 
 
 
@@ -331,6 +332,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
 			playerd.position.x -= 1;
+			
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
@@ -340,7 +342,9 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::ROOF)
 		{
-			playerd.position.y += 1;
+			//playerd.position.y += 1;
+			playerd.vely = 0;
+			playerd.position.y = b->rect.y + b->rect.h;
 			cameraControl = false;
 			doubleJump = false;
 		}
@@ -350,18 +354,38 @@ void Player::OnCollision(Collider* a, Collider* b)
 			winCondition= true;
 
 		}
-		if (b->type == Collider::Type::ENEMY)
+		if (b->type == Collider::Type::ENEMY && deathCondition == false)
+		{
+			//InitialPos();
+			app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
+			deathCondition = true;
+		}
+		if (b->type == Collider::Type::DEATH)
 		{
 			InitialPos();
+			//app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 		}
+		
 	}
 }
 void Player::InitialPos() 
 {
-	playerd.position.x = 50.0f;//50
-	playerd.position.y = 200.0f;//670.0
-	playerd.vely = 0;
+	if (scene1 == true) 
+	{
+		playerd.position.x = 50.0f;//50
+		playerd.position.y = 200.0f;//670.0
+		playerd.vely = 0;
 
-	app->render->camera.x = 0;//-10
-	app->render->camera.y = -playerd.position.y;
+		app->render->camera.x = 0;//-10
+		app->render->camera.y = -playerd.position.y;
+	}
+	if (scene2 == true)
+	{
+		app->player->playerd.position.x = 50.0f;//50
+		app->player->playerd.position.y = 278.0f;//670.0
+
+		app->render->camera.x = 0;//-10
+		app->render->camera.y = (-app->player->playerd.position.y) + 100;
+	}
+	
 }

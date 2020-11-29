@@ -20,6 +20,7 @@ struct Collider
 		ROOF,
 		ENEMY,
 		ENEMY_UP,
+		DEATH,
 
 	
 		MAX

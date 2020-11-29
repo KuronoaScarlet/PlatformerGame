@@ -17,6 +17,7 @@ public:
 	float vely = 0.0f;
 	float velx = 0.0f;
 	SDL_Texture* texture;
+	SDL_Texture* livess;
 	Animation* currentAnim = nullptr;
 };
 
@@ -80,6 +81,7 @@ private:
 	bool debug = false;
 	bool cameraControl = true;
 	bool winCondition;
+	bool deathCondition;
 
 
 

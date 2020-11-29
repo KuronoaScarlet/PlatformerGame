@@ -38,6 +38,7 @@ Enemies::~Enemies()
 // Called before the first frame
 bool Enemies::Start()
 {
+	InitialPos();
 	enemyd.texture = app->tex->Load("Assets/Textures/Enemy.png");
 	enemyd.currentAnim = &idleAnim;
 
@@ -46,7 +47,7 @@ bool Enemies::Start()
 	collider = app->collisions->AddCollider(colE, Collider::Type::ENEMY, this);
 	killEnemy = app->collisions->AddCollider(colenemyUp, Collider::Type::ENEMY_UP, this);
 
-	InitialPos();
+	
 
 	return true;
 }

@@ -23,6 +23,7 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ROOF] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
 
 	matrix[Collider::Type::FLOOR][Collider::Type::LEFT_WALL] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
@@ -56,6 +57,12 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::ENEMY][Collider::Type::FLOOR] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::RIGHT_WALL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::WIN] = false;
+
+	matrix[Collider::Type::DEATH][Collider::Type::LEFT_WALL] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::RIGHT_WALL] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::WIN] = false;
 
 }
 
@@ -218,6 +225,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::ENEMY_UP:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 2, 55, alpha);
+			break;
+		case Collider::Type::DEATH:
+			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 100, alpha);
 			break;
 		}
 	}
