@@ -50,6 +50,8 @@ bool Player::Start()
 	playerd.texture = app->tex->Load("Assets/Textures/player.png");
 	playerd.currentAnim = &idleAnim;
 
+	playerd.livess = app->tex->Load("Assets/Textures/life.png");
+
 	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 	
@@ -94,21 +96,7 @@ bool Player::Update(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 		playerd.currentAnim = &idleAnim;
 	}
-	if (scene1 == true) 
-	{
-		if (playerd.position.x == 300 && playerd.position.y == 150)
-		{
-			playerd.position.x = 50.0f;
-			playerd.position.y = 670.0f;
-			app->render->camera.x = -10;
-			app->render->camera.y = -playerd.position.y;
-		}
-	}
-	if (scene2 == true)
-	{
-
-	}
-	
+		
 
 	if(onGround == false)
 	{
@@ -186,11 +174,7 @@ bool Player::Update(float dt)
 			walkAnimLeft.Reset();
 			playerd.currentAnim = &walkAnimLeft;
 		}
-		if (playerd.position.x >= 176.0f && playerd.position.x <= 192.0f)
-		{
-			app->render->camera.x += 2;
-
-		}
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -205,10 +189,7 @@ bool Player::Update(float dt)
 			walkAnimRight.Reset();
 			playerd.currentAnim = &walkAnimRight;
 		}
-		if (playerd.position.x >= 176.0f && playerd.position.x <= 192.0f) 
-		{
-			app->render->camera.x -= 2;
-		}
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
@@ -270,8 +251,12 @@ bool Player::PostUpdate()
 	bool ret = true;
 	SDL_Rect rectPlayer;
 	rectPlayer = playerd.currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(playerd.livess, -app->render->camera.x+16, -app->render->camera.y - 120, NULL);//50 281
 	app->render->DrawTexture(playerd.texture, playerd.position.x, playerd.position.y, &rectPlayer);
-	
+	/*for (int i = 0; i < playerd.playerLives; i++)
+	{
+		app->render->DrawTexture(playerd.livess, -app->render->camera.x + (i * 30), 0, NULL);
+	}*/
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -332,7 +317,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
 			playerd.position.x -= 1;
-			
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)

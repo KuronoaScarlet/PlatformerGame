@@ -68,7 +68,21 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		if (app->player->playerd.position.x >= 176.0f && app->player->playerd.position.x <= 192.0f)
+		{
+			app->render->camera.x += 2;
 
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		if (app->player->playerd.position.x >= 176.0f && app->player->playerd.position.x <= 192.0f)
+		{
+			app->render->camera.x -= 2;
+		}
+	}
 	app->map->Draw();
 	app->map->LoadColliders();
 

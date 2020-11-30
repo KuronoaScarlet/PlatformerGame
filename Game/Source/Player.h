@@ -18,6 +18,7 @@ public:
 	float velx = 0.0f;
 	SDL_Texture* texture;
 	SDL_Texture* livess;
+	int playerLives = 3;
 	Animation* currentAnim = nullptr;
 };
 
@@ -68,6 +69,8 @@ public:
 	bool scene1;
 	bool scene2;
 
+	bool cameraControl = true;
+
 private:
 
 	SDL_Texture* character;
@@ -79,7 +82,6 @@ private:
 	bool onGround = false;
 	bool isDead;
 	bool debug = false;
-	bool cameraControl = true;
 	bool winCondition;
 	bool deathCondition;
 
