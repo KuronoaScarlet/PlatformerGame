@@ -37,8 +37,6 @@ Player::Player() : Module()
 
 	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
-	
-	
 }
 
 // Destructor
@@ -60,8 +58,6 @@ bool Player::Start()
 	deathCondition = false;
 
 	InitialPos();
-
-
 
 	return true;
 }
@@ -132,14 +128,8 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		if (debug == false) 
-		{
-			debug = true;
-		}
-		else 
-		{
-			debug = false;
-		}
+		if (debug == false) debug = true;
+		else debug = false;
 	}
 	if (debug == true) {
 		app->collisions->DebugDraw();
@@ -184,21 +174,18 @@ bool Player::Update(float dt)
 			walkAnimRight.Reset();
 			playerData.currentAnim = &walkAnimRight;
 		}
-		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
 	{
 		playerData.position.y -= 1;
 		app->render->camera.y += 3;
-
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true)
 	{
 		playerData.position.y += 1;
 		app->render->camera.y -= 3;
-
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
@@ -215,7 +202,6 @@ bool Player::Update(float dt)
 		}
 		if (playerJumping == true ) 
 		{
-			
 			playerJumping = false;
 			playerData.vely = -5.5f;
 			playerData.position.y += playerData.vely;			
@@ -226,11 +212,7 @@ bool Player::Update(float dt)
 				playerData.currentAnim = &jumpAnim;
 			}
 			onGround = false;
-			//Player->vely - 15;
 		}
-		
-
-
 	}
 
 	playerData.currentAnim->Update();
@@ -250,12 +232,12 @@ bool Player::PostUpdate()
 	bool ret = true;
 	SDL_Rect rectPlayer;
 	rectPlayer = playerData.currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(playerData.livess, -app->render->camera.x+16, -app->render->camera.y - 120, NULL);//50 281
 	app->render->DrawTexture(playerData.texture, playerData.position.x, playerData.position.y, &rectPlayer);
-	/*for (int i = 0; i < playerData.playerLives; i++)
+	for (int i = 0; i < playerData.playerLives; i++)
 	{
-		app->render->DrawTexture(playerData.livess, -app->render->camera.x + (i * 30), 0, NULL);
-	}*/
+		app->render->DrawTexture(playerData.livess, (-app->render->camera.x + (i * 32)) / 3, +70, NULL);
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -338,14 +320,17 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::ENEMY && deathCondition == false)
 		{
-			//InitialPos();
+			playerData.playerLives--;
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
+			if (playerData.playerLives == 0)
+			{
+				//Death Scene
+			}
 			deathCondition = true;
 		}
 		if (b->type == Collider::Type::DEATH)
 		{
-			InitialPos();
-			//app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+
 		}
 		if (b->type == Collider::Type::CHECKPOINT)
 		{
