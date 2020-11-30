@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
+#include "CheckPoint.h"
 
 
 #include "Defs.h"
@@ -358,6 +359,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::CHECKPOINT)
 		{
 			app->SaveGameRequest();
+			app->checkpoint->on = true;
 		}
 		
 	}

@@ -29,6 +29,17 @@ CheckPoint::CheckPoint() : Module()
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
+	activated.PushBack({ 0, 32, 12, 32 });
+	activated.PushBack({ 14,32, 12, 32 });
+	activated.PushBack({ 28,32, 13, 32 });
+	activated.PushBack({ 43,32, 12, 32 });
+	activated.PushBack({ 57,32, 12, 32 });
+	activated.PushBack({ 70,32, 12, 32 });
+	activated.PushBack({ 85,32, 12, 32 });
+	activated.PushBack({ 101,32, 12, 32 });
+	activated.loop = true;
+	activated.speed = 0.1f;
+
 
 }
 
@@ -66,7 +77,17 @@ bool CheckPoint::PreUpdate()
 
 bool CheckPoint::Update(float dt)
 {
-	currentAnim = &idleAnim;
+	
+	if(on == false)
+	{
+		currentAnim = &idleAnim;
+	}
+	else
+	{
+	
+		currentAnim = &activated;
+	}
+	
 	currentAnim->Update();
 	return true;
 }

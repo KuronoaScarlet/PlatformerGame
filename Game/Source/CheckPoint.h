@@ -36,7 +36,7 @@ public:
 
 	void InitialPos();
 	
-	
+	bool on = false;
 	
 private:
 
