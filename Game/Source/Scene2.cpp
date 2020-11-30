@@ -74,7 +74,7 @@ bool Scene2::PreUpdate()
 // Called each loop iteration
 bool Scene2::Update(float dt)
 {
-	if (app->player->playerd.position.x >= 213.3f && app->player->playerd.position.x <= 1067.7f && app->player->cameraControl == true)
+	if (app->player->playerData.position.x >= 213.3f && app->player->playerData.position.x <= 1067.7f && app->player->cameraControl == true)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{

@@ -70,7 +70,7 @@ bool Scene::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if (app->player->playerd.position.x >= 176.0f && app->player->playerd.position.x <= 192.0f)
+		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
 			app->render->camera.x += 2;
 
@@ -78,7 +78,7 @@ bool Scene::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if (app->player->playerd.position.x >= 176.0f && app->player->playerd.position.x <= 192.0f)
+		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
 			app->render->camera.x -= 2;
 		}

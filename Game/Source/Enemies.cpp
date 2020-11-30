@@ -14,7 +14,7 @@
 
 Enemies::Enemies() : Module()
 {
-	name.Create("enemy");
+	name.Create("enemies");
 	idleAnim.loop = true;
 	idleAnim.PushBack({ 1, 1, 10, 12 });
 
@@ -39,11 +39,11 @@ Enemies::~Enemies()
 bool Enemies::Start()
 {
 	InitialPos();
-	enemyd.texture = app->tex->Load("Assets/Textures/Enemy.png");
-	enemyd.currentAnim = &idleAnim;
+	enemyData.texture = app->tex->Load("Assets/Textures/Enemy.png");
+	enemyData.currentAnim = &idleAnim;
 
-	SDL_Rect colE = { enemyd.position.x, enemyd.position.y, 10, 12 };
-	SDL_Rect colenemyUp = { enemyd.position.x+2, enemyd.position.y+15, 6, 2 };
+	SDL_Rect colE = { enemyData.position.x, enemyData.position.y, 10, 12 };
+	SDL_Rect colenemyUp = { enemyData.position.x+2, enemyData.position.y+15, 6, 2 };
 	collider = app->collisions->AddCollider(colE, Collider::Type::ENEMY, this);
 	killEnemy = app->collisions->AddCollider(colenemyUp, Collider::Type::ENEMY_UP, this);
 
@@ -73,11 +73,11 @@ bool Enemies::PreUpdate()
 // Called each loop iteration
 bool Enemies::Update(float dt)
 {
-	//enemyd.position.x += 1;
-	enemyd.currentAnim = &walkAnimRight;
-	enemyd.currentAnim->Update();
-	collider->SetPos(enemyd.position.x, enemyd.position.y);
-//	killEnemy->SetPos(enemyd.position.x, enemyd.position.y + 2);
+	enemyData.position.x += 0.5f;
+	enemyData.currentAnim = &walkAnimRight;
+	enemyData.currentAnim->Update();
+	collider->SetPos(enemyData.position.x, enemyData.position.y);
+//	killEnemy->SetPos(enemyData.position.x, enemyData.position.y + 2);
 	
 	return true;
 }
@@ -87,8 +87,8 @@ bool Enemies::PostUpdate()
 {
 	bool ret = true;
 	SDL_Rect rectPlayer;
-	rectPlayer = enemyd.currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(enemyd.texture, enemyd.position.x, enemyd.position.y, &rectPlayer);
+	rectPlayer = enemyData.currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(enemyData.texture, enemyData.position.x, enemyData.position.y, &rectPlayer);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -107,8 +107,8 @@ bool Enemies::CleanUp()
 bool Enemies::LoadState(pugi::xml_node& data)
 {
 	pugi::xml_node play = data.child("position");
-	enemyd.position.x = play.attribute("x").as_int(0);
-	enemyd.position.y = play.attribute("y").as_int(0);
+	enemyData.position.x = play.attribute("x").as_int(0);
+	enemyData.position.y = play.attribute("y").as_int(0);
 
 	return true;
 }
@@ -116,8 +116,8 @@ bool Enemies::LoadState(pugi::xml_node& data)
 bool Enemies::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node play = data.child("position");
-	play.attribute("x").set_value(enemyd.position.x);
-	play.attribute("y").set_value(enemyd.position.y);
+	play.attribute("x").set_value(enemyData.position.x);
+	play.attribute("y").set_value(enemyData.position.y);
 
 	return true;
 }
@@ -144,21 +144,21 @@ void Enemies::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::FLOOR)
 		{
 			onGround = true;
-			enemyd.position.y = enemyd.position.y;
+			enemyData.position.y = enemyData.position.y;
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
-			enemyd.position.x -= 1;
+			enemyData.position.x -= 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
 		{
-			enemyd.position.x += 1;
+			enemyData.position.x += 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::ROOF)
 		{
-			enemyd.position.y += 1;
+			enemyData.position.y += 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::WIN)
@@ -170,6 +170,6 @@ void Enemies::OnCollision(Collider* a, Collider* b)
 }
 void Enemies::InitialPos()
 {
-	enemyd.position.x = 240.0f;//50
-	enemyd.position.y = 244.0f;//670.0
+	enemyData.position.x = 240.0f;//50
+	enemyData.position.y = 244.0f;//670.0
 }

@@ -59,7 +59,7 @@ public:
 	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
-	Enemy enemyd;
+	Enemy enemyData;
 
 
 private:

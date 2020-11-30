@@ -8,7 +8,7 @@
 
 struct SDL_Texture;
 struct Collider;
-struct Playerd
+struct PlayerData
 {
 public:
 	fPoint position;
@@ -64,7 +64,7 @@ public:
 	float delta = 1.5f;
 	bool godMode = false;
 	bool doubleJump = false;
-	Playerd playerd;
+	PlayerData playerData;
 	
 	bool scene1;
 	bool scene2;

@@ -341,7 +341,6 @@ bool App::LoadGame()
 		ret = item->data->LoadState(saveLoadNode.child(item->data->name.GetString()));
 		item = item->next;
 	}
-	saveLoadFile.reset();
 
 	loadGameRequested = false;
 

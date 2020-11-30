@@ -48,12 +48,12 @@ Player::~Player()
 // Called before the first frame
 bool Player::Start()
 {
-	playerd.texture = app->tex->Load("Assets/Textures/player.png");
-	playerd.currentAnim = &idleAnim;
+	playerData.texture = app->tex->Load("Assets/Textures/player.png");
+	playerData.currentAnim = &idleAnim;
 
-	playerd.livess = app->tex->Load("Assets/Textures/life.png");
+	playerData.livess = app->tex->Load("Assets/Textures/life.png");
 
-	SDL_Rect colP = { playerd.position.x, playerd.position.y, 12, 11 };
+	SDL_Rect colP = { playerData.position.x, playerData.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 	
 	winCondition = false;
@@ -88,22 +88,22 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 	
-	int cameraPositionPlayerY = 360 + (playerd.position.y * -3) + 200;
+	int cameraPositionPlayerY = 360 + (playerData.position.y * -3) + 200;
 	
-	//app->render->camera.y = -(playerd.position.y)+50; //-2*(playerd.position.y)-50
+	//app->render->camera.y = -(playerData.position.y)+50; //-2*(playerData.position.y)-50
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
-		playerd.currentAnim = &idleAnim;
+		playerData.currentAnim = &idleAnim;
 	}
 		
 
 	if(onGround == false)
 	{
-		playerd.vely += gravity;
-		playerd.position.x += playerd.velx;
-		playerd.position.y += playerd.vely;
+		playerData.vely += gravity;
+		playerData.position.x += playerData.velx;
+		playerData.position.y += playerData.vely;
 	}
 
 
@@ -168,43 +168,43 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerd.position.x -= 1;
+		playerData.position.x -= 1;
 		if (godMode == false)
 		{
 			onGround = false;
 		}
-		if (playerd.currentAnim != &walkAnimLeft) {
+		if (playerData.currentAnim != &walkAnimLeft) {
 			walkAnimLeft.Reset();
-			playerd.currentAnim = &walkAnimLeft;
+			playerData.currentAnim = &walkAnimLeft;
 		}
 		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerd.position.x += 1;
+		playerData.position.x += 1;
 		if (godMode == false)
 		{
 			onGround = false;
 		}
 
-		if (playerd.currentAnim != &walkAnimRight) {
+		if (playerData.currentAnim != &walkAnimRight) {
 			walkAnimRight.Reset();
-			playerd.currentAnim = &walkAnimRight;
+			playerData.currentAnim = &walkAnimRight;
 		}
 		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
 	{
-		playerd.position.y -= 1;
+		playerData.position.y -= 1;
 		app->render->camera.y += 3;
 
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true)
 	{
-		playerd.position.y += 1;
+		playerData.position.y += 1;
 		app->render->camera.y -= 3;
 
 	}
@@ -213,25 +213,25 @@ bool Player::Update(float dt)
 	{
 		if (doubleJump == true && onGround == false) 
 		{
-			playerd.vely = -4.5f;
+			playerData.vely = -4.5f;
 			doubleJump = false;
-			if (playerd.currentAnim != &jumpAnim) 
+			if (playerData.currentAnim != &jumpAnim) 
 			{
 				jumpAnim.Reset();
-				playerd.currentAnim = &jumpAnim;
+				playerData.currentAnim = &jumpAnim;
 			}
 		}
 		if (playerJumping == true ) 
 		{
 			
 			playerJumping = false;
-			playerd.vely = -5.5f;
-			playerd.position.y += playerd.vely;			
+			playerData.vely = -5.5f;
+			playerData.position.y += playerData.vely;			
 			doubleJump = true;
-			if (playerd.currentAnim != &jumpAnim)
+			if (playerData.currentAnim != &jumpAnim)
 			{
 				jumpAnim.Reset();
-				playerd.currentAnim = &jumpAnim;
+				playerData.currentAnim = &jumpAnim;
 			}
 			onGround = false;
 			//Player->vely - 15;
@@ -241,10 +241,10 @@ bool Player::Update(float dt)
 
 	}
 
-	playerd.currentAnim->Update();
+	playerData.currentAnim->Update();
 	if (godMode == false)
 	{
-		collider->SetPos(playerd.position.x, playerd.position.y + 2);
+		collider->SetPos(playerData.position.x, playerData.position.y + 2);
 	}
 	
 	cameraControl = true;
@@ -257,12 +257,12 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 	SDL_Rect rectPlayer;
-	rectPlayer = playerd.currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(playerd.livess, -app->render->camera.x+16, -app->render->camera.y - 120, NULL);//50 281
-	app->render->DrawTexture(playerd.texture, playerd.position.x, playerd.position.y, &rectPlayer);
-	/*for (int i = 0; i < playerd.playerLives; i++)
+	rectPlayer = playerData.currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(playerData.livess, -app->render->camera.x+16, -app->render->camera.y - 120, NULL);//50 281
+	app->render->DrawTexture(playerData.texture, playerData.position.x, playerData.position.y, &rectPlayer);
+	/*for (int i = 0; i < playerData.playerLives; i++)
 	{
-		app->render->DrawTexture(playerd.livess, -app->render->camera.x + (i * 30), 0, NULL);
+		app->render->DrawTexture(playerData.livess, -app->render->camera.x + (i * 30), 0, NULL);
 	}*/
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -281,8 +281,8 @@ bool Player::CleanUp()
 bool Player::LoadState(pugi::xml_node& data)
 {
 	pugi::xml_node play = data.child("position");
-	playerd.position.x = play.attribute("x").as_int(0);
-	playerd.position.y = play.attribute("y").as_int(0);
+	playerData.position.x = play.attribute("x").as_int(0);
+	playerData.position.y = play.attribute("y").as_int(0);
 
 	return true;
 }
@@ -290,8 +290,8 @@ bool Player::LoadState(pugi::xml_node& data)
 bool Player::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node play = data.child("position");
-	play.attribute("x").set_value(playerd.position.x);
-	play.attribute("y").set_value(playerd.position.y);
+	play.attribute("x").set_value(playerData.position.x);
+	play.attribute("y").set_value(playerData.position.y);
 
 	return true;
 }
@@ -318,24 +318,23 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::FLOOR)
 		{
 			onGround = true;
-			playerd.vely = 0;
-			playerd.position.y = playerd.position.y;
+			playerData.vely = 0;
+			playerData.position.y = playerData.position.y;
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
-			playerd.position.x -= 1;
+			playerData.position.x -= 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
 		{
-			playerd.position.x += 1;
+			playerData.position.x += 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::ROOF)
 		{
-			//playerd.position.y += 1;
-			playerd.vely = 0;
-			playerd.position.y = b->rect.y + b->rect.h;
+			playerData.vely = 0;
+			playerData.position.y = b->rect.y + b->rect.h;
 			cameraControl = false;
 			doubleJump = false;
 		}
@@ -368,20 +367,20 @@ void Player::InitialPos()
 {
 	if (scene1 == true) 
 	{
-		playerd.position.x = 50.0f;//50
-		playerd.position.y = 200.0f;//670.0
-		playerd.vely = 0;
+		playerData.position.x = 50.0f;//50
+		playerData.position.y = 200.0f;//670.0
+		playerData.vely = 0;
 
 		app->render->camera.x = 0;//-10
-		app->render->camera.y = -playerd.position.y;
+		app->render->camera.y = -playerData.position.y;
 	}
 	if (scene2 == true)
 	{
-		app->player->playerd.position.x = 50.0f;//50
-		app->player->playerd.position.y = 278.0f;//670.0
+		app->player->playerData.position.x = 50.0f;//50
+		app->player->playerData.position.y = 278.0f;//670.0
 
 		app->render->camera.x = 0;//-10
-		app->render->camera.y = (-app->player->playerd.position.y) + 100;
+		app->render->camera.y = (-app->player->playerData.position.y) + 100;
 	}
 	
 }
