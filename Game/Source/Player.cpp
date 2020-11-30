@@ -153,11 +153,13 @@ bool Player::Update(float dt)
 		if (godMode == true)
 		{
 			godMode = false;
+			
 		
 		}
 		else
 		{
 			godMode = true;
+			collider->SetPos(-100, -100);
 		}
 
 	}
@@ -206,7 +208,7 @@ bool Player::Update(float dt)
 
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
 	{
 		if (doubleJump == true && onGround == false) 
 		{
@@ -239,7 +241,11 @@ bool Player::Update(float dt)
 	}
 
 	playerd.currentAnim->Update();
-	collider->SetPos(playerd.position.x, playerd.position.y + 2);
+	if (godMode == false)
+	{
+		collider->SetPos(playerd.position.x, playerd.position.y + 2);
+	}
+	
 	cameraControl = true;
 
 	return true;
@@ -348,6 +354,10 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			InitialPos();
 			//app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+		}
+		if (b->type == Collider::Type::CHECKPOINT)
+		{
+			app->SaveGameRequest();
 		}
 		
 	}

@@ -18,6 +18,7 @@ class Scene2;
 class Map;
 class Player;
 class Enemies;
+class CheckPoint;
 class FadeToBlack;
 class Collisions;
 
@@ -94,6 +95,7 @@ public:
 	Map* map;
 	Player* player;
 	Enemies* enemy;
+	CheckPoint* checkpoint;
 	FadeToBlack* fade;
 	Collisions* collisions;
 

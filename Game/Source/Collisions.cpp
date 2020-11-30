@@ -24,6 +24,7 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::ROOF] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = true;
 
 	matrix[Collider::Type::FLOOR][Collider::Type::LEFT_WALL] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
@@ -63,6 +64,15 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::RIGHT_WALL] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::WIN] = false;
+
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::LEFT_WALL] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::RIGHT_WALL] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::WIN] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ROOF] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::DEATH] = false;
 
 }
 

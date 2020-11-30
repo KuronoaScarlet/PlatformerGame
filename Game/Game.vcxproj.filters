@@ -29,6 +29,7 @@
     <ClCompile Include="Source\Scene2.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CheckPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -78,6 +79,7 @@
     <ClInclude Include="Source\Scene2.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CheckPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemies.h"
+#include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
 
@@ -47,14 +48,15 @@ bool Scene2::Start()
 	app->enemy->Init();
 	app->enemy->Start();
 
+	app->checkpoint->Init();
+	app->checkpoint->Start();
+
 	app->collisions->active = true;
 	app->map->active = true;
 	
 	app->map->Load("scene2.tmx");
 
 	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
-
-	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
 
 	app->collisions->AddCollider({ 20, 278, 15, 15 }, Collider::Type::DEATH, this); 
 	

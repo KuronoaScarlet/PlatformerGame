@@ -3,7 +3,7 @@
 
 #include "SDL/include/SDL_Rect.h"
 
-#define MAX_LISTENERS 1000
+#define MAX_LISTENERS 1500
 
 class Module;
 
@@ -21,6 +21,7 @@ struct Collider
 		ENEMY,
 		ENEMY_UP,
 		DEATH,
+		CHECKPOINT,
 
 	
 		MAX

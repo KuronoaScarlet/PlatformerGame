@@ -10,6 +10,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Enemies.h"
+#include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
 
@@ -35,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	player = new Player();
 	enemy = new Enemies();
+	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
 	// Ordered for awake / Start / Update
@@ -50,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(player);
 	AddModule(enemy);
+	AddModule(checkpoint);
 	AddModule(fade);
 
 	// Render last to swap buffer
@@ -61,6 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player->active = false;
 	enemy->active = false;
 	scene2->active = false;
+	checkpoint->active = false;
 	//collisions->active = false;
 }
 
