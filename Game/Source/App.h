@@ -12,6 +12,7 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Logo;
 class Intro;
 class Scene;
 class Scene2;
@@ -21,6 +22,7 @@ class Enemies;
 class CheckPoint;
 class FadeToBlack;
 class Collisions;
+class DeathScreen;
 
 class App
 {
@@ -89,6 +91,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Logo* logo;
 	Intro* intro;
 	Scene* scene;
 	Scene2* scene2;
@@ -98,6 +101,7 @@ public:
 	CheckPoint* checkpoint;
 	FadeToBlack* fade;
 	Collisions* collisions;
+	DeathScreen* deathScreen;
 
 private:
 

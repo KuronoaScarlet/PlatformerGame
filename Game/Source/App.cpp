@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Logo.h"
 #include "Intro.h"
 #include "Scene.h"
 #include "Scene2.h"
@@ -13,6 +14,7 @@
 #include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
+#include "DeathScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -30,6 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	logo = new Logo();
 	intro = new Intro();
 	scene = new Scene();
 	scene2 = new Scene2();
@@ -39,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
+	deathScreen = new DeathScreen();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 
@@ -46,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(logo);
 	AddModule(intro);
 	AddModule(scene);
 	AddModule(scene2);
@@ -54,17 +59,20 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(enemy);
 	AddModule(checkpoint);
 	AddModule(fade);
+	AddModule(deathScreen);
 
 	// Render last to swap buffer
 
 	AddModule(collisions);
 	AddModule(render);
 
+	intro->active = false;
 	scene->active = false;
 	player->active = false;
 	enemy->active = false;
 	scene2->active = false;
 	checkpoint->active = false;
+	deathScreen->active = false;
 	//collisions->active = false;
 }
 

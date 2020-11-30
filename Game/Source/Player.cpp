@@ -9,6 +9,8 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "CheckPoint.h"
+#include "Scene.h"
+#include "Scene2.h"
 
 
 #include "Defs.h"
@@ -37,6 +39,8 @@ Player::Player() : Module()
 
 	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
+
+	playerData.playerLives = 1;
 }
 
 // Destructor
@@ -49,7 +53,7 @@ bool Player::Start()
 	playerData.texture = app->tex->Load("Assets/Textures/player.png");
 	playerData.currentAnim = &idleAnim;
 
-	playerData.livess = app->tex->Load("Assets/Textures/life.png");
+	playerData.livesTexture = app->tex->Load("Assets/Textures/life.png");
 
 	SDL_Rect colP = { playerData.position.x, playerData.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
@@ -149,7 +153,7 @@ bool Player::Update(float dt)
 	}
 
 	//PlayerMovement
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && deathCondition == false)
 	{
 		playerData.position.x -= 1;
 		if (godMode == false)
@@ -162,7 +166,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && deathCondition == false)
 	{
 		playerData.position.x += 1;
 		if (godMode == false)
@@ -235,7 +239,7 @@ bool Player::PostUpdate()
 	app->render->DrawTexture(playerData.texture, playerData.position.x, playerData.position.y, &rectPlayer);
 	for (int i = 0; i < playerData.playerLives; i++)
 	{
-		app->render->DrawTexture(playerData.livess, (-app->render->camera.x + (i * 32)) / 3, +70, NULL);
+		app->render->DrawTexture(playerData.livesTexture, (-app->render->camera.x + (i * 32)) / 3, +70, NULL);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -315,18 +319,25 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::WIN && winCondition == false)
 		{
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
-			winCondition= true;
+			winCondition = true;
 
 		}
 		if (b->type == Collider::Type::ENEMY && deathCondition == false)
 		{
 			playerData.playerLives--;
+			deathCondition = true;
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
 			if (playerData.playerLives == 0)
 			{
-				//Death Scene
+				if (app->scene->active == true)
+				{
+					app->fade->Fade((Module*)app->scene, (Module*)app->deathScreen, 60);
+				}
+				if (app->scene2->active == true)
+				{
+					app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
+				}
 			}
-			deathCondition = true;
 		}
 		if (b->type == Collider::Type::DEATH)
 		{

@@ -98,7 +98,7 @@ bool Scene2::PostUpdate()
 	bool ret = true;
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	ret = false;
 
 
 	
@@ -113,6 +113,7 @@ bool Scene2::CleanUp()
 
 	app->map->CleanUp();
 	app->player->CleanUp();
+	app->enemy->CleanUp();
 	app->collisions->CleanUp();
 
 	app->player->scene2 = false;

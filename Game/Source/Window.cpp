@@ -10,7 +10,7 @@
 Window::Window() : Module()
 {
 	window = NULL;
-	screenSurface = NULL;
+	Introurface = NULL;
 	name.Create("window");
 }
 
@@ -74,7 +74,7 @@ bool Window::Awake(pugi::xml_node& config)
 		else
 		{
 			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
+			Introurface = SDL_GetWindowSurface(window);
 		}
 	}
 

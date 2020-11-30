@@ -17,8 +17,8 @@ public:
 	float vely = 0.0f;
 	float velx = 0.0f;
 	SDL_Texture* texture;
-	SDL_Texture* livess;
-	int playerLives = 3;
+	SDL_Texture* livesTexture;
+	int playerLives;
 	Animation* currentAnim = nullptr;
 };
 
@@ -54,9 +54,12 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
+	// Collision 
 	bool CheckCollision(int x, int y);
 	void OnCollision(Collider* a, Collider* b);
 	void InitialPos();
+
+	// Getters
 
 	bool playerJumping = true;
 	float MAX_FALL_SPEED = 1.0f;
@@ -69,6 +72,9 @@ public:
 	bool scene1;
 	bool scene2;
 
+	bool winCondition = false;
+	bool deathCondition = false;
+
 	bool cameraControl = true;
 
 private:
@@ -79,14 +85,9 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	Collider* collider;
+
 	bool onGround = false;
-	bool isDead;
 	bool debug = false;
-	bool winCondition;
-	bool deathCondition;
-
-
-
 };
 
 

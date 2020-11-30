@@ -9,66 +9,65 @@
 #include "Enemies.h"
 #include "Player.h"
 #include "Animation.h"
-#include "Intro.h"
-#include "Scene.h"
+#include "Logo.h"
 #include "FadeToBlack.h"
 
 
 #include "Defs.h"
 #include "Log.h"
 
-Intro::Intro() : Module()
+Logo::Logo() : Module()
 {
-    name.Create("Intro");
+    name.Create("Logo");
 }
 
-Intro::~Intro()
+Logo::~Logo()
 {
 
 }
 
-bool Intro::Awake()
+bool Logo::Awake()
 {
-    LOG("Loading Screens");
+    LOG("Loading Logo");
     bool ret = true;
 
     return ret;
 }
 
 // Load assets
-bool Intro::Start()
+bool Logo::Start()
 {
-    LOG("Loading Screens assets");
+    LOG("Loading Logo assets");
 
     bool ret = true;
 
-    screen = app->tex->Load("Assets/Textures/title_screen.png");
+    screen = app->tex->Load("Assets/Textures/logo_screen.png");
 
 
     return ret;
 }
 
-bool Intro::PreUpdate()
+bool Logo::PreUpdate()
 {
     return true;
 }
 
-bool Intro::Update(float dt)
+bool Logo::Update(float dt)
 {
-    
+
 
     return true;
 }
 
 // Update: draw background
-bool Intro::PostUpdate()
+bool Logo::PostUpdate()
 {
     bool ret = true;
     // Draw everything --------------------------------------
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
-        app->fade->Fade(this, (Module*)app->scene, 60);
-   
+        app->fade->Fade(this, (Module*)app->intro, 60);
+
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     ret = false;
@@ -77,11 +76,11 @@ bool Intro::PostUpdate()
     return ret;
 }
 
-bool Intro::CleanUp()
+bool Logo::CleanUp()
 {
     if (!active)return true;
-    LOG("Freeing intro");
-    app->intro->active = false;
+    LOG("Freeing Logo");
+    app->logo->active = false;
     app->tex->UnLoad(screen);
     return true;
 }

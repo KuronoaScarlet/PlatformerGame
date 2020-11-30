@@ -9,25 +9,26 @@
 #include "Enemies.h"
 #include "Player.h"
 #include "Animation.h"
-#include "Intro.h"
+#include "DeathScreen.h"
 #include "Scene.h"
+#include "Scene2.h"
 #include "FadeToBlack.h"
 
 
 #include "Defs.h"
 #include "Log.h"
 
-Intro::Intro() : Module()
+DeathScreen::DeathScreen() : Module()
 {
-    name.Create("Intro");
+    name.Create("DeathScreen");
 }
 
-Intro::~Intro()
+DeathScreen::~DeathScreen()
 {
 
 }
 
-bool Intro::Awake()
+bool DeathScreen::Awake()
 {
     LOG("Loading Screens");
     bool ret = true;
@@ -36,39 +37,38 @@ bool Intro::Awake()
 }
 
 // Load assets
-bool Intro::Start()
+bool DeathScreen::Start()
 {
     LOG("Loading Screens assets");
 
     bool ret = true;
 
-    screen = app->tex->Load("Assets/Textures/title_screen.png");
-
+    screen = app->tex->Load("Assets/Textures/death_screen.png");
 
     return ret;
 }
 
-bool Intro::PreUpdate()
+bool DeathScreen::PreUpdate()
 {
     return true;
 }
 
-bool Intro::Update(float dt)
+bool DeathScreen::Update(float dt)
 {
-    
-
     return true;
 }
 
 // Update: draw background
-bool Intro::PostUpdate()
+bool DeathScreen::PostUpdate()
 {
     bool ret = true;
     // Draw everything --------------------------------------
+    app->render->camera.x = 0;
+    app->render->camera.y = 0;
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
         app->fade->Fade(this, (Module*)app->scene, 60);
-   
+
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     ret = false;
@@ -77,11 +77,11 @@ bool Intro::PostUpdate()
     return ret;
 }
 
-bool Intro::CleanUp()
+bool DeathScreen::CleanUp()
 {
     if (!active)return true;
     LOG("Freeing intro");
-    app->intro->active = false;
+    app->deathScreen->active = false;
     app->tex->UnLoad(screen);
     return true;
 }

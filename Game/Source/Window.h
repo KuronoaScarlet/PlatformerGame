@@ -35,7 +35,7 @@ public:
 	SDL_Window* window;
 
 	// The surface contained by the window
-	SDL_Surface* screenSurface;
+	SDL_Surface* Introurface;
 
 private:
 	SString title;

@@ -20,16 +20,25 @@
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\Enemies.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
+    <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Intro.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\Levels</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene2.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\Levels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CheckPoint.cpp" />
+    <ClCompile Include="Source\Intro.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Logo.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DeathScreen.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WinScreen.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -70,16 +79,25 @@
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Enemies.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
+    <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Intro.h">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\Levels</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene2.h">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\Levels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CheckPoint.h" />
+    <ClInclude Include="Source\Intro.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DeathScreen.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Logo.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinScreen.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -93,6 +111,12 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{c3398d21-b93f-4de1-aaab-c0243b2b1187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\NoLevels">
+      <UniqueIdentifier>{aff8de48-39ca-400c-aeff-49f55cd70279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Levels">
+      <UniqueIdentifier>{ed83c333-685f-4ace-8459-249f6149150a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
