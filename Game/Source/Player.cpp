@@ -40,7 +40,8 @@ Player::Player() : Module()
 	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
 
-	playerData.playerLives = 1;
+
+	
 }
 
 // Destructor
@@ -61,6 +62,8 @@ bool Player::Start()
 	winCondition = false;
 	deathCondition = false;
 
+	
+
 	InitialPos();
 
 	return true;
@@ -71,9 +74,9 @@ bool Player::Awake()
 {
 	LOG("Loading Player");
 	
-	bool ret = true;
+	
 
-	return ret;
+	return true;
 }
 
 
@@ -153,7 +156,7 @@ bool Player::Update(float dt)
 	}
 
 	//PlayerMovement
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && deathCondition == false)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerData.position.x -= 1;
 		if (godMode == false)
@@ -166,7 +169,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && deathCondition == false)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		playerData.position.x += 1;
 		if (godMode == false)
@@ -239,7 +242,7 @@ bool Player::PostUpdate()
 	app->render->DrawTexture(playerData.texture, playerData.position.x, playerData.position.y, &rectPlayer);
 	for (int i = 0; i < playerData.playerLives; i++)
 	{
-		app->render->DrawTexture(playerData.livesTexture, (-app->render->camera.x + (i * 32)) / 3, +70, NULL);
+		app->render->DrawTexture(playerData.livesTexture, (-app->render->camera.x + (i * 32)) / 3, 70, NULL);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -252,6 +255,7 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	LOG("Freeing Player");
+	active = false;
 
 	return true;
 }
@@ -326,7 +330,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			playerData.playerLives--;
 			deathCondition = true;
-			app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
 			if (playerData.playerLives == 0)
 			{
 				if (app->scene->active == true)
@@ -338,6 +341,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 					app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
 				}
 			}
+			else
+			{
+				app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
+			}
+			
+			
 		}
 		if (b->type == Collider::Type::DEATH)
 		{

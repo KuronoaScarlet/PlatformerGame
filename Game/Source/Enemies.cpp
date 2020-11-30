@@ -100,7 +100,7 @@ bool Enemies::PostUpdate()
 bool Enemies::CleanUp()
 {
 	LOG("Freeing Player");
-
+	active = false;
 	return true;
 }
 

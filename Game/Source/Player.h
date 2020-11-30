@@ -18,7 +18,7 @@ public:
 	float velx = 0.0f;
 	SDL_Texture* texture;
 	SDL_Texture* livesTexture;
-	int playerLives;
+	int playerLives = 3;
 	Animation* currentAnim = nullptr;
 };
 

@@ -44,7 +44,6 @@ bool Intro::Start()
 
     screen = app->tex->Load("Assets/Textures/title_screen.png");
 
-
     return ret;
 }
 
@@ -64,6 +63,8 @@ bool Intro::Update(float dt)
 bool Intro::PostUpdate()
 {
     bool ret = true;
+    app->render->camera.x = 0;
+    app->render->camera.y = 0;
     // Draw everything --------------------------------------
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
@@ -73,7 +74,7 @@ bool Intro::PostUpdate()
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     ret = false;
     app->render->DrawTexture(screen, 0, 0, NULL);
-
+    
     return ret;
 }
 
