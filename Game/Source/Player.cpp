@@ -119,10 +119,6 @@ bool Player::Update(float dt)
 	{
 		InitialPos();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
-	{
-		
-	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
 		InitialPos();
@@ -154,15 +150,12 @@ bool Player::Update(float dt)
 		if (godMode == true)
 		{
 			godMode = false;
-			
-		
 		}
 		else
 		{
 			godMode = true;
 			collider->SetPos(-100, -100);
 		}
-
 	}
 
 	//PlayerMovement
@@ -177,7 +170,6 @@ bool Player::Update(float dt)
 			walkAnimLeft.Reset();
 			playerData.currentAnim = &walkAnimLeft;
 		}
-		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
