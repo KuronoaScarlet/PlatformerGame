@@ -11,6 +11,7 @@
 #include "CheckPoint.h"
 #include "Scene.h"
 #include "Scene2.h"
+#include "Enemies.h"
 
 
 #include "Defs.h"
@@ -58,6 +59,9 @@ bool Player::Start()
 
 	SDL_Rect colP = { playerData.position.x, playerData.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
+
+	SDL_Rect colPFoot = { playerData.position.x+4, playerData.position.y+11, 11, 8 };
+	playerFoot = app->collisions->AddCollider(colPFoot, Collider::Type::PLAYERFOOT, this);
 	
 	winCondition = false;
 	deathCondition = false;
@@ -91,7 +95,7 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 	
-	int cameraPositionPlayerY = 360 + (playerData.position.y * -3) + 200;
+	//int cameraPositionPlayerY = 360 + (playerData.position.y * -3) + 200;
 	
 	//app->render->camera.y = -(playerData.position.y)+50; //-2*(playerData.position.y)-50
 
@@ -226,6 +230,7 @@ bool Player::Update(float dt)
 	if (godMode == false)
 	{
 		collider->SetPos(playerData.position.x, playerData.position.y + 2);
+		playerFoot->SetPos(playerData.position.x, playerData.position.y + 20);
 	}
 	
 	cameraControl = true;
@@ -358,6 +363,17 @@ void Player::OnCollision(Collider* a, Collider* b)
 			app->checkpoint->on = true;
 		}
 		
+	}
+
+	if (a == playerFoot)
+	{
+		if (b->type == Collider::Type::ENEMY)
+		{
+			playerData.vely = -5.5f;
+			playerData.position.y += playerData.vely;
+			b->pendingToDelete = true;
+			app->enemy->deathCondition = true;
+		}
 	}
 }
 void Player::InitialPos() 

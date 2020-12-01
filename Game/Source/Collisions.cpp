@@ -74,6 +74,11 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::DEATH] = false;
 
+	matrix[Collider::Type::PLAYERFOOT][Collider::Type::ENEMY_UP] = true;
+	matrix[Collider::Type::ENEMY_UP][Collider::Type::PLAYERFOOT] = true;
+
+	matrix[Collider::Type::PLAYERFOOT][Collider::Type::ENEMY] = true;
+
 }
 
 // Called before render is available
@@ -238,6 +243,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::DEATH:
 			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 100, alpha);
+			break;
+		case Collider::Type::PLAYERFOOT:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 2, 55, alpha);
 			break;
 		}
 	}

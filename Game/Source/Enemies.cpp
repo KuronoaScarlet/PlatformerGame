@@ -42,7 +42,7 @@ bool Enemies::Start()
 	enemyData.texture = app->tex->Load("Assets/Textures/Enemy.png");
 	enemyData.currentAnim = &idleAnim;
 
-	SDL_Rect colE = { enemyData.position.x, enemyData.position.y, 10, 12 };
+	SDL_Rect colE = { enemyData.position.x, enemyData.position.y, 10, 8 };
 	SDL_Rect colenemyUp = { enemyData.position.x+2, enemyData.position.y+15, 6, 2 };
 	collider = app->collisions->AddCollider(colE, Collider::Type::ENEMY, this);
 	killEnemy = app->collisions->AddCollider(colenemyUp, Collider::Type::ENEMY_UP, this);
@@ -73,11 +73,12 @@ bool Enemies::PreUpdate()
 // Called each loop iteration
 bool Enemies::Update(float dt)
 {
-	enemyData.position.x += 0.5f;
+	
+	//enemyData.position.x += 0.5f;
 	enemyData.currentAnim = &walkAnimRight;
 	enemyData.currentAnim->Update();
 	collider->SetPos(enemyData.position.x, enemyData.position.y);
-//	killEnemy->SetPos(enemyData.position.x, enemyData.position.y + 2);
+	//killEnemy->SetPos(enemyData.position.x, enemyData.position.y + 2);
 	
 	return true;
 }
@@ -86,10 +87,13 @@ bool Enemies::Update(float dt)
 bool Enemies::PostUpdate()
 {
 	bool ret = true;
-	SDL_Rect rectPlayer;
-	rectPlayer = enemyData.currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(enemyData.texture, enemyData.position.x, enemyData.position.y, &rectPlayer);
-
+	if (deathCondition == false)
+	{
+		
+		SDL_Rect rectPlayer;
+		rectPlayer = enemyData.currentAnim->GetCurrentFrame();
+		app->render->DrawTexture(enemyData.texture, enemyData.position.x, enemyData.position.y, &rectPlayer);
+	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -165,6 +169,19 @@ void Enemies::OnCollision(Collider* a, Collider* b)
 		{
 			InitialPos();
 
+		}
+		if (b->type == Collider::Type::PLAYER)
+		{
+			InitialPos();
+
+		}
+	}
+	if (a == killEnemy)
+	{
+		if (b->type == Collider::Type::PLAYERFOOT)
+		{
+			//enemyData.position.x = -1000.0f;
+			//enemyData.position.y = -1000.0f;
 		}
 	}
 }

@@ -22,6 +22,7 @@ struct Collider
 		ENEMY_UP,
 		DEATH,
 		CHECKPOINT,
+		PLAYERFOOT,
 
 	
 		MAX

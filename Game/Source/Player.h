@@ -85,6 +85,7 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	Collider* collider;
+	Collider* playerFoot;
 
 	bool onGround = false;
 	bool debug = false;

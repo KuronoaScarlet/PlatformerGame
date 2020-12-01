@@ -60,6 +60,7 @@ public:
 	float gravity = 0.2f;
 	float delta = 1.5f;
 	Enemy enemyData;
+	bool deathCondition = false;
 
 
 private:
