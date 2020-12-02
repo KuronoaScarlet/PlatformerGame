@@ -108,9 +108,7 @@ void CheckPoint::InitialPos()
 {
 	if (app->player->scene1 == true)
 	{
-		/*position.x = 50.0f;//50
-		position.y = 200.0f;//670.0*/
-				
+		
 	}
 	if (app->player->scene2 == true)
 	{

@@ -16,6 +16,7 @@
 #include "FadeToBlack.h"
 #include "DeathScreen.h"
 
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -25,6 +26,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
+	PERF_START(perfTimer);
 	frames = 0;
 
 	input = new Input();
@@ -74,6 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	checkpoint->active = false;
 	deathScreen->active = false;
 	//collisions->active = false;
+	PERF_PEEK(perfTimer);
 }
 
 // Destructor
@@ -88,7 +91,7 @@ App::~App()
 		item = item->prev;
 	}
 
-	modules.clear();
+	modules.Clear();
 
 	configFile.reset();
 }
@@ -97,12 +100,13 @@ void App::AddModule(Module* module)
 {
 	module->Init();
 
-	modules.add(module);
+	modules.Add(module);
 }
 
 // Called before render is available
 bool App::Awake()
 {
+	PERF_START(perfTimer);
 	// TODO 3: Load config from XML
 
 	bool ret = LoadConfig();
@@ -132,13 +136,15 @@ bool App::Awake()
 	{
 		saveLoadNode = saveLoadFile.child("save");
 	}
-
+	frameRate = configApp.attribute("framerate_cap").as_int(0);
+	PERF_PEEK(perfTimer);
 	return ret;
 }
 
 // Called before the first frame
 bool App::Start()
 {
+	PERF_START(perfTimer);
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -150,7 +156,7 @@ bool App::Start()
 
 		item = item->next;
 	}
-
+	PERF_PEEK(perfTimer);
 	return ret;
 }
 
@@ -202,6 +208,12 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	fpsCount++;
+	lastSecFrameCnt++;
+
+	// L08: DONE 4: Calculate the dt: differential time since last frame
+	dt = frameTime.ReadSec();
+	frameTime.Start();
 }
 
 // ---------------------------------------------
@@ -210,6 +222,41 @@ void App::FinishUpdate()
 	// Load / Save Calls
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+
+	PERF_START(perfTimer);
+	uint32 lastFrameInMs = 0;
+	uint32 framesOnLastUpdate = 0;
+
+	float secondsStart = startTime.ReadSec();
+	float average = fpsCount / secondsStart;
+
+	if (frameTime.ReadSec() > 1.0f)
+	{
+		framesSecond = lastSecFrameCnt;
+		lastSecFrameCnt = 0;
+		frameTime.Start();
+	}
+
+	oldLastFrame = lastFrameInMs;
+
+	lastFrameInMs = lastSecond.Read();
+
+	lastSecond.Start();
+
+	int delay = (1000 * (1.0f / frameRate));
+
+	if (lastFrameInMs < 1000 * (1.0f / frameRate))
+	{
+		perfTimer.Start();
+		SDL_Delay(delay);
+		timePerfect = perfTimer.ReadMs();
+		LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
+	}
+
+	static char title[256];
+	/*sprintf_s(title, 256, "Game (Lost by TDM Studios) Av.FPS: %.2f", average);
+
+	app->win->SetTitle(title);*/
 }
 
 // Call modules before each loop iteration

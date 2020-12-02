@@ -39,6 +39,8 @@
     <ClCompile Include="Source\WinScreen.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -98,6 +100,10 @@
     <ClInclude Include="Source\WinScreen.h">
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\PQueue.h" />
+    <ClInclude Include="Source\Queue.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

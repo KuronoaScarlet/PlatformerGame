@@ -3,9 +3,14 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PQueue.h"
 #include "Point.h"
+#include "DynArray.h"
+
 
 #include "PugiXml\src\pugixml.hpp"
+
+#define COST_MAP_SIZE	100
 
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
@@ -132,6 +137,19 @@ public:
 
 	void LoadColliders();
 
+
+	/////////////////
+
+	/*void ResetPath(iPoint start);
+	void DrawPath();
+
+	int MovementCost(int x, int y) const;
+	void ComputePath(int x, int y);
+
+	void ComputePathAStar(int x, int y);
+
+	void PropagateAStar();*/
+
 private:
 
 	// L03: Methods to load all required map data
@@ -154,6 +172,20 @@ private:
 	SString folder;
 	bool mapLoaded;
 	bool DrawColliders = false;
+
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+
+	List<iPoint> breadcrumbs;
+	DynArray<iPoint> path;
+
+	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+
+	// L12: AStar (A*) variables
+	iPoint goalAStar;			// Store goal target tile
+	bool finishAStar = false;	// Detect when reached goal
+
+	SDL_Texture* tileX = nullptr;
 };
 
 #endif // __MAP_H__

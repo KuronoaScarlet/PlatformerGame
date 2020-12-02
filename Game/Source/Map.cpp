@@ -29,6 +29,7 @@ bool Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+
 // Draw the map (all requried layers)
 void Map::Draw()
 {
@@ -52,7 +53,7 @@ void Map::Draw()
 				{
 					// L04: TODO 9: Complete the draw function       
 					iPoint vec = MapToWorld(x, y);
-					for (int i = 0; i < data.tilesets.count(); i++)
+					for (int i = 0; i < data.tilesets.Count(); i++)
 					{
 						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0 || DrawColliders)
 							app->render->DrawTexture(data.tilesets.At(i)->data->texture, vec.x, vec.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
@@ -150,7 +151,7 @@ bool Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	data.tilesets.clear();
+	data.tilesets.Clear();
 
 	// L04: DONE 2: clean up all layer data
 	// Remove all layers
@@ -162,7 +163,7 @@ bool Map::CleanUp()
 		RELEASE(item2->data);
 		item2 = item2->next;
 	}
-	data.layers.clear();
+	data.layers.Clear();
 
 	// Clean up the pugui tree
 	mapFile.reset();
@@ -202,7 +203,7 @@ bool Map::Load(const char* filename)
 
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-		data.tilesets.add(set);
+		data.tilesets.Add(set);
 	}
 
 	// L04: DONE 4: Iterate all layers and load each of them
@@ -215,7 +216,7 @@ bool Map::Load(const char* filename)
 		ret = LoadLayer(layer, lay);
 
 		if (ret == true)
-			data.layers.add(lay);
+			data.layers.Add(lay);
 
 		pugi::xml_node propertiesNode;
 		for (propertiesNode = layer.child("properties"); propertiesNode && ret; propertiesNode = propertiesNode.next_sibling("properties"))
@@ -235,7 +236,7 @@ bool Map::Load(const char* filename)
 		LOG("Successfully parsed Successfully parsed map XML file: %s", filename);
 		LOG("width: %d  height: %d", data.width, data.height);
 
-		for (int i = 0; i < data.tilesets.count(); i++)
+		for (int i = 0; i < data.tilesets.Count(); i++)
 		{
 			LOG("Tileset %d ----", i + 1);
 			LOG("name: %s firstgid: %i", data.tilesets.At(i)->data->name.GetString(), data.tilesets.At(i)->data->firstgid);
@@ -349,7 +350,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	{
 		Prop->name = property_.attribute("name").as_string("");
 		Prop->value = property_.attribute("value").as_int(0);
-		properties.list.add(Prop);
+		properties.list.Add(Prop);
 	}
 
 	return ret;
@@ -357,7 +358,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	for (int i = 0; i < list.count(); i++)
+	for (int i = 0; i < list.Count(); i++)
 	{
 		if (strcmp(list.At(i)->data->name.GetString(), value) == 0)
 		{

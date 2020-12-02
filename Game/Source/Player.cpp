@@ -66,8 +66,6 @@ bool Player::Start()
 	winCondition = false;
 	deathCondition = false;
 
-	
-
 	InitialPos();
 
 	return true;
@@ -98,7 +96,7 @@ bool Player::Update(float dt)
 	//int cameraPositionPlayerY = 360 + (playerData.position.y * -3) + 200;
 	
 	//app->render->camera.y = -(playerData.position.y)+50; //-2*(playerData.position.y)-50
-
+	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
@@ -144,6 +142,7 @@ bool Player::Update(float dt)
 	}
 	if (debug == true) {
 		app->collisions->DebugDraw();
+	
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)

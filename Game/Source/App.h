@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "List.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -127,6 +129,26 @@ private:
 
 	pugi::xml_document saveLoadFile;
 	pugi::xml_node saveLoadNode;
+
+	PerfTimer perfTimer;
+	uint64 fpsCount = 0;
+
+	int frameRate;
+
+	Timer startTime;
+	Timer frameTime;
+	Timer lastSecond;
+	uint32 lastSecFrameCnt = 0;
+	uint32 prevLastSecFrameCnt = 0;
+	uint32 framesSecond = 0;
+	uint32 lastFrameMs = 0;
+	
+	float timePerfect;
+	float oldLastFrame = 0.0f;
+	int    cappedMs = -1;
+
+	
+
 };
 
 extern App* app;
