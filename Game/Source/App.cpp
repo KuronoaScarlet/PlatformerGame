@@ -10,7 +10,7 @@
 #include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
-#include "Enemies.h"
+#include "EntityManager.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
@@ -40,7 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
-	enemy = new Enemies();
+	entitymanager = new EntityManager();
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
@@ -58,7 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
-	AddModule(enemy);
+	AddModule(entitymanager);
 	AddModule(checkpoint);
 	AddModule(fade);
 	AddModule(deathScreen);
@@ -71,18 +71,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	intro->active = false;
 	scene->active = false;
 	player->active = false;
-	enemy->active = false;
 	scene2->active = false;
 	checkpoint->active = false;
 	deathScreen->active = false;
-	//collisions->active = false;
 	PERF_PEEK(perfTimer);
 }
 
-// Destructor
 App::~App()
 {
-	// Release modules
 	ListItem<Module*>* item = modules.end;
 
 	while (item != NULL)
@@ -103,17 +99,14 @@ void App::AddModule(Module* module)
 	modules.Add(module);
 }
 
-// Called before render is available
 bool App::Awake()
 {
 	PERF_START(perfTimer);
-	// TODO 3: Load config from XML
 
 	bool ret = LoadConfig();
 
 	if (ret == true)
 	{
-		// TODO 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		win->SetTitle(title.GetString());
 
@@ -122,10 +115,6 @@ bool App::Awake()
 
 		while (item != NULL && ret == true)
 		{
-			// TODO 5: Add a new argument to the Awake method to receive a pointer to an xml node.
-			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-			// that can be used to read all variables for that module.
-			// Send nullptr if the node does not exist in config.xml
 			ret = item->data->Awake(config.child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -141,7 +130,6 @@ bool App::Awake()
 	return ret;
 }
 
-// Called before the first frame
 bool App::Start()
 {
 	PERF_START(perfTimer);
@@ -160,7 +148,6 @@ bool App::Start()
 	return ret;
 }
 
-// Called each loop iteration
 bool App::Update()
 {
 	bool ret = true;
@@ -182,15 +169,12 @@ bool App::Update()
 	return ret;
 }
 
-// Load config from XML file
 bool App::LoadConfig()
 {
 	bool ret = true;
 
-	// TODO 3: Load config.xml file using load_file() method from the xml_document class
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 
-	// TODO 3: Check result for loading errors
 	if (result == NULL)
 	{
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
@@ -370,20 +354,15 @@ const char* App::GetOrganization() const
 // Load / Save
 void App::LoadGameRequest()
 {
-	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
 	loadGameRequested = true;
 }
 
 // ---------------------------------------
 void App::SaveGameRequest() const
 {
-	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
 	saveGameRequested = true;
 }
 
-// ---------------------------------------
-// L02: TODO 5: Create a method to actually load an xml file
-// then call all the modules to load themselves
 bool App::LoadGame()
 {
 	bool ret = true;
@@ -402,7 +381,6 @@ bool App::LoadGame()
 	return ret;
 }
 
-// L02: TODO 7: Implement the xml save method for current state
 bool App::SaveGame() const
 {
 	bool ret = true;

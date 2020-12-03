@@ -20,7 +20,7 @@ class Scene;
 class Scene2;
 class Map;
 class Player;
-class Enemies;
+class EntityManager;
 class CheckPoint;
 class FadeToBlack;
 class Collisions;
@@ -57,7 +57,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	// L02: DONE 1: Create methods to request Load / Save
+	// Load/Save Requests Methods
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
@@ -98,8 +98,8 @@ public:
 	Scene* scene;
 	Scene2* scene2;
 	Map* map;
+	EntityManager* entitymanager;
 	Player* player;
-	Enemies* enemy;
 	CheckPoint* checkpoint;
 	FadeToBlack* fade;
 	Collisions* collisions;
@@ -114,9 +114,6 @@ private:
 
 	List<Module*> modules;
 
-	// TODO 2: Create new variables from pugui namespace:
-	// a xml_document to store the config file and
-	// two xml_node to read specific branches of the xml
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
@@ -146,9 +143,6 @@ private:
 	float timePerfect;
 	float oldLastFrame = 0.0f;
 	int    cappedMs = -1;
-
-	
-
 };
 
 extern App* app;

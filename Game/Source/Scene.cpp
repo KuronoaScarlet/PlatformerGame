@@ -8,7 +8,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
-#include "Enemies.h"
+#include "EntityManager.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
 
@@ -41,11 +41,10 @@ bool Scene::Start()
 	app->player->Init();
 	app->player->Start();
 
-	
-
-	//Enemies start
-	app->enemy->Init();
-	app->enemy->Start();
+	app->entitymanager->AddEntity({ 260.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
+	app->entitymanager->AddEntity({ 266.0f, 210.0f }, Entity::Type::HEARTS);
+	app->entitymanager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
+	app->entitymanager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
 
 	app->collisions->active = true;
 	app->map->active = true;
@@ -73,7 +72,6 @@ bool Scene::Update(float dt)
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
 			app->render->camera.x += 2;
-
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -100,7 +98,7 @@ bool Scene::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		app->fade->Fade(this, (Module*)app->scene2, 60);
-
+		app->entitymanager->DeleteEntity();
 	}
 
 	return ret;
@@ -113,7 +111,6 @@ bool Scene::CleanUp()
 
 	app->map->CleanUp();
 	app->player->CleanUp();
-	app->enemy->CleanUp();
 	app->collisions->CleanUp();
 
 	app->player->scene1 = false;

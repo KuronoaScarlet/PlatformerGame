@@ -8,7 +8,6 @@
 #include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
-#include "Enemies.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
@@ -43,10 +42,6 @@ bool Scene2::Start()
 
 	app->player->Init();
 	app->player->Start();
-	
-
-	app->enemy->Init();
-	app->enemy->Start();
 
 	app->checkpoint->Init();
 	app->checkpoint->Start();
@@ -86,6 +81,7 @@ bool Scene2::Update(float dt)
 
 		}
 	}
+
 	app->map->Draw();
 	app->map->LoadColliders();
 
@@ -100,9 +96,6 @@ bool Scene2::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	ret = false;
 
-
-	
-
 	return ret;
 }
 
@@ -113,7 +106,6 @@ bool Scene2::CleanUp()
 
 	app->map->CleanUp();
 	app->player->CleanUp();
-	app->enemy->CleanUp();
 	app->collisions->CleanUp();
 
 	app->player->scene2 = false;

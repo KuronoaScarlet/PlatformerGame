@@ -15,10 +15,8 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
-    <ClCompile Include="Source\Enemies.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Scene.cpp">
@@ -41,6 +39,21 @@
     </ClCompile>
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Entities\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Coins.cpp">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GruondEnemy.cpp">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hearts.cpp">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -76,10 +89,8 @@
     </ClInclude>
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collisions.h" />
-    <ClInclude Include="Source\Enemies.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\Scene.h">
@@ -104,6 +115,24 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Queue.h" />
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Entities\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coins.h">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GroundEnemy.h">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hearts.h">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -123,6 +152,15 @@
     </Filter>
     <Filter Include="Scenes\Levels">
       <UniqueIdentifier>{ed83c333-685f-4ace-8459-249f6149150a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{73bc44d1-d7c9-4e99-9eaa-9f7be55184ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\NonPlayable">
+      <UniqueIdentifier>{41433183-7edc-445e-96b8-04daa0c074ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Playable">
+      <UniqueIdentifier>{6bab73b2-91fe-47e5-b007-719993058f37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

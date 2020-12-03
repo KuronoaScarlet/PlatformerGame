@@ -9,10 +9,9 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "CheckPoint.h"
+#include "EntityManager.h"
 #include "Scene.h"
 #include "Scene2.h"
-#include "Enemies.h"
-
 
 #include "Defs.h"
 #include "Log.h"
@@ -23,7 +22,6 @@ Player::Player() : Module()
 	idleAnim.loop = true;
 	idleAnim.PushBack({ 0, 0, 12, 11 });
 
-	
     walkAnimRight.PushBack({ 13,0, 12, 11 });
 	walkAnimRight.PushBack({ 26,0, 12, 11 });
 	walkAnimRight.PushBack({ 39,0, 12, 11 });
@@ -40,9 +38,6 @@ Player::Player() : Module()
 
 	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
-
-
-	
 }
 
 // Destructor
@@ -76,8 +71,6 @@ bool Player::Awake()
 {
 	LOG("Loading Player");
 	
-	
-
 	return true;
 }
 
@@ -92,34 +85,21 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	
-	//int cameraPositionPlayerY = 360 + (playerData.position.y * -3) + 200;
-	
-	//app->render->camera.y = -(playerData.position.y)+50; //-2*(playerData.position.y)-50
-	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 		playerData.currentAnim = &idleAnim;
 	}
-		
-
 	if(onGround == false)
 	{
 		playerData.vely += gravity;
 		playerData.position.x += playerData.velx;
 		playerData.position.y += playerData.vely;
 	}
-
-
-
-
 	if (onGround == true && godMode == false)
 	{
 		playerJumping = true;
 	}
-
-
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
 		InitialPos();
@@ -128,13 +108,10 @@ bool Player::Update(float dt)
 	{
 		InitialPos();
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
-
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
-
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		if (debug == false) debug = true;
@@ -144,7 +121,6 @@ bool Player::Update(float dt)
 		app->collisions->DebugDraw();
 	
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		if (godMode == true)
@@ -328,7 +304,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 			winCondition = true;
-
+			app->entitymanager->DeleteEntity();
 		}
 		if (b->type == Collider::Type::ENEMY && deathCondition == false)
 		{
@@ -349,8 +325,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 			{
 				app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
 			}
-			
-			
 		}
 		if (b->type == Collider::Type::DEATH)
 		{
@@ -361,7 +335,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 			app->SaveGameRequest();
 			app->checkpoint->on = true;
 		}
-		
 	}
 
 	if (a == playerFoot)
@@ -371,7 +344,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerData.vely = -5.5f;
 			playerData.position.y += playerData.vely;
 			b->pendingToDelete = true;
-			app->enemy->deathCondition = true;
 		}
 	}
 }
@@ -379,20 +351,19 @@ void Player::InitialPos()
 {
 	if (scene1 == true) 
 	{
-		playerData.position.x = 50.0f;//50
-		playerData.position.y = 200.0f;//670.0
+		playerData.position.x = 50.0f;
+		playerData.position.y = 200.0f;
 		playerData.vely = 0;
 
-		app->render->camera.x = 0;//-10
+		app->render->camera.x = 0;
 		app->render->camera.y = -playerData.position.y;
 	}
 	if (scene2 == true)
 	{
-		app->player->playerData.position.x = 50.0f;//50
-		app->player->playerData.position.y = 278.0f;//670.0
+		app->player->playerData.position.x = 50.0f;
+		app->player->playerData.position.y = 278.0f;
 
-		app->render->camera.x = 0;//-10
+		app->render->camera.x = 0;
 		app->render->camera.y = (-app->player->playerData.position.y) + 100;
 	}
-	
 }
