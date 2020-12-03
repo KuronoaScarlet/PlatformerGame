@@ -96,7 +96,7 @@
     <ClCompile Include="Source\DeathScreen.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
-    <ClCompile Include="Source\GruondEnemy.cpp" />
+    <ClCompile Include="Source\GroundEnemy.cpp" />
     <ClCompile Include="Source\Hearts.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Logo.cpp" />

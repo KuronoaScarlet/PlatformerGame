@@ -48,10 +48,10 @@
     <ClCompile Include="Source\Coins.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GruondEnemy.cpp">
+    <ClCompile Include="Source\Hearts.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Hearts.cpp">
+    <ClCompile Include="Source\GroundEnemy.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
   </ItemGroup>

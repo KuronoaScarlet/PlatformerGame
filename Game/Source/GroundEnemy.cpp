@@ -21,14 +21,11 @@ GroundEnemy::GroundEnemy(fPoint position, SDL_Texture* texture, Type type) : Ent
 
 bool GroundEnemy::Start()
 {
-	
-
 	return true;
 }
 
 bool GroundEnemy::Update(float dt)
 {
-	//position.x = position.x + 0.2f;
 	currentAnimation = &walkAnimRight;
 	currentAnimation->Update();
 
