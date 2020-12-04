@@ -51,7 +51,7 @@ bool Scene::Start()
 	
 	app->map->Load("scene1.tmx");
 
-	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
 	
