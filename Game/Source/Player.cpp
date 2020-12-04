@@ -137,7 +137,7 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerData.position.x -= 1;
+		playerData.position.x -= 50 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -150,7 +150,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerData.position.x += 1;
+		playerData.position.x += 50 * dt;
 		if (godMode == false)
 		{
 			onGround = false;

@@ -160,6 +160,15 @@ private:
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	TileSet* GetTilesetFromTileId(int id) const;
 	
+	void ResetPath(iPoint start);
+	void DrawPath();
+
+	// L11: More pathfinding methods
+	int MovementCost(int x, int y) const;
+	
+	void ComputePathAStar(int x, int y);
+
+	void PropagateAStar(int heuristic);
 
 public:
 
