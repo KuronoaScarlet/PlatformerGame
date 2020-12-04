@@ -8,12 +8,12 @@
 
 struct SDL_Texture;
 struct Collider;
+
 struct PlayerData
 {
 public:
 	fPoint position;
 	SString name;
-	float posx, posy;
 	float vely = 0.0f;
 	float velx = 0.0f;
 	SDL_Texture* texture;

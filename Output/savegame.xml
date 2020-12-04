@@ -6,12 +6,12 @@
 	<audio />
 	<scene />
 	<player>
-		<position x="213.320129" y="244.700027" />
+		<position x="475.558868" y="278" />
 	</player>
 	<enemies>
 		<position x="261.5" y="244" />
 	</enemies>
 	<renderer>
-		<camera x="-32" y="-200" />
+		<camera x="-741" y="-228" />
 	</renderer>
 </save>

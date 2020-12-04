@@ -85,6 +85,12 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+
+	if (playerData.position.y <= 230 && playerData.position.y >= 20)
+	{
+		app->render->camera.y = -playerData.position.y;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
@@ -150,7 +156,7 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerData.position.x -= 70 * dt;
+		playerData.position.x -= 60 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -163,12 +169,11 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerData.position.x += 70 * dt;
+		playerData.position.x += 60 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
 		}
-
 		if (playerData.currentAnim != &walkAnimRight) {
 			walkAnimRight.Reset();
 			playerData.currentAnim = &walkAnimRight;
@@ -218,7 +223,7 @@ bool Player::Update(float dt)
 	if (godMode == false)
 	{
 		collider->SetPos(playerData.position.x, playerData.position.y + 2);
-		playerFoot->SetPos(playerData.position.x, playerData.position.y + 9);
+		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
 	}
 	
 	cameraControl = true;
@@ -235,7 +240,7 @@ bool Player::PostUpdate()
 	app->render->DrawTexture(playerData.texture, playerData.position.x, playerData.position.y, &rectPlayer);
 	for (int i = 0; i < playerData.playerLives; i++)
 	{
-		app->render->DrawTexture(playerData.livesTexture, (-app->render->camera.x + (i * 32)) / 3, 70, NULL);
+		app->render->DrawTexture(playerData.livesTexture, ((-app->render->camera.x + 10) + (i * 32)) / 3, (-app->render->camera.y + 20) / 3, NULL);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -293,17 +298,19 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::FLOOR)
 		{
 			onGround = true;
+			playerData.position.y = b->rect.y - b->rect.h - 9;
 			playerData.vely = 0;
 			playerData.position.y = playerData.position.y;
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
-			playerData.position.x -= 1;
+			playerData.position.x = b->rect.x - b->rect.w - 10;
+			playerData.vely = 0;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
 		{
-			playerData.position.x += 1;
+			playerData.position.x = b->rect.x + b->rect.w + 1;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::ROOF)
@@ -363,10 +370,11 @@ void Player::InitialPos()
 	if (scene1 == true) 
 	{
 		playerData.position.x = 50.0f;
-		playerData.position.y = 250.0f;
+		playerData.position.y = 260.0f;
+		playerData.vely = 0;
 
 		app->render->camera.x = 0;
-		app->render->camera.y = -playerData.position.y;
+		app->render->camera.y = -playerData.position.y + 50;
 	}
 	if (scene2 == true)
 	{
