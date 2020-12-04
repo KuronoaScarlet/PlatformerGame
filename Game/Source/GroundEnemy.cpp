@@ -46,10 +46,10 @@ bool GroundEnemy::Draw()
 
 void GroundEnemy::Collision(Collider* coll)
 {
-	if (collider == app->player->collider)
+	if (coll->type == Collider::Type::PLAYER)
 	{
-		app->player->playerData.playerLives--;
 		app->player->deathCondition = true;
+		app->player->playerData.playerLives--;
 	}
 	if (coll->type == Collider::Type::PLAYERFOOT)
 	{

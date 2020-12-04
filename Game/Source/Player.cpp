@@ -104,6 +104,19 @@ bool Player::Update(float dt)
 	{
 		InitialPos();
 	}
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		if(scene1==true)
+		{
+			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+			app->entitymanager->CleanUp();
+		}
+		if (scene2 == true)
+		{
+			app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+			app->entitymanager->CleanUp();
+		}
+	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
 		InitialPos();
@@ -137,7 +150,7 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerData.position.x -= 50 * dt;
+		playerData.position.x -= 70 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -150,7 +163,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerData.position.x += 50 * dt;
+		playerData.position.x += 70 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -205,7 +218,7 @@ bool Player::Update(float dt)
 	if (godMode == false)
 	{
 		collider->SetPos(playerData.position.x, playerData.position.y + 2);
-		playerFoot->SetPos(playerData.position.x, playerData.position.y + 11);
+		playerFoot->SetPos(playerData.position.x, playerData.position.y + 9);
 	}
 	
 	cameraControl = true;
@@ -308,8 +321,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::ENEMY && deathCondition == false)
 		{
-			playerData.playerLives--;
-			deathCondition = true;
 			if (playerData.playerLives == 0)
 			{
 				if (app->scene->active == true)
@@ -352,8 +363,7 @@ void Player::InitialPos()
 	if (scene1 == true) 
 	{
 		playerData.position.x = 50.0f;
-		playerData.position.y = 200.0f;
-		playerData.vely = 0;
+		playerData.position.y = 250.0f;
 
 		app->render->camera.x = 0;
 		app->render->camera.y = -playerData.position.y;
