@@ -75,6 +75,9 @@ public:
 
 	bool cameraControl = true;
 
+	Collider* collider;
+	Collider* playerFoot;
+
 private:
 
 	SDL_Texture* character;
@@ -82,8 +85,7 @@ private:
 	Animation walkAnimLeft;
 	Animation jumpAnim;
 	Animation idleAnim;
-	Collider* collider;
-	Collider* playerFoot;
+	
 
 	bool onGround = false;
 	bool debug = false;

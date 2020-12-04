@@ -17,7 +17,7 @@ public:
 		COINS
 	};
 
-	Entity(fPoint position, SDL_Texture* texture, Type type) : position(position), texture(texture), type(type)
+	Entity(Module* listener, fPoint position, SDL_Texture* texture, Type type) : listener(listener), position(position), texture(texture), type(type)
 	{}
 
 	virtual bool Start()
@@ -35,9 +35,23 @@ public:
 		return true;
 	}
 
+	virtual void Collision(Collider* coll)
+	{
+
+	}
+
+	virtual void CleanUp()
+	{
+
+	}
+
+	Module* listener;
+
 	Type type;
 	fPoint position;
 	SDL_Texture* texture;
+
+	Collider* collider = nullptr;
 
 	bool pendingToDelete = false;
 };

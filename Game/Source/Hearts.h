@@ -11,13 +11,17 @@ struct Collider;
 class Hearts : Entity
 {
 public:
-	Hearts(fPoint position, SDL_Texture* texture, Type type);
+	Hearts(Module* listener, fPoint position, SDL_Texture* texture, Type type);
 
 	bool Start();
 
 	bool Update(float dt);
 
 	bool Draw();
+
+	void Collision(Collider* coll);
+
+	void CleanUp();
 
 private:
 	Animation idleAnimation;

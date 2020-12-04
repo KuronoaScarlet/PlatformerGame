@@ -55,7 +55,7 @@ bool Player::Start()
 	SDL_Rect colP = { playerData.position.x, playerData.position.y, 12, 11 };
 	collider = app->collisions->AddCollider(colP, Collider::Type::PLAYER, this);
 
-	SDL_Rect colPFoot = { playerData.position.x+4, playerData.position.y+11, 11, 8 };
+	SDL_Rect colPFoot = { playerData.position.x+4, playerData.position.y, 11, 8 };
 	playerFoot = app->collisions->AddCollider(colPFoot, Collider::Type::PLAYERFOOT, this);
 	
 	winCondition = false;
@@ -205,7 +205,7 @@ bool Player::Update(float dt)
 	if (godMode == false)
 	{
 		collider->SetPos(playerData.position.x, playerData.position.y + 2);
-		playerFoot->SetPos(playerData.position.x, playerData.position.y + 20);
+		playerFoot->SetPos(playerData.position.x, playerData.position.y + 11);
 	}
 	
 	cameraControl = true;
@@ -304,7 +304,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 			winCondition = true;
-			app->entitymanager->DeleteEntity();
+			app->entitymanager->CleanUp();
 		}
 		if (b->type == Collider::Type::ENEMY && deathCondition == false)
 		{

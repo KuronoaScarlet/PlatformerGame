@@ -35,7 +35,7 @@ public:
 
 	void AddEntity(fPoint position, Entity::Type type);
 
-	void DeleteEntity();
+	void OnCollision(Collider* a, Collider* b);
 
 private:
 	List<Entity*> entityList;

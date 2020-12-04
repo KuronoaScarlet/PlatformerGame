@@ -5,7 +5,7 @@
 #include "Collisions.h"
 #include "Collider.h"
 
-GroundEnemy::GroundEnemy(fPoint position, SDL_Texture* texture, Type type) : Entity(position, texture, type)
+GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
 	idleAnimation.loop = true;
 	idleAnimation.PushBack({ 1, 1, 10, 12 });
@@ -17,6 +17,8 @@ GroundEnemy::GroundEnemy(fPoint position, SDL_Texture* texture, Type type) : Ent
 	walkAnimRight.speed = 0.1f;
 
 	currentAnimation = &idleAnimation;
+
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
 }
 
 bool GroundEnemy::Start()
@@ -28,6 +30,7 @@ bool GroundEnemy::Update(float dt)
 {
 	currentAnimation = &walkAnimRight;
 	currentAnimation->Update();
+	collider->SetPos(position.x, position.y);
 
 	return true;
 }
@@ -39,4 +42,26 @@ bool GroundEnemy::Draw()
 	app->render->DrawTexture(texture, position.x, position.y, &rectEnemy);
 
 	return true;
+}
+
+void GroundEnemy::Collision(Collider* coll)
+{
+	if (collider == app->player->collider)
+	{
+		app->player->playerData.playerLives--;
+		app->player->deathCondition = true;
+	}
+	if (coll->type == Collider::Type::PLAYERFOOT)
+	{
+		pendingToDelete = true;
+		collider->pendingToDelete = true;
+
+		app->player->playerData.vely = -5.5f;
+		app->player->playerData.position.y += app->player->playerData.vely;
+	}
+}
+
+void GroundEnemy::CleanUp()
+{
+
 }

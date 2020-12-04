@@ -19,12 +19,12 @@ struct Collider
 		WIN,
 		ROOF,
 		ENEMY,
-		ENEMY_UP,
 		DEATH,
 		CHECKPOINT,
 		PLAYERFOOT,
+		HEART,
+		COIN,
 
-	
 		MAX
 	};
 

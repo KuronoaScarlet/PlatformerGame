@@ -42,7 +42,7 @@ bool Scene::Start()
 	app->player->Start();
 
 	app->entitymanager->AddEntity({ 260.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
-	app->entitymanager->AddEntity({ 266.0f, 210.0f }, Entity::Type::HEARTS);
+	app->entitymanager->AddEntity({ 166.0f, 210.0f }, Entity::Type::HEARTS);
 	app->entitymanager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
 	app->entitymanager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
 
@@ -98,7 +98,7 @@ bool Scene::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		app->fade->Fade(this, (Module*)app->scene2, 60);
-		app->entitymanager->DeleteEntity();
+		app->entitymanager->CleanUp();
 	}
 
 	return ret;

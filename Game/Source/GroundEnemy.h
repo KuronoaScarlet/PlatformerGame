@@ -11,7 +11,7 @@ struct Collider;
 class GroundEnemy : Entity
 {
 public:
-	GroundEnemy(fPoint position, SDL_Texture* texture, Type type);
+	GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type);
 	
 	bool Start();
 
@@ -19,13 +19,15 @@ public:
 
 	bool Draw();
 
+	void Collision(Collider* coll);
+	
+	void CleanUp();
+
 private:
 	Animation idleAnimation;
 	Animation walkAnimRight;
 
 	Animation* currentAnimation;
-
-	Collider* collider;
 };
 
 #endif // _GROUNDENEMY_H_

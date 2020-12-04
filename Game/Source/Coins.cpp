@@ -2,8 +2,9 @@
 #include "App.h"
 #include "Render.h"
 #include "Player.h"
+#include "Collisions.h"
 
-Coins::Coins(fPoint position, SDL_Texture* texture, Type type) : Entity(position, texture, type)
+Coins::Coins(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
 	idleAnimation.loop = true;
 	idleAnimation.PushBack({ 1, 1, 10, 10 });
@@ -19,6 +20,8 @@ Coins::Coins(fPoint position, SDL_Texture* texture, Type type) : Entity(position
 	idleAnimation.speed = 0.15f;
 
 	currentAnimation = &idleAnimation;
+
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 10 }), Collider::Type::COIN, listener);
 }
 
 bool Coins::Start()
@@ -39,4 +42,18 @@ bool Coins::Draw()
 	app->render->DrawTexture(texture, position.x, position.y, &rectCoins);
 
 	return true;
+}
+
+void Coins::Collision(Collider* coll)
+{
+	if (coll == app->player->collider)
+	{
+		pendingToDelete = true;
+		collider->pendingToDelete = true;
+	}
+}
+
+void Coins::CleanUp()
+{
+
 }
