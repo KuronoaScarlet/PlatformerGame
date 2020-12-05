@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "Intro.h"
 
 Coins::Coins(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -48,6 +49,7 @@ void Coins::Collision(Collider* coll)
 {
 	if (coll == app->player->collider)
 	{
+		app->intro->score = app->intro->score + 1;
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 	}

@@ -54,6 +54,7 @@
     <ClCompile Include="Source\GroundEnemy.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Source\Hearts.h">
       <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Fonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

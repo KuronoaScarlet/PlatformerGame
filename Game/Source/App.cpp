@@ -15,6 +15,7 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "DeathScreen.h"
+#include "Fonts.h"
 
 
 #include "Defs.h"
@@ -45,6 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
 	deathScreen = new DeathScreen();
+	fonts = new Fonts();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 
@@ -62,6 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(checkpoint);
 	AddModule(fade);
 	AddModule(deathScreen);
+	AddModule(fonts);
 
 	// Render last to swap buffer
 

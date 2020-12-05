@@ -11,6 +11,7 @@
 #include "EntityManager.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
+#include "Fonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -54,6 +55,11 @@ bool Scene::Start()
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
+
+	//Fonts
+	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
+	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
+	app->activeFonts++; app->totalFonts++;
 	
 	return true;
 }
@@ -83,6 +89,11 @@ bool Scene::Update(float dt)
 	}
 	app->map->Draw();
 	app->map->LoadColliders();
+
+	//Score
+	app->fonts->BlitText(3, 20, scoreFont, "score:");
+	sprintf_s(scoreText, 10, "%4d", app->intro->score);
+	app->fonts->BlitText(30, 20, scoreFont, scoreText);
 
 	return true;
 }

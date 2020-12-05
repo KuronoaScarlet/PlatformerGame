@@ -41,6 +41,8 @@ bool Intro::Start()
 
     bool ret = true;
 
+    score = 000;
+
     screen = app->tex->Load("Assets/Textures/title_screen.png");
 
     return ret;

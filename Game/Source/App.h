@@ -25,6 +25,7 @@ class CheckPoint;
 class FadeToBlack;
 class Collisions;
 class DeathScreen;
+class Fonts;
 
 class App
 {
@@ -104,6 +105,10 @@ public:
 	FadeToBlack* fade;
 	Collisions* collisions;
 	DeathScreen* deathScreen;
+	Fonts* fonts;
+
+	uint activeFonts = 0;
+	uint totalFonts = 0;
 
 private:
 

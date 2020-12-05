@@ -36,6 +36,9 @@ public:
 public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
+
+    //Score
+    uint score = 000;
   
 };
 
