@@ -38,6 +38,7 @@ public:
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };
 
+	bool firstEntry = true;
 
 private:
 };

@@ -20,6 +20,8 @@ public:
 	SDL_Texture* livesTexture;
 	int playerLives = 3;
 	Animation* currentAnim = nullptr;
+
+	int currentLevel = 1;
 };
 
 

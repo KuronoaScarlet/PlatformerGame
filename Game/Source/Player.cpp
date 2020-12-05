@@ -112,29 +112,38 @@ bool Player::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
-		InitialPos();
+		if (scene1 == true)
+		{
+			InitialPos();
+		}
+		if (scene2 == true)
+		{
+			app->scene->firstEntry = true;
+			app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+			app->entitymanager->CleanUp();
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		if(scene1==true)
 		{
+			app->scene2->firstEntry = true;
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 			app->entitymanager->CleanUp();
 		}
 		if (scene2 == true)
 		{
-			app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
-			app->entitymanager->CleanUp();
+			InitialPos();
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
 		InitialPos();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		app->LoadGameRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		if (debug == false) debug = true;
@@ -271,6 +280,20 @@ bool Player::LoadState(pugi::xml_node& data)
 	playerData.position.x = play.attribute("x").as_int(0);
 	playerData.position.y = play.attribute("y").as_int(0);
 
+	pugi::xml_node level = data.child("level");
+	playerData.currentLevel = level.attribute("l").as_int(0);
+
+	if (playerData.currentLevel == 1 && scene2 == true)
+	{
+		app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+		app->entitymanager->CleanUp();
+	}
+	if (playerData.currentLevel == 2 && scene1 == true)
+	{
+		app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+		app->entitymanager->CleanUp();
+	}
+
 	return true;
 }
 
@@ -279,6 +302,17 @@ bool Player::SaveState(pugi::xml_node& data) const
 	pugi::xml_node play = data.child("position");
 	play.attribute("x").set_value(playerData.position.x);
 	play.attribute("y").set_value(playerData.position.y);
+	
+	pugi::xml_node level = data.child("level");
+	if(scene1 == true)
+	{
+		level.attribute("l").set_value("1");
+	}
+	if (scene2 == true)
+	{
+		level.attribute("l").set_value("2");
+	}
+
 
 	return true;
 }
@@ -340,7 +374,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 				winCondition = true;
 				app->entitymanager->CleanUp();
 			}
-			
 		}
 		if (b->type == Collider::Type::CHECKPOINT)
 		{
@@ -348,9 +381,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 				app->SaveGameRequest();
 				app->audio->PlayFx(checkPointFx);
 			}
-
 			app->checkpoint->on = true;
-			
 		}
 	}
 
@@ -367,7 +398,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 }
 void Player::InitialPos() 
 {
-	if (scene1 == true) 
+	if (scene1 == true && app->scene->firstEntry == true) 
 	{
 		playerData.position.x = 50.0f;
 		playerData.position.y = 260.0f;
@@ -376,7 +407,7 @@ void Player::InitialPos()
 		app->render->camera.x = 0;
 		app->render->camera.y = -playerData.position.y + 50;
 	}
-	if (scene2 == true)
+	if (scene2 == true && app->scene2->firstEntry == true)
 	{
 		app->player->playerData.position.x = 50.0f;
 		app->player->playerData.position.y = 278.0f;

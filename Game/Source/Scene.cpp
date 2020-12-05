@@ -62,6 +62,8 @@ bool Scene::Start()
 	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
 	app->activeFonts++; app->totalFonts++;
 	
+	firstEntry = false;
+
 	return true;
 }
 
