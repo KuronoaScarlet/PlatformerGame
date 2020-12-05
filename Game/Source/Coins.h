@@ -27,6 +27,8 @@ private:
 	Animation idleAnimation;
 
 	Animation* currentAnimation;
+
+	uint coinFx = 0;
 };
 
 #endif // _COINS_H_

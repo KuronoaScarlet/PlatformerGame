@@ -61,8 +61,12 @@ bool Player::Start()
 	winCondition = false;
 	deathCondition = false;
 
-	InitialPos();
+	jumpFx = app->audio->LoadFx("Assets/Audio/FX/jump.wav");
+	doubleJumpFx = app->audio->LoadFx("Assets/Audio/FX/double_jump.wav");
+	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
+	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
+	InitialPos();
 	return true;
 }
 
@@ -88,7 +92,7 @@ bool Player::Update(float dt)
 
 	if (playerData.position.y <= 230 && playerData.position.y >= 20)
 	{
-		app->render->camera.y = -playerData.position.y;
+		app->render->camera.y = -playerData.position.y+20;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
@@ -194,8 +198,10 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
 	{
+		
 		if (doubleJump == true && onGround == false) 
 		{
+			app->audio->PlayFx(doubleJumpFx);
 			playerData.vely = -4.5f;
 			doubleJump = false;
 			if (playerData.currentAnim != &jumpAnim) 
@@ -206,6 +212,7 @@ bool Player::Update(float dt)
 		}
 		if (playerJumping == true ) 
 		{
+			app->audio->PlayFx(jumpFx);
 			playerJumping = false;
 			playerData.vely = -5.5f;
 			playerData.position.y += playerData.vely;			
@@ -305,7 +312,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
 			playerData.position.x = b->rect.x - b->rect.w - 10;
-			playerData.vely = 0;
 			cameraControl = false;
 		}
 		if (b->type == Collider::Type::RIGHT_WALL)
@@ -322,14 +328,29 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 		if (b->type == Collider::Type::WIN && winCondition == false)
 		{
-			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
-			winCondition = true;
-			app->entitymanager->CleanUp();
+			if (scene1 == true)
+			{
+				app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+				winCondition = true;
+				app->entitymanager->CleanUp();
+			}
+			if (scene2 == true)
+			{
+				app->fade->Fade((Module*)app->scene2, (Module*)app->winScreen, 60);
+				winCondition = true;
+				app->entitymanager->CleanUp();
+			}
+			
 		}
 		if (b->type == Collider::Type::CHECKPOINT)
 		{
-			app->SaveGameRequest();
+			if (app->checkpoint->on == false) {
+				app->SaveGameRequest();
+				app->audio->PlayFx(checkPointFx);
+			}
+
 			app->checkpoint->on = true;
+			
 		}
 	}
 
@@ -340,6 +361,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerData.vely = -5.5f;
 			playerData.position.y += playerData.vely;
 			b->pendingToDelete = true;
+			app->audio->PlayFx(killingEnemyFx);
 		}
 	}
 }

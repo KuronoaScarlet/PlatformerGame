@@ -26,6 +26,8 @@ public:
 private:
 	Animation idleAnimation;
 	Animation* currentAnimation;
+
+	uint heartFx = 0;
 };
 
 #endif // _HEARTS_H_

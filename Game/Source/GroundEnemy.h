@@ -28,6 +28,8 @@ private:
 	Animation walkAnimRight;
 
 	Animation* currentAnimation;
+
+	uint hitFx = 0;
 };
 
 #endif // _GROUNDENEMY_H_

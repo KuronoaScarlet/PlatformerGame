@@ -78,14 +78,14 @@ bool Scene::Update(float dt)
 	{
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
-			app->render->camera.x += 2;
+			app->render->camera.x += 60*dt;
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
-			app->render->camera.x -= 2;
+			app->render->camera.x -= 120*dt;
 		}
 	}
 	app->map->Draw();

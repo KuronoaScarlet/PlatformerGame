@@ -19,7 +19,7 @@
 
 DeathScreen::DeathScreen() : Module()
 {
-    name.Create("DeathScreen");
+    name.Create("deathscreen");
 }
 
 DeathScreen::~DeathScreen()

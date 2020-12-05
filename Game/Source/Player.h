@@ -86,6 +86,10 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	
+	uint jumpFx = 0;
+	uint doubleJumpFx = 0;
+	uint checkPointFx = 0;
+	uint killingEnemyFx = 0;
 
 	bool onGround = false;
 	bool debug = false;

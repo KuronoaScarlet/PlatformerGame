@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Collisions.h"
 #include "Intro.h"
+#include "Audio.h"
+
 
 Coins::Coins(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -23,6 +25,8 @@ Coins::Coins(Module* listener, fPoint position, SDL_Texture* texture, Type type)
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 10 }), Collider::Type::COIN, listener);
+
+	coinFx = app->audio->LoadFx("Assets/Audio/FX/coin.wav");
 }
 
 bool Coins::Start()
@@ -49,6 +53,7 @@ void Coins::Collision(Collider* coll)
 {
 	if (coll == app->player->collider)
 	{
+		app->audio->PlayFx(coinFx);
 		app->intro->score = app->intro->score + 1;
 		pendingToDelete = true;
 		collider->pendingToDelete = true;

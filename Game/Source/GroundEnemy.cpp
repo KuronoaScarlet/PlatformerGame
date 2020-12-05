@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "Scene2.h"
 #include "map.h"
+#include "Audio.h"
 
 GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -23,6 +24,7 @@ GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
+	hitFx = app->audio->LoadFx("Assets/Audio/FX/heart.wav");
 }
 
 bool GroundEnemy::Start()
@@ -84,6 +86,7 @@ void GroundEnemy::Collision(Collider* coll)
 {
 	if (coll->type == Collider::Type::PLAYER)
 	{
+		app->audio->PlayFx(hitFx);
 		app->player->deathCondition = true;
 		app->player->playerData.playerLives--;
 

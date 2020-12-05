@@ -52,7 +52,7 @@ bool Scene2::Start()
 
 	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
 
-	app->collisions->AddCollider({ 20, 278, 15, 15 }, Collider::Type::DEATH, this); 
+	app->collisions->AddCollider({ 1248, 240, 15, 15 }, Collider::Type::WIN, this); 
 	
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
@@ -75,11 +75,11 @@ bool Scene2::Update(float dt)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			app->render->camera.x -= 3;
+			app->render->camera.x -= 200*dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			app->render->camera.x += 3;
+			app->render->camera.x += 160*dt;
 
 		}
 	}

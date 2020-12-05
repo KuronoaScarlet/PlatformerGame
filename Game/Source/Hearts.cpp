@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "Audio.h"
 
 Hearts::Hearts(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -12,11 +13,13 @@ Hearts::Hearts(Module* listener, fPoint position, SDL_Texture* texture, Type typ
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 8, 8 }), Collider::Type::HEART, listener);
-
+	heartFx = app->audio->LoadFx("Assets/Audio/FX/heart.wav");
+	
 }
 
 bool Hearts::Start()
 {
+	
 	return true;
 }
 
@@ -42,6 +45,7 @@ void Hearts::Collision(Collider* coll)
 		app->player->playerData.playerLives++;
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
+		app->audio->PlayFx(heartFx);
 	}
 }
 

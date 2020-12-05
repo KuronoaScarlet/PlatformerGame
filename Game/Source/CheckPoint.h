@@ -57,6 +57,7 @@ private:
 	fPoint position;
 
 	
+	
 	// The Checkpoint's collider
 	Collider* collider = nullptr;
 

@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Point.h"
 
+
 class Entity
 {
 public:

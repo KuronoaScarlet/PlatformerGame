@@ -16,6 +16,7 @@
 #include "FadeToBlack.h"
 #include "DeathScreen.h"
 #include "Fonts.h"
+#include "WinScreen.h"
 
 
 #include "Defs.h"
@@ -46,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
 	deathScreen = new DeathScreen();
+	winScreen = new WinScreen();
 	fonts = new Fonts();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -64,6 +66,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(checkpoint);
 	AddModule(fade);
 	AddModule(deathScreen);
+	AddModule(winScreen);
 	AddModule(fonts);
 
 	// Render last to swap buffer
@@ -77,6 +80,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene2->active = false;
 	checkpoint->active = false;
 	deathScreen->active = false;
+	winScreen->active = false;
 	PERF_PEEK(perfTimer);
 }
 

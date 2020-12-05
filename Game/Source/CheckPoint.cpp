@@ -55,8 +55,8 @@ bool CheckPoint::Start()
 	currentAnim = &idleAnim;
 	SDL_Rect colCheckPoint = { position.x, position.y, 12, 32 };
 	collider = app->collisions->AddCollider(colCheckPoint, Collider::Type::CHECKPOINT, this);
+
 	return true;
-	
 }
 bool CheckPoint::Awake()
 {
