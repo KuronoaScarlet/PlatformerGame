@@ -326,28 +326,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 			winCondition = true;
 			app->entitymanager->CleanUp();
 		}
-		if (b->type == Collider::Type::ENEMY && deathCondition == false)
-		{
-			if (playerData.playerLives == 0)
-			{
-				if (app->scene->active == true)
-				{
-					app->fade->Fade((Module*)app->scene, (Module*)app->deathScreen, 60);
-				}
-				if (app->scene2->active == true)
-				{
-					app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
-				}
-			}
-			else
-			{
-				app->fade->Fade((Module*)app->scene, (Module*)app->scene, 60);
-			}
-		}
-		if (b->type == Collider::Type::DEATH)
-		{
-
-		}
 		if (b->type == Collider::Type::CHECKPOINT)
 		{
 			app->SaveGameRequest();

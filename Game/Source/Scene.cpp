@@ -117,6 +117,7 @@ bool Scene::CleanUp()
 	app->map->CleanUp();
 	app->player->CleanUp();
 	app->collisions->CleanUp();
+	app->entitymanager->CleanUp();
 
 	app->player->scene1 = false;
 

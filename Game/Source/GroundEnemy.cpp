@@ -4,6 +4,9 @@
 #include "Player.h"
 #include "Collisions.h"
 #include "Collider.h"
+#include "FadeToBlack.h"
+#include "Scene.h"
+#include "Scene2.h"
 
 GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -50,6 +53,29 @@ void GroundEnemy::Collision(Collider* coll)
 	{
 		app->player->deathCondition = true;
 		app->player->playerData.playerLives--;
+
+		if (app->player->playerData.playerLives == 0)
+		{
+			if (app->scene->active == true)
+			{
+				app->fade->Fade((Module*)app->scene, (Module*)app->deathScreen, 60);
+			}
+			if (app->scene2->active == true)
+			{
+				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
+			}
+		}
+		if (app->player->playerData.playerLives != 0)
+		{
+			if (position.x > app->player->playerData.position.x)
+			{
+				app->player->playerData.position.x = collider->rect.x - collider->rect.w - 9;
+			}
+			if (position.x < app->player->playerData.position.x)
+			{
+				app->player->playerData.position.x = collider->rect.x + collider->rect.w + 6;
+			}
+		}
 	}
 	if (coll->type == Collider::Type::PLAYERFOOT)
 	{

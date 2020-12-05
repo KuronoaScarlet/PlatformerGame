@@ -34,7 +34,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-
+	//Fonts
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
 
 
 private:

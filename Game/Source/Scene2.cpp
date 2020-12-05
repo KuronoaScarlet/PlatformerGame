@@ -11,6 +11,7 @@
 #include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
+#include "Fonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -36,8 +37,6 @@ bool Scene2::Awake()
 // Called before the first frame
 bool Scene2::Start()
 {
-
-	
 	app->player->scene2 = true;
 
 	app->player->Init();
@@ -55,7 +54,10 @@ bool Scene2::Start()
 
 	app->collisions->AddCollider({ 20, 278, 15, 15 }, Collider::Type::DEATH, this); 
 	
-	
+	//Fonts
+	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
+	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
+	app->activeFonts++; app->totalFonts++;
 
 	return true;
 }
@@ -84,6 +86,11 @@ bool Scene2::Update(float dt)
 
 	app->map->Draw();
 	app->map->LoadColliders();
+
+	//Score
+	app->fonts->BlitText(3, 20, scoreFont, "score:");
+	sprintf_s(scoreText, 10, "%4d", app->intro->score);
+	app->fonts->BlitText(30, 20, scoreFont, scoreText);
 
 	return true;
 }
