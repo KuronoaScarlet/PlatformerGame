@@ -126,7 +126,7 @@ void Map::DrawPath()
 	while (item)
 	{
 		point = item->data;
-		TileSet* tileset = GetTilesetFromTileId(26);
+		TileSet* tileset = GetTilesetFromTileId(260);
 
 		SDL_Rect rec = tileset->GetTileRect(26);
 		iPoint pos = MapToWorld(point.x, point.y);
@@ -161,10 +161,21 @@ int Map::MovementCost(int x, int y) const
 
 	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
 	{
-		int id = data.layers.start->next->data->Get(x, y);
+		/*int id = data.layers.start->next->data->Get(x, y);
 
 		if (id == 0) ret = 3;
-		else ret = 0;
+		else ret = 0;*/
+		int id = data.layers.start->next->next->data->Get(x, y);
+
+		if (id != 0)
+		{
+			int fisrtGid = GetTilesetFromTileId(id)->firstgid;
+
+			if (id == fisrtGid) ret = 1;
+			else if (id == fisrtGid + 1) ret = 0;
+			else if (id == fisrtGid + 2) ret = 3;
+		}
+		else ret = 1;
 	}
 
 	return ret;
@@ -223,7 +234,8 @@ iPoint Map::MapToWorld(int x, int y) const
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-
+	ret.x = x / data.tileWidth;
+	ret.y = y / data.tileHeight;
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
 
 	return ret;

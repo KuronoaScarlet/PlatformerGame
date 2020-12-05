@@ -13,6 +13,7 @@ public:
 	{
 		UNKNOWN,
 		GROUND_ENEMY,
+		AIR_ENEMY,
 		HEARTS,
 		COINS
 	};

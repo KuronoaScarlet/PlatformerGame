@@ -140,15 +140,14 @@ public:
 
 	/////////////////
 
-	/*void ResetPath(iPoint start);
+	void ResetPath(iPoint start);
 	void DrawPath();
 
 	int MovementCost(int x, int y) const;
-	void ComputePath(int x, int y);
-
+	
 	void ComputePathAStar(int x, int y);
 
-	void PropagateAStar();*/
+	void PropagateAStar(int heuristic);
 
 private:
 
@@ -160,20 +159,18 @@ private:
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	TileSet* GetTilesetFromTileId(int id) const;
 	
-	void ResetPath(iPoint start);
-	void DrawPath();
 
-	// L11: More pathfinding methods
-	int MovementCost(int x, int y) const;
-	
-	void ComputePathAStar(int x, int y);
-
-	void PropagateAStar(int heuristic);
 
 public:
 
 	// L03: DONE 1: Add your struct for map info
 	MapData data;
+	
+	// L12: AStar (A*) variables
+	iPoint goalAStar;			// Store goal target tile
+	bool endAStar = false;	// Detect when reached goal
+	List<iPoint> visited;
+	DynArray<iPoint> path;
 
 private:
 
@@ -183,16 +180,13 @@ private:
 	bool DrawColliders = false;
 
 	PQueue<iPoint> frontier;
-	List<iPoint> visited;
+	
 
 	List<iPoint> breadcrumbs;
-	DynArray<iPoint> path;
+	
 
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 
-	// L12: AStar (A*) variables
-	iPoint goalAStar;			// Store goal target tile
-	bool finishAStar = false;	// Detect when reached goal
 
 	SDL_Texture* tileX = nullptr;
 };

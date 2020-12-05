@@ -7,6 +7,7 @@
 #include "GroundEnemy.h"
 #include "Hearts.h"
 #include "Coins.h"
+#include "AirEnemy.h"
 
 EntityManager::EntityManager() : Module()
 {
@@ -21,6 +22,7 @@ bool EntityManager::Awake()
 bool EntityManager::Start()
 {
 	gEnemyTexture = app->tex->Load("Assets/Textures/enemy.png");
+	aEnemyTexture = app->tex->Load("Assets/Textures/enemy.png");
 	heartsTexture = app->tex->Load("Assets/Textures/life.png");
 	coinsTexture = app->tex->Load("Assets/Textures/coins.png");
 
@@ -92,6 +94,10 @@ void EntityManager::AddEntity(fPoint position, Entity::Type type)
 	case Entity::Type::COINS:
 		coin = (Entity*)(new Coins((Module*)this, position, coinsTexture, type));
 		entityList.Add(coin);
+		break;
+	case Entity::Type::AIR_ENEMY:
+		aEnemy = (Entity*)(new AirEnemy((Module*)this, position, aEnemyTexture, type));
+		entityList.Add(aEnemy);
 		break;
 	}
 }

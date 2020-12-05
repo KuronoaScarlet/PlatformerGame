@@ -1,4 +1,4 @@
-#include "GroundEnemy.h"
+#include "AirEnemy.h"
 #include "App.h"
 #include "Render.h"
 #include "Player.h"
@@ -9,69 +9,34 @@
 #include "Scene2.h"
 #include "map.h"
 
-GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
+AirEnemy::AirEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
 	idleAnimation.loop = true;
-	idleAnimation.PushBack({ 1, 1, 10, 12 });
-
-	walkAnimRight.PushBack({ 13,0, 10, 13 });
-	walkAnimRight.PushBack({ 25,0, 10, 13 });
-	walkAnimRight.PushBack({ 37,1, 10, 12 });
-	walkAnimRight.loop = true;
-	walkAnimRight.speed = 0.1f;
+	idleAnimation.PushBack({ 0, 16, 12, 12 });
+	idleAnimation.PushBack({ 15, 16, 12, 12 });
+	idleAnimation.loop = true;
+	idleAnimation.speed = 0.2f;
 
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
 }
 
-bool GroundEnemy::Start()
+bool AirEnemy::Start()
 {
 	return true;
 }
 
-bool GroundEnemy::Update(float dt)
+bool AirEnemy::Update(float dt)
 {
-	app->map->goalAStar = { 13,16 };
-
-	if (app->map->endAStar == false) {
-
-		app->map->PropagateAStar(0);
-
-
-		/*for (int i = 0; i < app->map->visited.Count(); i++)
-		{
-			if (app->map->visited.At(i)->data.x == app->map->goalAStar.x && app->map->visited.At(i)->data.y == app->map->goalAStar.y)
-			{
-				app->map->endAStar = true;
-				app->map->ComputePathAStar(app->map->goalAStar.x, app->map->goalAStar.y);
-			}
-		}*/
-	}
-	if (app->map->path.At(0) != NULL) {
-		int i;
-		for (i = 0; i < app->map->path.Count(); i++)
-		{
-			if (position.x == app->map->path.At(i)->x && position.y == app->map->path.At(i)->y) break;
-		}
-		iPoint pos = app->map->WorldToMap(position.x, position.y);
-		if (pos.x < app->map->path.At(i + 1)->x)
-		{
-			position.x += 1;
-		}
-		else
-		{
-			position.x -= 1;
-		}
-	}
-	currentAnimation = &walkAnimRight;
+		
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
 
 	return true;
 }
 
-bool GroundEnemy::Draw()
+bool AirEnemy::Draw()
 {
 	SDL_Rect rectEnemy;
 	rectEnemy = currentAnimation->GetCurrentFrame();
@@ -80,7 +45,7 @@ bool GroundEnemy::Draw()
 	return true;
 }
 
-void GroundEnemy::Collision(Collider* coll)
+void AirEnemy::Collision(Collider* coll)
 {
 	if (coll->type == Collider::Type::PLAYER)
 	{
@@ -120,7 +85,7 @@ void GroundEnemy::Collision(Collider* coll)
 	}
 }
 
-void GroundEnemy::CleanUp()
+void AirEnemy::CleanUp()
 {
 
 }

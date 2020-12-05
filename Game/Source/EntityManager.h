@@ -41,10 +41,12 @@ private:
 	List<Entity*> entityList;
 
 	SDL_Texture* gEnemyTexture;
+	SDL_Texture* aEnemyTexture;
 	SDL_Texture* heartsTexture;
 	SDL_Texture* coinsTexture;
 
 	Entity* gEnemy;
+	Entity* aEnemy;
 	Entity* heart;
 	Entity* coin;
 };
