@@ -1,6 +1,6 @@
 <!-- Config file for the game -->
 <config>
-  <app framerate_cap="60">
+  <app framerate_cap="30">
     <title>Game (Lost by TDM Studios)</title>
     <organization>UPC</organization>
   </app>

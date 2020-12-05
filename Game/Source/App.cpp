@@ -152,6 +152,7 @@ bool App::Start()
 		item = item->next;
 	}
 	PERF_PEEK(perfTimer);
+	caped = true;
 	return ret;
 }
 
@@ -172,8 +173,14 @@ bool App::Update()
 	if (ret == true)
 		ret = PostUpdate();
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		caped = !caped;
+	}
 	FinishUpdate();
-	return ret;
+
+	
+ 	return ret;
 }
 
 bool App::LoadConfig()
@@ -218,36 +225,36 @@ void App::FinishUpdate()
 	uint32 lastFrameInMs = 0;
 	uint32 framesOnLastUpdate = 0;
 
-	float secondsStart = startTime.ReadSec();
-	float average = fpsCount / secondsStart;
-
-	if (frameTime.ReadSec() > 1.0f)
+	if (caped == true)
 	{
-		framesSecond = lastSecFrameCnt;
-		lastSecFrameCnt = 0;
-		frameTime.Start();
+		float secondsStart = startTime.ReadSec();
+		float average = fpsCount / secondsStart;
+
+		if (frameTime.ReadSec() > 1.0f)
+		{
+			framesSecond = lastSecFrameCnt;
+			lastSecFrameCnt = 0;
+			frameTime.Start();
+		}
+
+		oldLastFrame = lastFrameInMs;
+
+		lastFrameInMs = lastSecond.Read();
+
+		lastSecond.Start();
+
+		int delay = (1000 * (1.0f / frameRate));
+
+		if (lastFrameInMs < 1000 * (1.0f / frameRate))
+		{
+			perfTimer.Start();
+			SDL_Delay(delay);
+			timePerfect = perfTimer.ReadMs();
+			LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
+		}
+
 	}
-
-	oldLastFrame = lastFrameInMs;
-
-	lastFrameInMs = lastSecond.Read();
-
-	lastSecond.Start();
-
-	int delay = (1000 * (1.0f / frameRate));
-
-	if (lastFrameInMs < 1000 * (1.0f / frameRate))
-	{
-		perfTimer.Start();
-		SDL_Delay(delay);
-		timePerfect = perfTimer.ReadMs();
-		LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
-	}
-
-	static char title[256];
-	/*sprintf_s(title, 256, "Game (Lost by TDM Studios) Av.FPS: %.2f", average);
-
-	app->win->SetTitle(title);*/
+	
 }
 
 // Call modules before each loop iteration
