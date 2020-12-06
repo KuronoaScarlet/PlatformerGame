@@ -12,7 +12,12 @@ We hope you like it!
  - Map Navigation.
  - Player Animations.
  - Collitions Added.
- - Win Condition! (Find the torch!)
+ - Fully Implemented Game Loop. (Find the arrow signals to pass the levels!).
+ - Enemies Fully Implemented (Air/Ground Enemies Pathfinding implemented! They can kill you!).
+ - Hp implemented!
+ - Collectible Coins Implemented!
+ - Checkpoints Implemented!
+ - Capped Framerate to 60 and 30!
  
 ## Controls
 
@@ -20,12 +25,14 @@ We hope you like it!
  - Space Bar - Jump.
  
  The game also supports a debug mode!
- - F1 - Start from Level 1.
+ - F1 - Go to Level 1.
+ - F2 - Go to Level 2.
  - F3 - Start from the beggining of the current Level.
  - F5 - Save the current game state.
  - F6 - Load the previous state.
  - F9 - View colliders.
  - F10 - God Mode.
+ - F11 - Change Framerate Cap.
 
 ## Developers
 
