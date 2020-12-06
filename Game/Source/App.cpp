@@ -17,6 +17,7 @@
 #include "DeathScreen.h"
 #include "Fonts.h"
 #include "WinScreen.h"
+#include "Pathfinding.h"
 
 
 #include "Defs.h"
@@ -49,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	deathScreen = new DeathScreen();
 	winScreen = new WinScreen();
 	fonts = new Fonts();
+	pathFinding = new PathFinding();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 
@@ -68,6 +70,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(deathScreen);
 	AddModule(winScreen);
 	AddModule(fonts);
+	AddModule(pathFinding);
 
 	// Render last to swap buffer
 

@@ -29,148 +29,6 @@ bool Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-
-void Map::ResetPath(iPoint start)
-{
-	frontier.Clear();
-	visited.Clear();
-	breadcrumbs.Clear();
-
-	frontier.Push(start, 0);
-	visited.Add(start);
-	breadcrumbs.Add(start);
-
-	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
-}
-void Map::PropagateAStar(int heuristic)
-{
-	// L12a: TODO 2: Implement AStar algorythm
-	// Consider the different heuristics
-	int newCost[4];
-	iPoint current;
-	if (frontier.Pop(current))
-	{
-		iPoint neighbors[4];
-		neighbors[0].Create(current.x + 1, current.y + 0);
-		neighbors[1].Create(current.x + 0, current.y - 1);
-		neighbors[2].Create(current.x - 1, current.y + 0);
-		neighbors[3].Create(current.x + 0, current.y + 1);
-
-		int j = 0;
-		bool init = false;
-		for (uint i = 0; i < 4; ++i)
-		{
-			if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
-			{
-				if (visited.Find(neighbors[i]) == -1)
-				{
-					//visited.Add(neighbors[i]);
-					newCost[i] = neighbors[i].DistanceManhattan(visited.start->data) + neighbors[i].DistanceManhattan(goalAStar);
-					if (newCost[i] >= 0 && init == false)j = i, init = true;
-				}
-			}
-		}
-
-		for (int i = 0; i < 3; i++)
-		{
-			if (visited.Find(neighbors[i]) == -1)
-			{
-				if (MovementCost(neighbors[i].x, neighbors[i].y) > 0 && newCost[i + 1] >= 0 && newCost[j] >= newCost[i + 1])j = i + 1;
-				//if (!(MovementCost(neighbors[i].x, neighbors[i].y) > 0) && i == 0)j++;
-			}
-		}
-		for (int i = 0; i < 4; i++)
-		{
-			if (visited.Find(neighbors[i]) == -1 && MovementCost(neighbors[i].x, neighbors[i].y))
-			{
-				visited.Add(neighbors[i]);
-				breadcrumbs.Add(current);
-				if (newCost[j] == newCost[i])
-				{
-					frontier.Push(neighbors[i], newCost[i]);
-				}
-			}
-		}
-	}
-}
-void Map::ComputePathAStar(int x, int y)
-{
-	// L12a: Compute AStart pathfinding
-	path.Clear();
-	int j;
-	goalAStar = WorldToMap(x, y);
-	for (j = visited.Count() - 1; j > 0; j--)
-	{
-		if (visited.At(j)->data.x == goalAStar.x && visited.At(j)->data.y == goalAStar.y)
-		{
-			path.PushBack(breadcrumbs.At(j)->data);
-			break;
-		}
-	}
-	for (int i = visited.Count() - 1; i > 0; i--)
-	{
-		if (visited.At(i)->data == breadcrumbs.At(j)->data)
-		{
-			path.PushBack(breadcrumbs.At(i)->data);
-			j = i;
-		}
-	}
-}
-void Map::DrawPath()
-{
-	iPoint point;
-
-	// Draw visited
-	ListItem<iPoint>* item = visited.start;
-
-	while (item)
-	{
-		point = item->data;
-		TileSet* tileset = GetTilesetFromTileId(26);
-
-		SDL_Rect rec = tileset->GetTileRect(26);
-		iPoint pos = MapToWorld(point.x, point.y);
-
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
-
-		item = item->next;
-	}
-
-	// Draw frontier
-	for (uint i = 0; i < frontier.Count(); ++i)
-	{
-		point = *(frontier.Peek(i));
-		TileSet* tileset = GetTilesetFromTileId(25);
-
-		SDL_Rect rec = tileset->GetTileRect(25);
-		iPoint pos = MapToWorld(point.x, point.y);
-
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
-	}
-
-	// Draw path
-	for (uint i = 0; i < path.Count(); ++i)
-	{
-		iPoint pos = MapToWorld(path[i].x, path[i].y);
-		app->render->DrawTexture(tileX, pos.x, pos.y);
-	}
-}
-int Map::MovementCost(int x, int y) const
-{
-	int ret = -1;
-
-	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
-	{
-		int id = data.layers.start->next->data->Get(x, y);
-
-		if (id == 0) ret = 3;
-		else ret = 0;
-	}
-
-	return ret;
-}
-
-
 // Draw the map (all requried layers)
 void Map::Draw()
 {
@@ -193,7 +51,7 @@ void Map::Draw()
 				if (tileId > 0)
 				{
 					// L04: TODO 9: Complete the draw function       
-					iPoint vec = MapToWorld(x, y);
+					fPoint vec = MapToWorld(x, y);
 					for (int i = 0; i < data.tilesets.Count(); i++)
 					{
 						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0 || DrawColliders)
@@ -207,9 +65,9 @@ void Map::Draw()
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
-iPoint Map::MapToWorld(int x, int y) const
+fPoint Map::MapToWorld(float x, float y) const
 {
-	iPoint ret;
+	fPoint ret;
 
 	ret.x = x * data.tileWidth;
 	ret.y = y * data.tileHeight;
@@ -220,9 +78,9 @@ iPoint Map::MapToWorld(int x, int y) const
 }
 
 // L05: TODO 2: Add orthographic world to map coordinates
-iPoint Map::WorldToMap(int x, int y) const
+fPoint Map::WorldToMap(float x, float y) const
 {
-	iPoint ret(0, 0);
+	fPoint ret(0, 0);
 	ret.x = x / data.tileWidth;
 	ret.y = y / data.tileHeight;
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
@@ -232,15 +90,6 @@ iPoint Map::WorldToMap(int x, int y) const
 
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
-	/*ListItem<TileSet*>* item = data.tilesets.start;
-	TileSet* set = item->data;
-
-	for (set; item->next != nullptr; item = item->next, set = item->data)
-	{
-		if (id >= set->firstgid && id < set->firstgid + (set->numTilesWidth * set->numTilesHeight)) return set;
-	}
-
-	return set;*/
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
@@ -262,13 +111,172 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
+void Map::ResetPath(iPoint start)
+{
+	frontier.Clear();
+	visited.Clear();
+	breadCrumbs.Clear();
 
+	frontier.Push(start, 0);
+	visited.Add(start);
+	breadCrumbs.Add(start);
+
+	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
+}
+
+void Map::DrawPath()
+{
+	iPoint pointV;
+	iPoint pointF;
+	iPoint pointPath;
+
+	// Draw visited
+	ListItem<iPoint>* itemVisited = visited.start;
+	PQueueItem<iPoint>* itemFrontier = frontier.start;
+
+
+	while (itemVisited)
+	{
+		pointV = itemVisited->data;
+
+		TileSet* tileset = GetTilesetFromTileId(422);
+
+		SDL_Rect rec = tileset->GetTileRect(422);
+		fPoint pos = MapToWorld(pointV.x, pointV.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		itemVisited = itemVisited->next;
+
+	}
+	while (itemFrontier)
+	{
+		TileSet* tileset = GetTilesetFromTileId(401);
+
+		SDL_Rect rec = tileset->GetTileRect(401);
+
+		pointF = itemFrontier->data;
+		tileset = GetTilesetFromTileId(401);
+		fPoint pos = MapToWorld(pointF.x, pointF.y);
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		itemFrontier = itemFrontier->next;
+	}
+	int pathSize = path.Count();
+	for (size_t i = 0; i < pathSize; i++)
+	{
+		TileSet* tileset = GetTilesetFromTileId(401);
+
+		SDL_Rect rec = tileset->GetTileRect(401);
+
+		pointPath = { path.At(i)->x,path.At(i)->y };
+		tileset = GetTilesetFromTileId(401);
+		fPoint pos = MapToWorld(pointPath.x, pointPath.y);
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+
+	}
+}
+
+int Map::MovementCost(int x, int y) const
+{
+	int ret = -1;
+
+	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
+	{
+		// Coje el layer de las colisiones que en nuestro caso es el tercero
+		int id = data.layers.start->next->next->data->Get(x, y);
+
+		if (id != 0)
+		{
+			int fisrtGid = GetTilesetFromTileId(id)->firstgid;
+
+			if (id == fisrtGid) ret = 1;
+			else if (id == fisrtGid + 1) ret = 0;
+			else if (id == fisrtGid + 2) ret = 3;
+		}
+		else ret = 1;
+	}
+
+	return ret;
+}
+
+
+void Map::PropagateAStar(int heuristic)
+{
+	// Consider the different heuristics
+	iPoint curr;
+	curr = frontier.GetLast()->data;
+	if (frontier.Pop(curr) && curr != tileDestiny)
+	{
+		if (true)
+		{
+			iPoint neighbors[4];
+			neighbors[0].Create(curr.x + 1, curr.y + 0);
+			neighbors[1].Create(curr.x + 0, curr.y + 1);
+			neighbors[2].Create(curr.x - 1, curr.y + 0);
+			neighbors[3].Create(curr.x + 0, curr.y - 1);
+
+			for (uint i = 0; i < 4; ++i)
+			{
+				if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
+				{
+					if (visited.Find(neighbors[i]) == -1)
+					{
+						frontier.Push(neighbors[i], CalculateDistanceToDestiny(neighbors[i]) + CalculateDistanceToStart(neighbors[i]));
+						visited.Add(neighbors[i]);
+						costSoFar[i][0] = MovementCost(neighbors[i].x, neighbors[i].y);
+						breadCrumbs.Add(curr);
+					}
+				}
+			}
+		}
+
+	}
+	else
+	{
+		breadCrumbs.Add(curr);
+		ComputePathAStar(tileDestiny.x, tileDestiny.y);
+		app->map->ResetPath(app->map->tileDestiny);
+	}
+}
+
+void Map::ComputePathAStar(int x, int y)
+{
+	path.Clear();
+	iPoint goal = { x, y };
+	int size = breadCrumbs.Count() - 1;
+	path.PushBack(goal);
+
+	ListItem<iPoint>* iterator = visited.end;
+	ListItem<iPoint>* tmp = breadCrumbs.At(size);
+
+	for (iterator; iterator; iterator = iterator->prev)
+	{
+		size--;
+		if (iterator->data == tmp->data)
+		{
+			path.PushBack(iterator->data);
+			tmp = breadCrumbs.At(size);
+		}
+	}
+}
+
+int Map::CalculateDistanceToDestiny(iPoint node)
+{
+	iPoint distance = tileDestiny - node;
+	return distance.x + distance.y;
+}
+
+int Map::CalculateDistanceToStart(iPoint node)
+{
+	iPoint distance;
+	distance = node - visited.start->data;
+	return distance.x + distance.y;
+
+}
 // Get relative Tile rectangle
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
 
-	// L04: DONE 7: Get relative Tile rectangle
 	int relativeId = id - firstgid;
 	rect.w = tileWidth;
 	rect.h = tileHeight;
@@ -283,8 +291,6 @@ bool Map::CleanUp()
 {
 	LOG("Unloading map");
 
-	// L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
-	// Remove all tilesets
 	ListItem<TileSet*>* item;
 	item = data.tilesets.start;
 
@@ -295,8 +301,6 @@ bool Map::CleanUp()
 	}
 	data.tilesets.Clear();
 
-	// L04: DONE 2: clean up all layer data
-	// Remove all layers
 	ListItem<MapLayer*>* item2;
 	item2 = data.layers.start;
 
@@ -330,12 +334,9 @@ bool Map::Load(const char* filename)
 	// Load general info
 	if (ret == true)
 	{
-		// L03: DONE 3: Create and call a private function to load and fill all your map data
 		ret = LoadMap();
 	}
 
-	// L03: DONE 4: Create and call a private function to load a tileset
-	// remember to support more any number of tilesets!
 	pugi::xml_node tileset;
 	for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
@@ -348,8 +349,6 @@ bool Map::Load(const char* filename)
 		data.tilesets.Add(set);
 	}
 
-	// L04: DONE 4: Iterate all layers and load each of them
-	// Load layer info
 	pugi::xml_node layer;
 	for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
 	{
@@ -367,14 +366,12 @@ bool Map::Load(const char* filename)
 
 			ret = LoadProperties(propertiesNode, *property);
 
-			//data.layers.At(0)->data->properties.list.add();
 			lay->properties = *property;
 		}
 	}
 
 	if (ret == true)
 	{
-		// L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
 		LOG("Successfully parsed Successfully parsed map XML file: %s", filename);
 		LOG("width: %d  height: %d", data.width, data.height);
 
@@ -385,9 +382,6 @@ bool Map::Load(const char* filename)
 			LOG("tile width: %d tile height: %d", data.tilesets.At(i)->data->texWidth, data.tilesets.At(i)->data->texHeight);
 			LOG("spacing: %d margin: %d", data.tilesets.At(i)->data->spacing, data.tilesets.At(i)->data->margin);
 		}
-
-
-		// L04: TODO 4: LOG the info for each loaded layer
 	}
 
 	mapLoaded = ret;
@@ -395,7 +389,6 @@ bool Map::Load(const char* filename)
 	return ret;
 }
 
-// L03: TODO: Load map general properties
 bool Map::LoadMap()
 {
 	bool ret = true;
@@ -408,7 +401,6 @@ bool Map::LoadMap()
 	}
 	else
 	{
-		// L03: TODO: Load map general properties
 		data.width = map.attribute("width").as_int(0);
 		data.height = map.attribute("height").as_int(0);
 		data.tileWidth = map.attribute("tilewidth").as_int(0);
@@ -419,12 +411,10 @@ bool Map::LoadMap()
 	return ret;
 }
 
-// L03: TODO: Load Tileset attributes
 bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
-	// L03: TODO: Load Tileset attributes
 	set->firstgid = tileset_node.attribute("firstgid").as_int(0);
 	set->name = tileset_node.attribute("name").as_string();
 	set->margin = tileset_node.attribute("margin").as_int(0);
@@ -436,7 +426,6 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L03: TODO: Load Tileset image
 bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -450,19 +439,16 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		// L03: TODO: Load Tileset image
 		set->texture = app->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 	}
 
 	return ret;
 }
 
-// L04: TODO 3: Create the definition for a function that loads a single layer
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 
-	// L04: TODO 3: Load a single layer
 	layer->name = node.attribute("name").as_string("");
 	layer->width = node.attribute("width").as_int(0);
 	layer->height = node.attribute("height").as_int(0);
@@ -540,7 +526,7 @@ void Map::LoadColliders()
 
 
 				int u = layer->Get(x, y);
-				iPoint pos = MapToWorld(x, y);
+				fPoint pos = MapToWorld(x, y);
 				SDL_Rect n = { pos.x + 1, pos.y, data.tileWidth - 2, data.tileHeight-15 };
 				SDL_Rect n2 = { pos.x-1, pos.y+7, 2, 6 };
 				SDL_Rect n3 = { pos.x + 15, pos.y + 7, 2, 6 };
@@ -560,4 +546,47 @@ void Map::LoadColliders()
 		}
 		L = L->next;
 	}
+}
+
+bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	ListItem<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.GetProperty("Nodraw", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y * layer->width) + x;
+
+				int tileId = layer->Get(x, y);
+				TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
 }

@@ -12,6 +12,7 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "Fonts.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -42,6 +43,16 @@ bool Scene::Start()
 	app->player->Init();
 	app->player->Start();
 
+	if (app->map->Load("scene1.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &data)) app->pathFinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+
 	app->entitymanager->AddEntity({ 260.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
 	app->entitymanager->AddEntity({ 246.0f, 200.0f }, Entity::Type::AIR_ENEMY);
 	app->entitymanager->AddEntity({ 166.0f, 210.0f }, Entity::Type::HEARTS);
@@ -50,8 +61,6 @@ bool Scene::Start()
 
 	app->collisions->active = true;
 	app->map->active = true;
-	
-	app->map->Load("scene1.tmx");
 
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 

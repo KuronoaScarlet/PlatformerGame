@@ -58,6 +58,7 @@
     <ClCompile Include="Source\AirEnemy.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Source\AirEnemy.h">
       <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

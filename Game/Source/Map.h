@@ -124,30 +124,27 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Load new map
 	bool Load(const char* path);
 
-	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
-	iPoint MapToWorld(int x, int y) const;
-
-	// L05: TODO 2: Add orthographic world to map coordinates
-	iPoint WorldToMap(int x, int y) const;
+	fPoint MapToWorld(float x, float y) const;
+	fPoint WorldToMap(float x, float y) const;
 
 	void ShowCollider() { DrawColliders = !DrawColliders; }
 
 	void LoadColliders();
 
-
-	/////////////////
-
 	void ResetPath(iPoint start);
 	void DrawPath();
 
 	int MovementCost(int x, int y) const;
-	
-	void ComputePathAStar(int x, int y);
 
+	void ComputePathAStar(int x, int y);
 	void PropagateAStar(int heuristic);
+
+	int CalculateDistanceToDestiny(iPoint node);
+	int CalculateDistanceToStart(iPoint node);
+
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 
@@ -158,19 +155,10 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	TileSet* GetTilesetFromTileId(int id) const;
-	
-
 
 public:
-
-	// L03: DONE 1: Add your struct for map info
 	MapData data;
-	
-	// L12: AStar (A*) variables
-	iPoint goalAStar;			// Store goal target tile
-	bool endAStar = false;	// Detect when reached goal
-	List<iPoint> visited;
-	DynArray<iPoint> path;
+	iPoint tileDestiny;
 
 private:
 
@@ -180,13 +168,14 @@ private:
 	bool DrawColliders = false;
 
 	PQueue<iPoint> frontier;
-	
+	List<iPoint> visited;
 
-	List<iPoint> breadcrumbs;
-	
-
+	List<iPoint> breadCrumbs;
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+	DynArray<iPoint> path;
 
+	iPoint goalAStar;
+	bool finishAStar = false;
 
 	SDL_Texture* tileX = nullptr;
 };

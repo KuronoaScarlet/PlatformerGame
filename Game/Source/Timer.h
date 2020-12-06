@@ -13,6 +13,7 @@ public:
 	void Start();
 	uint32 Read() const;
 	float ReadSec() const;
+	bool Check(float interval);
 
 private:
 	uint32 startTime;

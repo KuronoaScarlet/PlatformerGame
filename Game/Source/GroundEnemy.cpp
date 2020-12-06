@@ -9,6 +9,7 @@
 #include "Scene2.h"
 #include "map.h"
 #include "Audio.h"
+#include "Pathfinding.h"
 
 GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -25,6 +26,8 @@ GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
 	hitFx = app->audio->LoadFx("Assets/Audio/FX/heart.wav");
+
+	lastPathEnemy = new DynArray<fPoint>();
 }
 
 bool GroundEnemy::Start()
@@ -34,38 +37,28 @@ bool GroundEnemy::Start()
 
 bool GroundEnemy::Update(float dt)
 {
-	app->map->goalAStar = { 13,16 };
+	if (Radar(app->player->playerData.position))
+	{
+		//Direction
+		if (position.x < app->player->playerData.position.x);
+		//If player move
+		fPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
+		fPoint worldPositionPalyer = app->player->playerData.position;
+		fPoint mapPositionPalyer = app->map->WorldToMap(worldPositionPalyer.x, worldPositionPalyer.y);
 
-	if (app->map->endAStar == false) {
+		//Cerate Path
+		CreatePathEnemy(mapPositionEnemy, mapPositionPalyer);
+		int i = GetCurrentPositionInPath(mapPositionEnemy);
 
-		app->map->PropagateAStar(0);
-
-
-		/*for (int i = 0; i < app->map->visited.Count(); i++)
+		//Move Enemy
+		if (lastPathEnemy->At(i + 1) != NULL)
 		{
-			if (app->map->visited.At(i)->data.x == app->map->goalAStar.x && app->map->visited.At(i)->data.y == app->map->goalAStar.y)
-			{
-				app->map->endAStar = true;
-				app->map->ComputePathAStar(app->map->goalAStar.x, app->map->goalAStar.y);
-			}
-		}*/
-	}
-	if (app->map->path.At(0) != NULL) {
-		int i;
-		for (i = 0; i < app->map->path.Count(); i++)
-		{
-			if (position.x == app->map->path.At(i)->x && position.y == app->map->path.At(i)->y) break;
-		}
-		iPoint pos = app->map->WorldToMap(position.x, position.y);
-		if (pos.x < app->map->path.At(i + 1)->x)
-		{
-			position.x += 1;
-		}
-		else
-		{
-			position.x -= 1;
+			fPoint nextPositionEnemy = *lastPathEnemy->At(i + 1);
+			fPoint nextAuxPositionEenemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
+			MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
 		}
 	}
+	
 	currentAnimation = &walkAnimRight;
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
@@ -126,4 +119,54 @@ void GroundEnemy::Collision(Collider* coll)
 void GroundEnemy::CleanUp()
 {
 
+}
+
+bool GroundEnemy::Radar(fPoint distance)
+{
+	if (position.DistanceManhattan(distance) < range) return true;
+
+	return false;
+}
+
+int GroundEnemy::CalculateDistance(fPoint origin, fPoint destination)
+{
+	return abs(origin.x - destination.x) + abs(origin.y - destination.y);;
+}
+
+void GroundEnemy::CreatePathEnemy(fPoint mapPositionEnemy, fPoint mapPositionDestination)
+{
+	if (checkDestination->Check(1000))
+	{
+		app->pathFinding->ResetPath(mapPositionEnemy);
+		checkDestination->Start();
+		app->pathFinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
+		lastPathEnemy = app->pathFinding->GetLastPath();
+	}
+}
+
+int GroundEnemy::GetCurrentPositionInPath(fPoint mapPositionEnemy)
+{
+	int i = 0;
+	for (i = 0; i < lastPathEnemy->Count(); i++)
+	{
+		if (mapPositionEnemy == fPoint({ lastPathEnemy->At(i)->x, lastPathEnemy->At(i)->y })) break;
+	}
+	return i;
+}
+
+void GroundEnemy::MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy)
+{
+	int positionEnemyX = position.x;
+	int positionEnemyY = position.y;
+	
+	if (nextAuxPositionEenemy.x < positionEnemyX)
+	{
+		position.x -= 1;
+	}
+	else if (nextAuxPositionEenemy.x > positionEnemyX)
+	{
+		position.x += 1;
+	}
+
+	
 }

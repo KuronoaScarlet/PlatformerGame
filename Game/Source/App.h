@@ -27,6 +27,7 @@ class Collisions;
 class DeathScreen;
 class WinScreen;
 class Fonts;
+class PathFinding;
 
 class App
 {
@@ -108,6 +109,7 @@ public:
 	DeathScreen* deathScreen;
 	WinScreen* winScreen;
 	Fonts* fonts;
+	PathFinding* pathFinding;
 
 	uint activeFonts = 0;
 	uint totalFonts = 0;
