@@ -25,7 +25,7 @@ GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 10 }), Collider::Type::ENEMY, listener);
-	hitFx = app->audio->LoadFx("Assets/Audio/FX/heart.wav");
+	hitFx = app->audio->LoadFx("Assets/Audio/FX/hit.wav");
 
 	lastPathEnemy = new DynArray<fPoint>();
 }

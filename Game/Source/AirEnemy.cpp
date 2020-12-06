@@ -10,6 +10,7 @@
 #include "map.h"
 #include "Player.h"
 #include "Pathfinding.h"
+#include "Audio.h"
 
 AirEnemy::AirEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -22,6 +23,8 @@ AirEnemy::AirEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type
 	currentAnimation = &idleAnimation;
 
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
+
+	hitFx = app->audio->LoadFx("Assets/Audio/FX/hit.wav");
 }
 
 bool AirEnemy::Start()
@@ -99,6 +102,7 @@ void AirEnemy::Collision(Collider* coll)
 {
 	if (coll->type == Collider::Type::PLAYER)
 	{
+		app->audio->PlayFx(hitFx);
 		app->player->deathCondition = true;
 		app->player->playerData.playerLives--;
 

@@ -25,6 +25,8 @@ public:
 	
 	void CleanUp();
 
+	uint hitFx = 0;
+
 private:
 	Animation idleAnimation;
 	Animation walkAnimRight;
