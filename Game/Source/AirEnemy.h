@@ -31,10 +31,9 @@ private:
 
 	Animation* currentAnimation;
 
-	bool Radar(fPoint origin);
+	bool Sonar(fPoint origin);
 	void CreatePathEnemy(fPoint origin, fPoint destination);
 	int GetCurrentPositionInPath(fPoint mapPositionEnemy);
-	void MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy);
 	int CalculateDistance(fPoint origin, fPoint destination);
 
 	int range = 100;
@@ -44,6 +43,8 @@ private:
 	Timer* checkDestination = new Timer();
 	fPoint destination;
 	fPoint positionInitial;
+
+	int timer = 0;
 
 	DynArray<fPoint>* lastPathEnemy;
 };

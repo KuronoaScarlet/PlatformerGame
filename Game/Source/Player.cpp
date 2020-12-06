@@ -245,7 +245,7 @@ bool Player::Update(float dt)
 
 	if (playerData.position.y <= 230 && playerData.position.y >= 20)
 	{
-		app->render->camera.y = -playerData.position.y + 20;
+		app->render->camera.y = -playerData.position.y + 30;
 	}
 
 	return true;

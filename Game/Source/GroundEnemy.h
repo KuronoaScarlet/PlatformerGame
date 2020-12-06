@@ -7,6 +7,8 @@
 #include "Timer.h"
 #include "DynArray.h"
 
+#define grav = -0.1f
+
 struct SDL_Texture;
 struct Collider;
 
@@ -35,10 +37,9 @@ private:
 	uint hitFx = 0;
 
 	// PathFinding
-	bool Radar(fPoint origin);
+	bool Sonar(fPoint origin);
 	void CreatePathEnemy(fPoint origin, fPoint destination);
 	int GetCurrentPositionInPath(fPoint mapPositionEnemy);
-	void MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy);
 	int CalculateDistance(fPoint origin, fPoint destination);
 
 	int range = 70;
@@ -50,6 +51,12 @@ private:
 	fPoint positionInitial;
 
 	DynArray<fPoint>* lastPathEnemy;
+
+	float vely = 0.0f;
+	float velx = 0.0f;
+	float gravity = 0.2f;
+
+	int timer = 0;
 
 };
 

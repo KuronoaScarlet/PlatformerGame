@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "Scene2.h"
 #include "map.h"
+#include "Player.h"
 #include "Pathfinding.h"
 
 AirEnemy::AirEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
@@ -30,29 +31,52 @@ bool AirEnemy::Start()
 
 bool AirEnemy::Update(float dt)
 {
-	if (Radar(app->player->playerData.position))
+	if (Sonar(app->player->playerData.position))
 	{
-		//Direction
-		/*if (position.x < app->player->playerData.position.x)
-			position.x += 60 * dt;
-		*/
 		//If player move
-		fPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
-		fPoint worldPositionPlayer = app->player->playerData.position;
-		fPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
+		fPoint positionEnemy = app->map->WorldToMap(position.x, position.y);
+		fPoint positionPlayer = app->map->WorldToMap(app->player->playerData.position.x, app->player->playerData.position.y);
 
 
 		//Cerate Path
-		CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
-		int i = GetCurrentPositionInPath(mapPositionEnemy);
+		CreatePathEnemy(positionEnemy, positionPlayer);
+		int i = GetCurrentPositionInPath(positionEnemy);
 
 		//Move Enemy
 		if (lastPathEnemy->At(i + 1) != NULL)
 		{
-			fPoint nextPositionEnemy = *lastPathEnemy->At(i + 1);
-			fPoint nextAuxPositionEenemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
-			MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
+			
+			if (app->player->playerData.position.x < position.x)
+			{
+				position.x -= 1;
+				if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
+				if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
+
+			}
+			else if (app->player->playerData.position.x > position.x)
+			{
+				position.x += 1;
+				if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
+				if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
+			}
 		}
+	}
+	else
+	{
+
+		if (timer <= 100)
+		{
+			position.x += 0.5f;
+			timer++;
+		}
+		if (timer >= 100 && timer <= 200)
+		{
+			position.x -= 0.5f;
+			timer++;
+		}
+		if (timer == 200)
+			timer = 0;
+
 	}
 
 	currentAnimation = &idleAnimation;
@@ -109,13 +133,33 @@ void AirEnemy::Collision(Collider* coll)
 		app->player->playerData.vely = -5.5f;
 		app->player->playerData.position.y += app->player->playerData.vely;
 	}
+	if (coll->type == Collider::Type::FLOOR)
+	{
+		position.y = coll->rect.y - coll->rect.h - 9;
+		position.y = position.y;
+	}
+	if (coll->type == Collider::Type::LEFT_WALL)
+	{
+		position.x = coll->rect.x - coll->rect.w - 10;
+		
+	}
+	if (coll->type == Collider::Type::RIGHT_WALL)
+	{
+		position.x = coll->rect.x + coll->rect.w + 1;
+		
+	}
+	if (coll->type == Collider::Type::ROOF)
+	{
+		position.y = coll->rect.y + coll->rect.h;
+		
+	}
 }
 
 void AirEnemy::CleanUp()
 {
 
 }
-bool AirEnemy::Radar(fPoint distance)
+bool AirEnemy::Sonar(fPoint distance)
 {
 	if (position.DistanceManhattan(distance) < range) return true;
 
@@ -148,19 +192,3 @@ int AirEnemy::GetCurrentPositionInPath(fPoint mapPositionEnemy)
 	return i;
 }
 
-void AirEnemy::MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy)
-{
-	int positionEnemyX = position.x;
-	int positionEnemyY = position.y;
-
-	if (nextAuxPositionEenemy.x < positionEnemyX)
-	{
-		position.x -= 1;
-	}
-	else if (nextAuxPositionEenemy.x > positionEnemyX)
-	{
-		position.x += 1;
-	}
-
-
-}

@@ -37,24 +37,53 @@ bool GroundEnemy::Start()
 
 bool GroundEnemy::Update(float dt)
 {
-	if (Radar(app->player->playerData.position))
+
+	vely += gravity;
+	position.x += velx;
+	position.y += vely;
+
+	if (Sonar(app->player->playerData.position))
 	{
-		fPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
-		fPoint worldPositionPlayer = app->player->playerData.position;
-		fPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
+		//If player move
+		fPoint positionEnemy = app->map->WorldToMap(position.x, position.y);
+		fPoint positionPlayer = app->map->WorldToMap(app->player->playerData.position.x, app->player->playerData.position.y);
 
 
 		//Cerate Path
-		CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
-		int i = GetCurrentPositionInPath(mapPositionEnemy);
+		CreatePathEnemy(positionEnemy, positionPlayer);
+		int i = GetCurrentPositionInPath(positionEnemy);
 
 		//Move Enemy
 		if (lastPathEnemy->At(i + 1) != NULL)
 		{
 			fPoint nextPositionEnemy = *lastPathEnemy->At(i + 1);
-			fPoint nextAuxPositionEenemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
-			MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
+			fPoint nextAuxPositionEnemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
+			if (nextAuxPositionEnemy.x < position.x)
+			{
+				position.x -= 1;
+			}
+			else if (nextAuxPositionEnemy.x > position.x)
+			{
+				position.x += 1;
+			}
 		}
+	}
+	else
+	{
+
+		if (timer <= 100)
+		{
+			position.x += 0.5f;
+			timer++;
+		}
+		if (timer >= 100 && timer <= 200)
+		{
+			position.x -= 0.5f;
+			timer++;
+		}
+		if (timer == 200)
+			timer = 0;
+
 	}
 	
 	currentAnimation = &walkAnimRight;
@@ -112,6 +141,22 @@ void GroundEnemy::Collision(Collider* coll)
 		app->player->playerData.vely = -5.5f;
 		app->player->playerData.position.y += app->player->playerData.vely;
 	}
+	if (coll->type == Collider::Type::LEFT_WALL)
+	{
+		position.x -= 1;
+		timer = 100;
+	}
+	if (coll->type == Collider::Type::RIGHT_WALL)
+	{
+		position.x += 1;
+		timer = 0;
+	}
+	if (coll->type == Collider::Type::FLOOR)
+	{
+		position.y = coll->rect.y - coll->rect.h - 9;
+		vely = 0;
+		position.y = position.y;
+	}
 }
 
 void GroundEnemy::CleanUp()
@@ -119,7 +164,7 @@ void GroundEnemy::CleanUp()
 
 }
 
-bool GroundEnemy::Radar(fPoint distance)
+bool GroundEnemy::Sonar(fPoint distance)
 {
 	if (position.DistanceManhattan(distance) < range) return true;
 
@@ -152,19 +197,3 @@ int GroundEnemy::GetCurrentPositionInPath(fPoint mapPositionEnemy)
 	return i;
 }
 
-void GroundEnemy::MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy)
-{
-	int positionEnemyX = position.x;
-	int positionEnemyY = position.y;
-	
-	if (nextAuxPositionEenemy.x < positionEnemyX)
-	{
-		position.x -= 1;
-	}
-	else if (nextAuxPositionEenemy.x > positionEnemyX)
-	{
-		position.x += 1;
-	}
-
-	
-}
