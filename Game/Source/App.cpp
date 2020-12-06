@@ -43,7 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
-	entitymanager = new EntityManager();
+	entityManager = new EntityManager();
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
@@ -64,7 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
-	AddModule(entitymanager);
+	AddModule(entityManager);
 	AddModule(checkpoint);
 	AddModule(fade);
 	AddModule(deathScreen);

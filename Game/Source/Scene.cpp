@@ -53,9 +53,9 @@ bool Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	app->entitymanager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
-	app->entitymanager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
+	app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
 
 	app->collisions->active = true;
 	app->map->active = true;
@@ -127,7 +127,7 @@ bool Scene::CleanUp()
 	app->map->CleanUp();
 	app->player->CleanUp();
 	app->collisions->CleanUp();
-	app->entitymanager->CleanUp();
+	app->entityManager->CleanUp();
 
 	app->player->scene1 = false;
 

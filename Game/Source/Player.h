@@ -4,7 +4,6 @@
 #include "Module.h"
 #include "Animation.h"
 
-#define grav = -0.1f
 
 struct SDL_Texture;
 struct Collider;
@@ -62,7 +61,6 @@ public:
 	void InitialPos();
 
 	bool playerJumping = true;
-	float MAX_FALL_SPEED = 1.0f;
 	float gravity = 0.2f;
 	float delta = 1.5f;
 	bool godMode = false;

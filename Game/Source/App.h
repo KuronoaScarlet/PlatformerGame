@@ -101,7 +101,7 @@ public:
 	Scene* scene;
 	Scene2* scene2;
 	Map* map;
-	EntityManager* entitymanager;
+	EntityManager* entityManager;
 	Player* player;
 	CheckPoint* checkpoint;
 	FadeToBlack* fade;

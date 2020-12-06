@@ -56,35 +56,35 @@ bool Scene2::Start()
 	app->collisions->AddCollider({ 1248, 240, 15, 15 }, Collider::Type::WIN, this); 
 
 	//Enemies
-	app->entitymanager->AddEntity({ 752.0f, 270.0f }, Entity::Type::GROUND_ENEMY);
-	app->entitymanager->AddEntity({ 752.0f, 112.0f }, Entity::Type::AIR_ENEMY);
-	app->entitymanager->AddEntity({ 1056.0f, 32.0f }, Entity::Type::AIR_ENEMY);
+	app->entityManager->AddEntity({ 752.0f, 270.0f }, Entity::Type::GROUND_ENEMY);
+	app->entityManager->AddEntity({ 752.0f, 112.0f }, Entity::Type::AIR_ENEMY);
+	app->entityManager->AddEntity({ 1056.0f, 32.0f }, Entity::Type::AIR_ENEMY);
 
 	//Coins
-	app->entitymanager->AddEntity({ 128.0f, 256.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 128.0f, 192.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 112.0f, 192.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 192.0f, 48.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 352.0f, 64.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 224.0f, 256.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 240.0f, 240.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 256.0f, 256.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 560.0f, 208.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 608.0f, 208.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 704.0f, 144.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 752.0f, 144.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 448.0f, 96.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 464.0f, 96.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 928.0f, 176.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 944.0f, 176.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 896.0f, 48.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 880.0f, 48.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 880.0f, 32.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 1008.0f, 96.0f }, Entity::Type::COINS);
-	app->entitymanager->AddEntity({ 1024.0f, 96.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 128.0f, 256.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 128.0f, 192.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 112.0f, 192.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 192.0f, 48.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 352.0f, 64.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 224.0f, 256.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 240.0f, 240.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 256.0f, 256.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 560.0f, 208.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 608.0f, 208.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 704.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 752.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 448.0f, 96.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 464.0f, 96.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 928.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 944.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 896.0f, 48.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 880.0f, 48.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 880.0f, 32.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1008.0f, 96.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1024.0f, 96.0f }, Entity::Type::COINS);
 
 	//Hearts
-	app->entitymanager->AddEntity({ 608.0f, 256.0f }, Entity::Type::HEARTS);
+	app->entityManager->AddEntity({ 608.0f, 256.0f }, Entity::Type::HEARTS);
 	
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
@@ -152,7 +152,7 @@ bool Scene2::CleanUp()
 	app->map->CleanUp();
 	app->player->CleanUp();
 	app->collisions->CleanUp();
-	app->entitymanager->CleanUp();
+	app->entityManager->CleanUp();
 
 	app->player->scene2 = false;
 

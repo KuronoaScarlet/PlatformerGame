@@ -114,7 +114,7 @@ bool Player::Update(float dt)
 		{
 			app->scene->firstEntry = true;
 			app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
-			app->entitymanager->CleanUp();
+			app->entityManager->CleanUp();
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -123,7 +123,7 @@ bool Player::Update(float dt)
 		{
 			app->scene2->firstEntry = true;
 			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
-			app->entitymanager->CleanUp();
+			app->entityManager->CleanUp();
 		}
 		if (scene2 == true)
 		{
@@ -292,12 +292,12 @@ bool Player::LoadState(pugi::xml_node& data)
 	if (playerData.currentLevel == 1 && scene2 == true)
 	{
 		app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
-		app->entitymanager->CleanUp();
+		app->entityManager->CleanUp();
 	}
 	if (playerData.currentLevel == 2 && scene1 == true)
 	{
 		app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
-		app->entitymanager->CleanUp();
+		app->entityManager->CleanUp();
 	}
 
 	return true;
@@ -371,13 +371,13 @@ void Player::OnCollision(Collider* a, Collider* b)
 			{
 				app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
 				winCondition = true;
-				app->entitymanager->CleanUp();
+				app->entityManager->CleanUp();
 			}
 			if (scene2 == true)
 			{
 				app->fade->Fade((Module*)app->scene2, (Module*)app->winScreen, 60);
 				winCondition = true;
-				app->entitymanager->CleanUp();
+				app->entityManager->CleanUp();
 			}
 		}
 		if (b->type == Collider::Type::CHECKPOINT)

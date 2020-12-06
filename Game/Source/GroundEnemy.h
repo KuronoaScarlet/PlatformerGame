@@ -7,7 +7,6 @@
 #include "Timer.h"
 #include "DynArray.h"
 
-#define grav = -0.1f
 
 struct SDL_Texture;
 struct Collider;

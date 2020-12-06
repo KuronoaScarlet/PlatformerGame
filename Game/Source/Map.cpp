@@ -54,7 +54,7 @@ void Map::Draw()
 					fPoint vec = MapToWorld(x, y);
 					for (int i = 0; i < data.tilesets.Count(); i++)
 					{
-						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0 || DrawColliders)
+						if (data.layers.At(i)->data->properties.GetProperty("Nodraw", 0) == 0 || drawColliders)
 							app->render->DrawTexture(data.tilesets.At(i)->data->texture, vec.x, vec.y, &data.tilesets.At(i)->data->GetTileRect(tileId));
 							//app->render->DrawTexture(GetTilesetFromTileId(tileId)->texture, vec.x, vec.y, &GetTilesetFromTileId(tileId)->GetTileRect(tileId));
 					}

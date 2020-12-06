@@ -106,11 +106,11 @@ void AirEnemy::Collision(Collider* coll)
 		{
 			if (app->scene->active == true)
 			{
-				app->fade->Fade((Module*)app->scene, (Module*)app->deathScreen, 60);
+				app->fade->Fade((Module*)app->scene, (Module*)app->deathScreen, 1);
 			}
 			if (app->scene2->active == true)
 			{
-				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
+				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 1);
 			}
 		}
 		if (app->player->playerData.playerLives != 0)

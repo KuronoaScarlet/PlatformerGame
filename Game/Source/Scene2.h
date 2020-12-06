@@ -4,9 +4,6 @@
 #include "Module.h"
 #include "Animation.h"
 
-#define grav = -0.1f
-
-
 class Scene2 : public Module
 {
 public:

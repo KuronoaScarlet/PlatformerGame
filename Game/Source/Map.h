@@ -129,7 +129,7 @@ public:
 	fPoint MapToWorld(float x, float y) const;
 	fPoint WorldToMap(float x, float y) const;
 
-	void ShowCollider() { DrawColliders = !DrawColliders; }
+	void ShowCollider() { drawColliders = !drawColliders; }
 
 	void LoadColliders();
 
@@ -165,7 +165,7 @@ private:
 	pugi::xml_document mapFile;
 	SString folder;
 	bool mapLoaded;
-	bool DrawColliders = false;
+	bool drawColliders = false;
 
 	PQueue<iPoint> frontier;
 	List<iPoint> visited;

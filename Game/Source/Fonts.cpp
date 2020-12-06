@@ -55,8 +55,8 @@ int Fonts::Load(const char* texture_path, const char* characters, uint rows)
 
 	uint tex_w, tex_h;
 	app->tex->GetSize(tex, tex_w, tex_h);
-	font.char_w = tex_w / font.columns;
-	font.char_h = tex_h / font.rows;
+	font.charw = tex_w / font.columns;
+	font.charh = tex_h / font.rows;
 
 	++fontsCount;
 
@@ -87,8 +87,8 @@ void Fonts::BlitText(int x, int y, int font_id, const char* text) const
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
 
-	spriteRect.w = font->char_w;
-	spriteRect.h = font->char_h;
+	spriteRect.w = font->charw;
+	spriteRect.h = font->charh;
 
 	for (uint i = 0; i < len; ++i)
 	{
