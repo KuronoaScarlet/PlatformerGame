@@ -249,6 +249,9 @@ void Collisions::DebugDraw()
 		case Collider::Type::PLAYERFOOT:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 2, 55, alpha);
 			break;
+		case Collider::Type::CHECKPOINT:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 2, 55, alpha);
+			break;
 		}
 	}
 }

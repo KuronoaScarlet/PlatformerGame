@@ -139,7 +139,8 @@ private:
 	PerfTimer perfTimer;
 	uint64 fpsCount = 0;
 
-	int frameRate;
+	int frameRate60;
+	int frameRate30;
 
 	Timer startTime;
 	Timer frameTime;

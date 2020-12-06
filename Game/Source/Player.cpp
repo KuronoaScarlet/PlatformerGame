@@ -89,7 +89,11 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-
+	if (godMode == false)
+	{
+		collider->SetPos(playerData.position.x, playerData.position.y + 2);
+		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
+	}
 	if (playerData.position.y <= 230 && playerData.position.y >= 20)
 	{
 		app->render->camera.y = -playerData.position.y+20;
@@ -151,6 +155,7 @@ bool Player::Update(float dt)
 	}
 	if (debug == true) {
 		app->collisions->DebugDraw();
+		app->map->DrawPath();
 	
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -236,12 +241,7 @@ bool Player::Update(float dt)
 	}
 
 	playerData.currentAnim->Update();
-	if (godMode == false)
-	{
-		collider->SetPos(playerData.position.x, playerData.position.y + 2);
-		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
-	}
-	
+
 	cameraControl = true;
 
 	return true;
@@ -358,7 +358,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerData.vely = 0;
 			playerData.position.y = b->rect.y + b->rect.h;
 			cameraControl = false;
-			doubleJump = false;
 		}
 		if (b->type == Collider::Type::WIN && winCondition == false)
 		{

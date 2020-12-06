@@ -138,10 +138,10 @@ void PathFinding::ComputePathAStar(const fPoint& origin, const fPoint& destinati
 	int count = 0;
 	while (destinationIsFind == false)
 	{
-		PropagateAStar(destination);
+ 		PropagateAStar(destination);
 		for (count; count < visited.Count(); count++)
 		{
-			if (visited.At(count)->data.x == destination.x && visited.At(count)->data.y == destination.y)
+			if ((int)visited.At(count)->data.x == (int)destination.x && (int)visited.At(count)->data.y == (int)destination.y)
 			{
 				destinationIsFind = true;
 				break;
@@ -149,7 +149,6 @@ void PathFinding::ComputePathAStar(const fPoint& origin, const fPoint& destinati
 		}
 	}
 	destinationIsFind = false;
-	//PropagateAStar(destination);
 	lastPath.Clear();
 
 	lastPath.PushBack(destination);

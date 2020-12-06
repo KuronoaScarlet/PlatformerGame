@@ -12,6 +12,7 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "Fonts.h"
+#include "EntityManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -53,6 +54,8 @@ bool Scene2::Start()
 	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
 
 	app->collisions->AddCollider({ 1248, 240, 15, 15 }, Collider::Type::WIN, this); 
+
+	app->entitymanager->AddEntity({ 608.0f, 272.0f }, Entity::Type::GROUND_ENEMY);
 	
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };

@@ -40,14 +40,17 @@ bool GroundEnemy::Update(float dt)
 	if (Radar(app->player->playerData.position))
 	{
 		//Direction
-		if (position.x < app->player->playerData.position.x);
+		/*if (position.x < app->player->playerData.position.x)
+			position.x += 60 * dt;
+		*/
 		//If player move
 		fPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
-		fPoint worldPositionPalyer = app->player->playerData.position;
-		fPoint mapPositionPalyer = app->map->WorldToMap(worldPositionPalyer.x, worldPositionPalyer.y);
+		fPoint worldPositionPlayer = app->player->playerData.position;
+		fPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
+
 
 		//Cerate Path
-		CreatePathEnemy(mapPositionEnemy, mapPositionPalyer);
+		CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
 		int i = GetCurrentPositionInPath(mapPositionEnemy);
 
 		//Move Enemy
@@ -55,7 +58,7 @@ bool GroundEnemy::Update(float dt)
 		{
 			fPoint nextPositionEnemy = *lastPathEnemy->At(i + 1);
 			fPoint nextAuxPositionEenemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
-			MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
+			//MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
 		}
 	}
 	
@@ -135,7 +138,7 @@ int GroundEnemy::CalculateDistance(fPoint origin, fPoint destination)
 
 void GroundEnemy::CreatePathEnemy(fPoint mapPositionEnemy, fPoint mapPositionDestination)
 {
-	if (checkDestination->Check(1000))
+	if (checkDestination->Check(1))
 	{
 		app->pathFinding->ResetPath(mapPositionEnemy);
 		checkDestination->Start();

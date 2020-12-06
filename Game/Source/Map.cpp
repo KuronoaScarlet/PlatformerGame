@@ -139,9 +139,9 @@ void Map::DrawPath()
 	{
 		pointV = itemVisited->data;
 
-		TileSet* tileset = GetTilesetFromTileId(422);
+		TileSet* tileset = GetTilesetFromTileId(401);
 
-		SDL_Rect rec = tileset->GetTileRect(422);
+		SDL_Rect rec = tileset->GetTileRect(401);
 		fPoint pos = MapToWorld(pointV.x, pointV.y);
 
 		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
@@ -150,12 +150,12 @@ void Map::DrawPath()
 	}
 	while (itemFrontier)
 	{
-		TileSet* tileset = GetTilesetFromTileId(401);
+		TileSet* tileset = GetTilesetFromTileId(422);
 
-		SDL_Rect rec = tileset->GetTileRect(401);
+		SDL_Rect rec = tileset->GetTileRect(422);
 
 		pointF = itemFrontier->data;
-		tileset = GetTilesetFromTileId(401);
+		tileset = GetTilesetFromTileId(422);
 		fPoint pos = MapToWorld(pointF.x, pointF.y);
 		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
 		itemFrontier = itemFrontier->next;

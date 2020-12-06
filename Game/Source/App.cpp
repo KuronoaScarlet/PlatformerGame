@@ -135,7 +135,8 @@ bool App::Awake()
 	{
 		saveLoadNode = saveLoadFile.child("save");
 	}
-	frameRate = configApp.attribute("framerate_cap").as_int(0);
+	frameRate60 = configApp.attribute("framerate_cap").as_int(0);
+	frameRate30 = 30;
 	PERF_PEEK(perfTimer);
 	return ret;
 }
@@ -155,7 +156,7 @@ bool App::Start()
 		item = item->next;
 	}
 	PERF_PEEK(perfTimer);
-	caped = true;
+	caped = false;
 	return ret;
 }
 
@@ -228,6 +229,35 @@ void App::FinishUpdate()
 	uint32 lastFrameInMs = 0;
 	uint32 framesOnLastUpdate = 0;
 
+	if (caped == false)
+	{
+		float secondsStart = startTime.ReadSec();
+		float average = fpsCount / secondsStart;
+
+		if (frameTime.ReadSec() > 1.0f)
+		{
+			framesSecond = lastSecFrameCnt;
+			lastSecFrameCnt = 0;
+			frameTime.Start();
+		}
+
+		oldLastFrame = lastFrameInMs;
+
+		lastFrameInMs = lastSecond.Read();
+
+		lastSecond.Start();
+
+		int delay = (1000 * (1.0f / frameRate60));
+
+		if (lastFrameInMs < 1000 * (1.0f / frameRate60))
+		{
+			perfTimer.Start();
+			SDL_Delay(delay);
+			timePerfect = perfTimer.ReadMs();
+			LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
+		}
+
+	}
 	if (caped == true)
 	{
 		float secondsStart = startTime.ReadSec();
@@ -246,9 +276,9 @@ void App::FinishUpdate()
 
 		lastSecond.Start();
 
-		int delay = (1000 * (1.0f / frameRate));
+		int delay = (1000 * (1.0f / frameRate30));
 
-		if (lastFrameInMs < 1000 * (1.0f / frameRate))
+		if (lastFrameInMs < 1000 * (1.0f / frameRate30))
 		{
 			perfTimer.Start();
 			SDL_Delay(delay);

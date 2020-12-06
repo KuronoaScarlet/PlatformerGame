@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Animation.h"
 #include "Timer.h"
+#include "DynArray.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -40,7 +41,7 @@ private:
 	void MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy);
 	int CalculateDistance(fPoint origin, fPoint destination);
 
-	int range = 500;
+	int range = 100;
 	bool isDetected = false;
 	bool returning;
 
