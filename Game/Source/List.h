@@ -178,7 +178,7 @@ public:
 			pItem = pItem->next;
 		}
 
-		ASSERT(pItem);
+		assert(pItem);
 
 		return(pItem->data);
 	}

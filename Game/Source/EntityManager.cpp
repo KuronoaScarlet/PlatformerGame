@@ -79,6 +79,52 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
+bool EntityManager::LoadState(pugi::xml_node& data)
+{
+	pugi::xml_node enemies = data.child("enemies");
+
+	pugi::xml_node e;
+
+	int count = 0;
+
+	for (e = enemies.child("enemy"); e; e = e.next_sibling("enemy"))
+	{
+		float x = e.attribute("x").as_float();
+		float y = e.attribute("y").as_float();
+		fPoint newPosition = fPoint(x, y);
+		Entity* enemies = entityList[count];
+		if (enemies->type == Entity::Type::GROUND_ENEMY || enemies->type == Entity::Type::AIR_ENEMY)
+		{
+			enemies->position = newPosition;
+		}
+
+		count++;
+	}
+
+	return true;
+}
+
+bool EntityManager::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node enemies = data.child("enemies");
+
+	for (int i = 0; i < entityList.Count(); i++)
+	{
+		Entity* e = entityList[i];
+		if (e->type == Entity::Type::GROUND_ENEMY || e->type == Entity::Type::AIR_ENEMY)
+		{
+			pugi::xml_node eNode = enemies.append_child("enemy");
+			pugi::xml_attribute x = eNode.append_attribute("x");
+			x.set_value(e->position.x);
+			pugi::xml_attribute y = eNode.append_attribute("y");
+			y.set_value(e->position.y);
+			eNode.next_sibling("enemy");
+		}
+	}
+
+	return true;
+}
+
 void EntityManager::AddEntity(fPoint position, Entity::Type type)
 {
 	switch (type)

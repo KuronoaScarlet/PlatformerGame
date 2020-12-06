@@ -33,6 +33,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	void AddEntity(fPoint position, Entity::Type type);
 
 	void OnCollision(Collider* a, Collider* b);
