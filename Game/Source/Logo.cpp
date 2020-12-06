@@ -65,7 +65,7 @@ bool Logo::PostUpdate()
     // Draw everything --------------------------------------
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
-        app->fade->Fade(this, (Module*)app->intro, 60);
+        app->fade->Fade(this, (Module*)app->intro, 10);
 
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

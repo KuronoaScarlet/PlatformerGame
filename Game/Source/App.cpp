@@ -221,14 +221,11 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// Load / Save Calls
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
 
-	PERF_START(perfTimer);
 	uint32 lastFrameInMs = 0;
 	uint32 framesOnLastUpdate = 0;
-
 	if (caped == false)
 	{
 		float secondsStart = startTime.ReadSec();
@@ -254,9 +251,11 @@ void App::FinishUpdate()
 			perfTimer.Start();
 			SDL_Delay(delay);
 			timePerfect = perfTimer.ReadMs();
-			LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
 		}
-
+		static char title[256];
+		sprintf_s(title, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
+			average, framesSecond, lastFrameInMs);
+		app->win->SetTitle(title);
 	}
 	if (caped == true)
 	{
@@ -283,9 +282,11 @@ void App::FinishUpdate()
 			perfTimer.Start();
 			SDL_Delay(delay);
 			timePerfect = perfTimer.ReadMs();
-			LOG("We waited for %d milliseconds and got back in %f milliseconds", delay, timePerfect);
 		}
-
+		static char title[256];
+		sprintf_s(title, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
+			average, framesSecond, lastFrameInMs);
+		app->win->SetTitle(title);
 	}
 	
 }
