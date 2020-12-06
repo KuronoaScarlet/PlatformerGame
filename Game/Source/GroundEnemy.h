@@ -41,7 +41,7 @@ private:
 	void MoveEnemy(fPoint nextAuxPositionEenemy, fPoint mapPositionEnemy);
 	int CalculateDistance(fPoint origin, fPoint destination);
 
-	int range = 100;
+	int range = 70;
 	bool isDetected = false;
 	bool returning;
 

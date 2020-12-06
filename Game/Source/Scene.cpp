@@ -53,9 +53,7 @@ bool Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	app->entitymanager->AddEntity({ 260.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
-	app->entitymanager->AddEntity({ 246.0f, 200.0f }, Entity::Type::AIR_ENEMY);
-	app->entitymanager->AddEntity({ 166.0f, 210.0f }, Entity::Type::HEARTS);
+	app->entitymanager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
 	app->entitymanager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
 	app->entitymanager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
 

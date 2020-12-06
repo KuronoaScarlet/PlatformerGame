@@ -24,7 +24,7 @@ GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture
 
 	currentAnimation = &idleAnimation;
 
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 8 }), Collider::Type::ENEMY, listener);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 10, 10 }), Collider::Type::ENEMY, listener);
 	hitFx = app->audio->LoadFx("Assets/Audio/FX/heart.wav");
 
 	lastPathEnemy = new DynArray<fPoint>();
@@ -39,11 +39,6 @@ bool GroundEnemy::Update(float dt)
 {
 	if (Radar(app->player->playerData.position))
 	{
-		//Direction
-		/*if (position.x < app->player->playerData.position.x)
-			position.x += 60 * dt;
-		*/
-		//If player move
 		fPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
 		fPoint worldPositionPlayer = app->player->playerData.position;
 		fPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
@@ -58,7 +53,7 @@ bool GroundEnemy::Update(float dt)
 		{
 			fPoint nextPositionEnemy = *lastPathEnemy->At(i + 1);
 			fPoint nextAuxPositionEenemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
-			//MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
+			MoveEnemy(nextAuxPositionEenemy, mapPositionEnemy);
 		}
 	}
 	

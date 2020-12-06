@@ -148,6 +148,7 @@ void PathFinding::ComputePathAStar(const fPoint& origin, const fPoint& destinati
 			}
 		}
 	}
+
 	destinationIsFind = false;
 	lastPath.Clear();
 

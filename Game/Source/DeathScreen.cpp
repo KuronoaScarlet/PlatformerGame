@@ -68,7 +68,8 @@ bool DeathScreen::PostUpdate()
     {
         app->player->playerData.playerLives = 3;
         app->fade->Fade(this, (Module*)app->intro, 60);
-        
+        app->scene->firstEntry = true;
+        app->scene2->firstEntry = true;
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     ret = false;

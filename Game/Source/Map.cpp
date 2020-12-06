@@ -530,7 +530,7 @@ void Map::LoadColliders()
 				SDL_Rect n = { pos.x + 1, pos.y, data.tileWidth - 2, data.tileHeight-15 };
 				SDL_Rect n2 = { pos.x-1, pos.y+7, 2, 6 };
 				SDL_Rect n3 = { pos.x + 15, pos.y + 7, 2, 6 };
-				SDL_Rect n4 = { pos.x+6, pos.y+10, 6, 7 };
+				SDL_Rect n4 = { pos.x+3, pos.y+13, 9, 7 };
 				if (u != 0)
 				{
 					if (layer->properties.GetProperty("Collisions", 1) == 1)
