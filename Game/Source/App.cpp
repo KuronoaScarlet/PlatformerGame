@@ -441,7 +441,7 @@ bool App::SaveGame() const
 		ret = item->data->SaveState(saveLoadNode.child(item->data->name.GetString()));
 		item = item->next;
 	}
-	saveLoadFile.save_file("savegame.xml");
+	saveLoadFile.save_file("save_game.xml");
 
 	saveGameRequested = false;
 
