@@ -89,12 +89,6 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-
-	if (playerData.position.y <= 230 && playerData.position.y >= 20)
-	{
-		app->render->camera.y = -playerData.position.y+20;
-	}
-
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
@@ -235,15 +229,24 @@ bool Player::Update(float dt)
 			onGround = false;
 		}
 	}
-
-	playerData.currentAnim->Update();
-	if (godMode == false)
-	{
-		collider->SetPos(playerData.position.x, playerData.position.y + 2);
-		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
-	}
+	
+	
 	
 	cameraControl = true;
+
+	if (godMode == false)
+	{
+		collider->SetPos(playerData.position.x, playerData.position.y+2);
+		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
+	}
+
+
+	playerData.currentAnim->Update();
+
+	if (playerData.position.y <= 230 && playerData.position.y >= 20)
+	{
+		app->render->camera.y = -playerData.position.y + 20;
+	}
 
 	return true;
 }
@@ -262,6 +265,8 @@ bool Player::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	
 
 	return ret;
 }
