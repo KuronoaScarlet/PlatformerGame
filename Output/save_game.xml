@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<save>
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<scene />
+	<player>
+		<position x="453.019592" y="278" />
+		<level l="2" />
+	</player>
+	<entitymanager>
+		<enemies>
+		</enemies>
+	</entitymanager>
+	<renderer>
+		<camera x="-683" y="-198" />
+	</renderer>
+</save>
