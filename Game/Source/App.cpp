@@ -6,10 +6,12 @@
 #include "Audio.h"
 #include "Logo.h"
 #include "Intro.h"
+#include "Title.h"
 #include "Scene.h"
 #include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
+//#include "Options.h"
 #include "EntityManager.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
@@ -38,11 +40,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	logo = new Logo();
+	title = new Title();
 	intro = new Intro();
 	scene = new Scene();
 	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
+	//options = new Options();
 	entityManager = new EntityManager();
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
@@ -60,10 +64,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(logo);
 	AddModule(intro);
+	AddModule(title);
 	AddModule(scene);
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
+	//AddModule(options);
 	AddModule(entityManager);
 	AddModule(checkpoint);
 	AddModule(fade);
@@ -78,8 +84,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(render);
 
 	intro->active = false;
+	title->active = false;
 	scene->active = false;
 	player->active = false;
+	//options->active = false;
 	scene2->active = false;
 	checkpoint->active = false;
 	deathScreen->active = false;
@@ -117,8 +125,8 @@ bool App::Awake()
 
 	if (ret == true)
 	{
-		title.Create(configApp.child("title").child_value());
-		win->SetTitle(title.GetString());
+		titl.Create(configApp.child("title").child_value());
+		win->SetTitle(titl.GetString());
 
 		ListItem<Module*>* item;
 		item = modules.start;
@@ -252,10 +260,10 @@ void App::FinishUpdate()
 			SDL_Delay(delay);
 			timePerfect = perfTimer.ReadMs();
 		}
-		static char title[256];
-		sprintf_s(title, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
+		static char titl[256];
+		sprintf_s(titl, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
 			average, framesSecond, lastFrameInMs);
-		app->win->SetTitle(title);
+		app->win->SetTitle(titl);
 	}
 	if (caped == true)
 	{
@@ -283,10 +291,10 @@ void App::FinishUpdate()
 			SDL_Delay(delay);
 			timePerfect = perfTimer.ReadMs();
 		}
-		static char title[256];
-		sprintf_s(title, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
+		static char titl[256];
+		sprintf_s(titl, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
 			average, framesSecond, lastFrameInMs);
-		app->win->SetTitle(title);
+		app->win->SetTitle(titl);
 	}
 	
 }
@@ -390,7 +398,7 @@ const char* App::GetArgv(int index) const
 // ---------------------------------------
 const char* App::GetTitle() const
 {
-	return title.GetString();
+	return titl.GetString();
 }
 
 // ---------------------------------------

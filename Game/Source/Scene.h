@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 
+class GuiControl;
 
 class Scene : public Module
 {
@@ -31,6 +32,11 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	bool OnGuiMouseClickEvent(GuiControl* control)
+	{
+		return true;
+	}
 
 	//Fonts
 	int scoreFont = -1;

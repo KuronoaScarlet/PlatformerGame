@@ -43,7 +43,10 @@ bool Intro::Start()
 
     score = 000;
 
-    screen = app->tex->Load("Assets/Textures/title_screen.png");
+    screen = app->tex->Load("Assets/Textures/tdm_screen.png");
+
+    timer = 0;
+    trans = true;
 
     return ret;
 }
@@ -55,7 +58,7 @@ bool Intro::PreUpdate()
 
 bool Intro::Update(float dt)
 {
-    
+    timer += dt;
 
     return true;
 }
@@ -67,10 +70,11 @@ bool Intro::PostUpdate()
     app->render->camera.x = 0;
     app->render->camera.y = 0;
     // Draw everything --------------------------------------
-    if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+    if (timer > 3 && trans == true)
     {
-        app->fade->Fade(this, (Module*)app->scene, 60);
-   
+        trans = false;
+        app->fade->Fade(this, (Module*)app->title, 10);
+
     }
     if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     ret = false;

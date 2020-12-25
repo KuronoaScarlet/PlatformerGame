@@ -42,6 +42,8 @@ bool Logo::Start()
 
     screen = app->tex->Load("Assets/Textures/logo_screen.png");
 
+    timer = 0;
+    trans = true;
 
     return ret;
 }
@@ -53,7 +55,7 @@ bool Logo::PreUpdate()
 
 bool Logo::Update(float dt)
 {
-
+    timer += dt;
 
     return true;
 }
@@ -63,8 +65,9 @@ bool Logo::PostUpdate()
 {
     bool ret = true;
     // Draw everything --------------------------------------
-    if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+    if (timer > 4 && trans == true)
     {
+        trans = false;
         app->fade->Fade(this, (Module*)app->intro, 10);
 
     }

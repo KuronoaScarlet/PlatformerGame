@@ -59,6 +59,21 @@
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Title.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -143,6 +158,24 @@
       <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Title.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -171,6 +204,9 @@
     </Filter>
     <Filter Include="Entities\Playable">
       <UniqueIdentifier>{6bab73b2-91fe-47e5-b007-719993058f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{2572ee84-c094-4c2d-9e24-4dc17d6498eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

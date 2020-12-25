@@ -99,6 +99,10 @@
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\GroundEnemy.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\Hearts.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\Logo.cpp" />
@@ -115,6 +119,7 @@
     <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Title.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\WinScreen.cpp" />
     <ClInclude Include="Source\AirEnemy.h" />
@@ -129,6 +134,11 @@
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GroundEnemy.h" />
+    <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\Hearts.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\Logo.h" />
@@ -147,6 +157,7 @@
     <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Title.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />

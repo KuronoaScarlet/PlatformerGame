@@ -1,19 +1,23 @@
-#ifndef __LOGO_H__
-#define __LOGO_H__
+#ifndef __OPTIONS_H__
+#define __OPTIONS_H__
 
 #include "Module.h"
 #include "Animation.h"
 
+#include "GuiButton.h"
+
+class GuiControl;
+
 struct SDL_Texture;
 
-class Logo : public Module
+class Options : public Module
 {
 public:
     //Constructor
-    Logo();
+    Options();
 
     //Destructor
-    ~Logo();
+    ~Options();
 
     bool Awake();
 
@@ -33,12 +37,15 @@ public:
 
     bool CleanUp();
 
+    bool OnGuiMouseClickEvent(GuiControl* control);
+
+
 public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
 
-    float timer;
-    bool trans;
+    GuiButton* start;
+    GuiButton* exit;
 
 };
 
