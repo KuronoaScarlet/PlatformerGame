@@ -45,7 +45,10 @@ bool Title::Start()
     start = new GuiButton(1, { 170, 100, 80, 20 }, "START");
     start->SetObserver((Scene*)this);
 
-    exit = new GuiButton(2, { 170, 125, 80, 20 }, "EXIT");
+    options = new GuiButton(2, { 170, 125, 80, 20 }, "OPTIONS");
+    options->SetObserver((Scene*)this);
+
+    exit = new GuiButton(3, { 170, 150, 80, 20 }, "EXIT");
     exit->SetObserver((Scene*)this);
 
     return ret;
@@ -59,6 +62,7 @@ bool Title::PreUpdate()
 bool Title::Update(float dt)
 {
     start->Update(app->input, dt);
+    options->Update(app->input, dt);
     exit->Update(app->input, dt);
 
     return true;
@@ -81,6 +85,7 @@ bool Title::PostUpdate()
 
 
     start->Draw(app->render);
+    options->Draw(app->render);
     exit->Draw(app->render);
 
     return ret;
@@ -102,7 +107,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     case GuiControlType::BUTTON:
     {
         if (control->id == 1)  app->fade->Fade(this, (Module*)app->scene, 10);
-        else if (control->id == 2) return false;
+        else if (control->id == 2) app->fade->Fade(this, (Module*)app->options, 10);
+        else if (control->id == 3) app->fade->Fade(this, (Module*)app->title, 10);
+        else if (control->id == 4) return false;
     }
     default: break;
     }

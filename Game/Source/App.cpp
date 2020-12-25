@@ -11,7 +11,7 @@
 #include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
-//#include "Options.h"
+#include "Options.h"
 #include "EntityManager.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
@@ -46,7 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
-	//options = new Options();
+	options = new Options();
 	entityManager = new EntityManager();
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
@@ -69,7 +69,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
-	//AddModule(options);
+	AddModule(options);
 	AddModule(entityManager);
 	AddModule(checkpoint);
 	AddModule(fade);
@@ -87,7 +87,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	title->active = false;
 	scene->active = false;
 	player->active = false;
-	//options->active = false;
+	options->active = false;
 	scene2->active = false;
 	checkpoint->active = false;
 	deathScreen->active = false;

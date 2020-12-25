@@ -48,6 +48,7 @@ public:
     SDL_Texture* screen = nullptr;
 
     GuiButton* start;
+    GuiButton* options;
     GuiButton* exit;
 
 };

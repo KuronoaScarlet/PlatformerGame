@@ -74,6 +74,9 @@
     <ClCompile Include="Source\Title.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Options.cpp">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -174,6 +177,9 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Title.h">
+      <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Options.h">
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
   </ItemGroup>

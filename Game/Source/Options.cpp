@@ -42,11 +42,10 @@ bool Options::Start()
 
     screen = app->tex->Load("Assets/Textures/options_screen.png");
 
-   start = new GuiButton(1, { 170, 100, 80, 20 }, "START");
-    start->SetObserver((Scene*)this);
+    back = new GuiButton(3, { 10, 10, 20, 20 }, "BACK");
+    back->SetObserver((Scene*)this);
 
-    exit = new GuiButton(2, { 170, 125, 80, 20 }, "EXIT");
-    exit->SetObserver((Scene*)this);
+   
 
     return ret;
 }
@@ -58,8 +57,8 @@ bool Options::PreUpdate()
 
 bool Options::Update(float dt)
 {
-    start->Update(app->input, dt);
-    exit->Update(app->input, dt);
+    back->Update(app->input, dt);
+
 
     return true;
 }
@@ -80,8 +79,7 @@ bool Options::PostUpdate()
     app->render->DrawTexture(screen, 0, 0, NULL);
 
 
-    start->Draw(app->render);
-    exit->Draw(app->render);
+    back->Draw(app->render);
 
     return ret;
 }
@@ -101,7 +99,8 @@ bool Options::OnGuiMouseClickEvent(GuiControl* control)
     {
     case GuiControlType::BUTTON:
     {
-        if (control->id == 1)  app->fade->Fade(this, (Module*)app->scene, 10);
+        if (control->id == 4) 
+            app->fade->Fade(this, (Module*)app->title, 10);
         else if (control->id == 2) return false;
     }
     default: break;
