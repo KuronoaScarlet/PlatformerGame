@@ -95,7 +95,7 @@ bool Title::CleanUp()
     return true;
 }
 
-bool Title::OnGuiMouseClickEvent(GuiControl* control)
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
     switch (control->type)
     {

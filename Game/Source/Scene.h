@@ -33,10 +33,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool OnGuiMouseClickEvent(GuiControl* control)
-	{
-		return true;
-	}
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 
 	//Fonts
 	int scoreFont = -1;
