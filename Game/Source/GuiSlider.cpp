@@ -17,14 +17,35 @@ bool GuiSlider::Update(Input* input, float dt)
         int mouseX, mouseY;
         input->GetMousePosition(mouseX, mouseY);
 
+        int mouseMotionX, mouseMotionY;
+        input->GetMouseMotion(mouseMotionX, mouseMotionY);
+
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
             (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
         {
             state = GuiControlState::FOCUSED;
 
-            
-            
+            if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+            {
+
+                state = GuiControlState::PRESSED;
+                if (bounds.x > 300)
+                {
+                    bounds.x = 300;
+                }
+                else if (bounds.x < 170)
+                {
+                    bounds.x = 170;
+                }
+                if (bounds.x >= 170 && bounds.x <= 300)
+                {
+                    bounds.x = mouseX - (bounds.w / 2);
+                    NotifyObserver();
+                }
+                
+
+            }
         }
         else state = GuiControlState::NORMAL;
     }

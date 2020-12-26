@@ -5,8 +5,10 @@
 #include "Animation.h"
 
 #include "GuiButton.h"
+#include "GuiSlider.h"
 
 class GuiControl;
+
 
 struct SDL_Texture;
 
@@ -45,6 +47,7 @@ public:
     SDL_Texture* screen = nullptr;
 
     GuiButton* back;
+    GuiSlider* volume;
 
 
 };

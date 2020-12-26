@@ -45,6 +45,9 @@ bool Options::Start()
     back = new GuiButton(3, { 10, 10, 20, 20 }, "BACK");
     back->SetObserver((Scene*)this);
 
+    volume = new GuiSlider(5, { 170, 175, 20, 20 }, "VOLUME");
+    volume->SetObserver((Scene*)this);
+
    
 
     return ret;
@@ -58,7 +61,7 @@ bool Options::PreUpdate()
 bool Options::Update(float dt)
 {
     back->Update(app->input, dt);
-
+    volume->Update(app->input, dt);
 
     return true;
 }
@@ -80,6 +83,7 @@ bool Options::PostUpdate()
 
 
     back->Draw(app->render);
+    volume->Draw(app->render);
 
     return ret;
 }

@@ -3,6 +3,8 @@
 
 #include "GuiControl.h"
 
+#include "App.h"
+#include "Textures.h"
 #include "Point.h"
 #include "SString.h"
 

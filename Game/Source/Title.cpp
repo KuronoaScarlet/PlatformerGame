@@ -44,12 +44,15 @@ bool Title::Start()
 
     start = new GuiButton(1, { 170, 100, 80, 20 }, "START");
     start->SetObserver((Scene*)this);
+    start->texture = app->tex->Load("Assets/Textures/option_screen.png");
 
     options = new GuiButton(2, { 170, 125, 80, 20 }, "OPTIONS");
     options->SetObserver((Scene*)this);
 
-    exit = new GuiButton(3, { 170, 150, 80, 20 }, "EXIT");
+    exit = new GuiButton(4, { 170, 150, 80, 20 }, "EXIT");
     exit->SetObserver((Scene*)this);
+
+    
 
     return ret;
 }
@@ -64,6 +67,7 @@ bool Title::Update(float dt)
     start->Update(app->input, dt);
     options->Update(app->input, dt);
     exit->Update(app->input, dt);
+    
 
     return true;
 }
@@ -87,6 +91,7 @@ bool Title::PostUpdate()
     start->Draw(app->render);
     options->Draw(app->render);
     exit->Draw(app->render);
+    
 
     return ret;
 }
@@ -102,14 +107,24 @@ bool Title::CleanUp()
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
+    
+
     switch (control->type)
     {
     case GuiControlType::BUTTON:
     {
-        if (control->id == 1)  app->fade->Fade(this, (Module*)app->scene, 10);
+        if (control->id == 1)  app->fade->Fade(this, (Module*)app->scene, 20);
         else if (control->id == 2) app->fade->Fade(this, (Module*)app->options, 10);
         else if (control->id == 3) app->fade->Fade(this, (Module*)app->title, 10);
         else if (control->id == 4) return false;
+    }
+    case GuiControlType::SLIDER:
+    {
+        if (control->id == 5)
+        {
+            
+        }
+
     }
     default: break;
     }

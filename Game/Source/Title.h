@@ -5,8 +5,10 @@
 #include "Animation.h"
 
 #include "GuiButton.h"
+#include "GuiSlider.h"
 
 class GuiControl;
+class GuiSlider;
 
 struct SDL_Texture;
 
