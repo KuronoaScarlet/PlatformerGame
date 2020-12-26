@@ -4,7 +4,9 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 {
     this->bounds = bounds;
     this->text = text;
-    this->texture = NULL;
+
+    audio = true;
+    buttonFx = app->audio->LoadFx("Assets/Audio/FX/jump.wav");
 }
 
 GuiButton::~GuiButton()
@@ -49,13 +51,23 @@ bool GuiButton::Draw(Render* render)
     // Draw the right button depending on state
     switch (state)
     {
-    case GuiControlState::DISABLED:render->DrawRectangle(bounds,  100, 100, 100, 255 );
+    case GuiControlState::DISABLED:
+        render->DrawRectangle(bounds,  100, 100, 100, 255 );
         break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds,  0, 255, 0, 255 );
+    case GuiControlState::NORMAL: 
+        render->DrawTexture(textureIdle, bounds.x, bounds.y, NULL);
+        audio = true;
         break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds,  255, 255, 0, 255 );
+    case GuiControlState::FOCUSED: 
+        render->DrawTexture(textureFocused, bounds.x, bounds.y, NULL);
+        if (audio == true)
+        {
+            audio = false;
+            app->audio->PlayFx(buttonFx);
+        }
         break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds,  0, 255, 255, 255 );
+    case GuiControlState::PRESSED: 
+        render->DrawTexture(texturePressed, bounds.x, bounds.y, NULL);
         break;
     case GuiControlState::SELECTED: render->DrawRectangle(bounds,  0, 255, 0, 255 );
         break;

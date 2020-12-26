@@ -46,7 +46,9 @@ public:
         text(text) 
     {
         color.r = 255; color.g = 255; color.b = 255;
-        texture = NULL;
+        textureIdle = NULL;
+        textureFocused = NULL;
+        texturePressed = NULL;
     }
 
     virtual bool Update(Input* input, float dt)
@@ -59,9 +61,11 @@ public:
         return true;
     }
 
-    void SetTexture(SDL_Texture* tex)
+    void SetTexture(SDL_Texture* texIdle, SDL_Texture* texFocused, SDL_Texture* texPressed)
     {
-        texture = tex;
+        textureIdle = texIdle;
+        textureFocused = texFocused;
+        texturePressed = texPressed;
         section = { 0, 0, 0, 0 };
     }
 
@@ -85,12 +89,20 @@ public:
     SDL_Rect bounds;        // Position and size
     SDL_Color color;        // Tint color
 
-    SDL_Texture* texture;   // Texture atlas reference
+    SDL_Texture* textureIdle;
+    SDL_Texture* textureFocused;   // Texture atlas reference
+    SDL_Texture* texturePressed;
     SDL_Rect section;       // Texture atlas base section
 
     //Font font;              // Text font
 
     Scene* observer;        // Observer module (it should probably be an array/list)
+
+    //Audio
+
+    uint buttonFx = 0;
+    bool audio;
+
 };
 
 #endif // __GUICONTROL_H__

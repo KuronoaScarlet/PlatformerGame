@@ -7,6 +7,7 @@
 #include "Textures.h"
 #include "Point.h"
 #include "SString.h"
+#include "Audio.h"
 
 class GuiButton : public GuiControl
 {

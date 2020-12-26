@@ -44,13 +44,15 @@ bool Title::Start()
 
     start = new GuiButton(1, { 170, 100, 80, 20 }, "START");
     start->SetObserver((Scene*)this);
-    start->texture = app->tex->Load("Assets/Textures/option_screen.png");
+    start->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"),app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
 
     options = new GuiButton(2, { 170, 125, 80, 20 }, "OPTIONS");
     options->SetObserver((Scene*)this);
+    options->SetTexture(app->tex->Load("Assets/Textures/Buttons/settings.png"), app->tex->Load("Assets/Textures/Buttons/settings_focused.png"), app->tex->Load("Assets/Textures/Buttons/settings_pressed.png"));
 
     exit = new GuiButton(4, { 170, 150, 80, 20 }, "EXIT");
     exit->SetObserver((Scene*)this);
+    exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit.png"), app->tex->Load("Assets/Textures/Buttons/exit_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_pressed.png"));
 
     
 
@@ -88,6 +90,8 @@ bool Title::PostUpdate()
     app->render->DrawTexture(screen, 0, 0, NULL);
 
 
+   // start->Draw(app->render);
+   // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
     start->Draw(app->render);
     options->Draw(app->render);
     exit->Draw(app->render);
