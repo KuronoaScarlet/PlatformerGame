@@ -41,6 +41,8 @@ public:
 	char scoreText[10] = { "\0" };
 
 	bool firstEntry = true;
+	
+	
 
 
 private:

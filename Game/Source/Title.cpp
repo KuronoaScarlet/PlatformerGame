@@ -54,8 +54,9 @@ bool Title::Start()
     exit->SetObserver((Scene*)this);
     exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit.png"), app->tex->Load("Assets/Textures/Buttons/exit_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_pressed.png"));
 
-    
-
+    fullSc = false;
+    vsync = true;
+    exi = false;
     return ret;
 }
 
@@ -85,8 +86,8 @@ bool Title::PostUpdate()
         app->fade->Fade(this, (Module*)app->scene, 10);
 
     }
-    if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-    ret = false;
+   // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+    
     app->render->DrawTexture(screen, 0, 0, NULL);
 
 
@@ -95,6 +96,11 @@ bool Title::PostUpdate()
     start->Draw(app->render);
     options->Draw(app->render);
     exit->Draw(app->render);
+
+    if (exi == true) 
+    {
+        return false;
+    }
     
 
     return ret;
@@ -117,16 +123,57 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     {
     case GuiControlType::BUTTON:
     {
-        if (control->id == 1)  app->fade->Fade(this, (Module*)app->scene, 20);
-        else if (control->id == 2) app->fade->Fade(this, (Module*)app->options, 10);
-        else if (control->id == 3) app->fade->Fade(this, (Module*)app->title, 10);
-        else if (control->id == 4) return false;
+        if (control->id == 1)
+        {
+            app->fade->Fade(this, (Module*)app->scene, 20);
+        }
+        else if (control->id == 2)
+        {
+            app->fade->Fade(this, (Module*)app->options, 10);
+        }
+        else if (control->id == 3)
+        {
+            app->fade->Fade(this, (Module*)app->title, 10);
+        }
+        else if (control->id == 4)
+        {
+            app->title->exi = true;
+        }
+        else if (control->id == 7)
+        {
+            if (app->title->fullSc == false)
+            {
+                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+                app->title->fullSc = true;
+            }
+            else 
+            {
+                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
+            }
+            
+        }
+        else if (control->id == 8)
+        {
+            if (app->title->vsync == true)
+            {
+                
+                app->title->vsync = false;
+            }
+            else
+            {
+               
+            }
+        }
     }
     case GuiControlType::SLIDER:
     {
         if (control->id == 5)
         {
             
+        }
+        else if (control->id == 6)
+        {
+
         }
 
     }

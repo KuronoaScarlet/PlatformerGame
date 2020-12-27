@@ -263,8 +263,8 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(playerData.livesTexture, ((-app->render->camera.x + 10) + (i * 32)) / 3, (-app->render->camera.y + 20) / 3, NULL);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		
 
 	
 

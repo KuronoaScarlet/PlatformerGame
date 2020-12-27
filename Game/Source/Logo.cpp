@@ -71,8 +71,8 @@ bool Logo::PostUpdate()
         app->fade->Fade(this, (Module*)app->intro, 10);
 
     }
-    if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-    ret = false;
+    //if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+   
     app->render->DrawTexture(screen, 0, 0, NULL);
 
     return ret;

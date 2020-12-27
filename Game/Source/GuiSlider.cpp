@@ -31,7 +31,7 @@ bool GuiSlider::Update(Input* input, float dt)
 
                 state = GuiControlState::PRESSED;
 
-                if (bounds.x >= 170)
+                if (bounds.x >= 143)
                 {
                     bounds.x = mouseX - (bounds.w / 2);  // Slider
                     if (bounds.x + bounds.w <= 170 + 130)
@@ -40,12 +40,12 @@ bool GuiSlider::Update(Input* input, float dt)
                     }
                     else
                     {
-                        bounds.x = 170 + 130 - bounds.w;
+                        bounds.x = 168 + 130 - bounds.w;
                     }
                 }
                 else
                 {
-                    bounds.x = 172;
+                    bounds.x = 145;
                 }
                 
 

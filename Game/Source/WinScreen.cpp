@@ -71,8 +71,8 @@ bool WinScreen::PostUpdate()
         app->scene->firstEntry = true;
         app->scene2->firstEntry = true;
     }
-    if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-        ret = false;
+   // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+        
     app->render->DrawTexture(screen, 0, 0, NULL);
 
     return ret;

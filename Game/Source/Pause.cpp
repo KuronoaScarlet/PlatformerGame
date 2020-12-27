@@ -8,24 +8,24 @@
 #include "Map.h"
 #include "Player.h"
 #include "Animation.h"
-#include "Options.h"
+#include "Pause.h"
 #include "FadeToBlack.h"
 
 
 #include "Defs.h"
 #include "Log.h"
 
-Options::Options() : Module()
+Pause::Pause() : Module()
 {
     name.Create("Logo");
 }
 
-Options::~Options()
+Pause::~Pause()
 {
 
 }
 
-bool Options::Awake()
+bool Pause::Awake()
 {
     LOG("Loading Logo");
     bool ret = true;
@@ -34,7 +34,7 @@ bool Options::Awake()
 }
 
 // Load assets
-bool Options::Start()
+bool Pause::Start()
 {
     LOG("Loading Logo assets");
 
@@ -65,12 +65,12 @@ bool Options::Start()
     return ret;
 }
 
-bool Options::PreUpdate()
+bool Pause::PreUpdate()
 {
     return true;
 }
 
-bool Options::Update(float dt)
+bool Pause::Update(float dt)
 {
     backButton->Update(app->input, dt);
     musicMolume->Update(app->input, dt);
@@ -82,7 +82,7 @@ bool Options::Update(float dt)
 }
 
 // Update: draw background
-bool Options::PostUpdate()
+bool Pause::PostUpdate()
 {
     bool ret = true;
 
@@ -92,7 +92,7 @@ bool Options::PostUpdate()
         app->fade->Fade(this, (Module*)app->scene, 10);
 
     }
-   // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+    //if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     
     app->render->DrawTexture(screen, 0, 0, NULL);
 
@@ -106,27 +106,18 @@ bool Options::PostUpdate()
     return ret;
 }
 
-bool Options::CleanUp()
+bool Pause::CleanUp()
 {
     if (!active)return true;
     LOG("Freeing Logo");
-    app->options->active = false;
+    app->pause->active = false;
     app->tex->UnLoad(screen);
     return true;
 }
 
-bool Options::OnGuiMouseClickEvent(GuiControl* control)
+bool Pause::OnGuiMouseClickEvent(GuiControl* control)
 {
-    switch (control->type)
-    {
-    case GuiControlType::BUTTON:
-    {
-        if (control->id == 4) 
-            app->fade->Fade(this, (Module*)app->title, 10);
-        else if (control->id == 2) return false;
-    }
-    default: break;
-    }
+    
 
     return true;
 }

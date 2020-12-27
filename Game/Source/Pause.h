@@ -1,5 +1,5 @@
-#ifndef __TITLE_H__
-#define __TITLE_H__
+#ifndef __PAUSE_H__
+#define __PAUSE_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -8,18 +8,18 @@
 #include "GuiSlider.h"
 
 class GuiControl;
-class GuiSlider;
+
 
 struct SDL_Texture;
 
-class Title : public Module
+class Pause : public Module
 {
 public:
     //Constructor
-    Title();
+    Pause();
 
     //Destructor
-    ~Title();
+    ~Pause();
 
     bool Awake();
 
@@ -39,23 +39,18 @@ public:
 
     bool CleanUp();
 
-    bool OnGuiMouseClickEvent(GuiControl* control)
-    {
-        return true;
-    }
+    bool OnGuiMouseClickEvent(GuiControl* control);
 
 
 public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
 
-    GuiButton* start;
-    GuiButton* options;
-    GuiButton* exit;
-
-    bool fullSc;
-    bool vsync;
-    bool exi;
+    GuiButton* backButton;
+    GuiSlider* musicMolume;
+    GuiSlider* fxVolume;
+    GuiButton* fullscreenButton;
+    GuiButton* vsyncButton;
 
 };
 

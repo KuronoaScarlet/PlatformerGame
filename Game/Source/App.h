@@ -22,6 +22,7 @@ class Scene2;
 class Map;
 class Player;
 class Options;
+class Pause;
 class EntityManager;
 class CheckPoint;
 class FadeToBlack;
@@ -107,6 +108,7 @@ public:
 	EntityManager* entityManager;
 	Player* player;
 	Options* options;
+	Pause* pause;
 	CheckPoint* checkpoint;
 	FadeToBlack* fade;
 	Collisions* collisions;

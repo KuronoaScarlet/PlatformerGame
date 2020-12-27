@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Options.h"
+#include "Pause.h"
 #include "EntityManager.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
@@ -47,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	player = new Player();
 	options = new Options();
+	pause = new Pause();
 	entityManager = new EntityManager();
 	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
@@ -70,6 +72,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(player);
 	AddModule(options);
+	AddModule(pause);
 	AddModule(entityManager);
 	AddModule(checkpoint);
 	AddModule(fade);
@@ -88,6 +91,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene->active = false;
 	player->active = false;
 	options->active = false;
+	pause->active = false;
 	scene2->active = false;
 	checkpoint->active = false;
 	deathScreen->active = false;
