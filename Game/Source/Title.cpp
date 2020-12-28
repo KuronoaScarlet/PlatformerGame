@@ -175,8 +175,16 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         {
             if(control->bounds.x == 143 || control->bounds.x == 156.5f|| control->bounds.x == 170|| control->bounds.x == 183.5f|| control->bounds.x == 197|| control->bounds.x == 210.5f|| control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
-                app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
-                app->audio->Volume(app->title->volumMusic+10);
+                if (control->bounds.x == 143)
+                {
+                    app->audio->Volume(0);
+                }
+                else
+                {
+                    app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
+                    app->audio->Volume(app->title->volumMusic + 10);
+                }
+                
             }
             
         }

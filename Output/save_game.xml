@@ -6,8 +6,8 @@
 	<audio />
 	<scene />
 	<player>
-		<position x="50" y="278" />
-		<level l="1" />
+		<position x="466.719543" y="246" />
+		<level l="2" />
 	</player>
 	<entitymanager>
 		<enemies>
@@ -23,9 +23,20 @@
 			<enemy x="320" y="246" />
 			<enemy x="312.5" y="246" />
 			<enemy x="305.5" y="246.199997" />
+			<enemy x="324.5" y="246" />
+			<enemy x="788" y="278" />
+			<enemy x="788" y="112" />
+			<enemy x="1092" y="32" />
+			<enemy x="775" y="278.600006" />
+			<enemy x="775" y="112" />
+			<enemy x="1079" y="32" />
+			<enemy x="318" y="246.199997" />
+			<enemy x="767.5" y="278" />
+			<enemy x="767.5" y="112" />
+			<enemy x="1071.5" y="32" />
 		</enemies>
 	</entitymanager>
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-750" y="-195" />
 	</renderer>
 </save>
