@@ -57,6 +57,8 @@ public:
     bool vsync;
     bool exi;
 
+    int volumMusic;
+
 };
 
 #endif

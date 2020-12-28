@@ -46,8 +46,8 @@ bool Options::Start()
     backButton->SetObserver((Scene*)this);
     backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
 
-    musicMolume = new GuiSlider(5, { 143, 118, 20, 16 }, "MUSIC_VOLUME");
-    musicMolume->SetObserver((Scene*)this);
+    musicVolume = new GuiSlider(5, { 143, 118, 20, 16 }, "MUSIC_VOLUME");
+    musicVolume->SetObserver((Scene*)this);
 
     fxVolume = new GuiSlider(6, { 143, 157, 20, 16 }, "FX_VOLUME");
     fxVolume->SetObserver((Scene*)this);
@@ -73,7 +73,7 @@ bool Options::PreUpdate()
 bool Options::Update(float dt)
 {
     backButton->Update(app->input, dt);
-    musicMolume->Update(app->input, dt);
+    musicVolume->Update(app->input, dt);
     fxVolume->Update(app->input, dt);
     fullscreenButton->Update(app->input, dt);
     vsyncButton->Update(app->input, dt);
@@ -98,7 +98,7 @@ bool Options::PostUpdate()
 
 
     backButton->Draw(app->render);
-    musicMolume->Draw(app->render);
+    musicVolume->Draw(app->render);
     fxVolume->Draw(app->render);
     fullscreenButton->Draw(app->render);
     vsyncButton-> Draw(app->render);

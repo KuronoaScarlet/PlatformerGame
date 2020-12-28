@@ -1,1 +1,31 @@
 <?xml version="1.0"?>
+<save>
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<scene />
+	<player>
+		<position x="50" y="278" />
+		<level l="1" />
+	</player>
+	<entitymanager>
+		<enemies>
+			<enemy x="316.5" y="246.199997" />
+			<enemy x="295.5" y="246.199997" />
+			<enemy x="298.5" y="246" />
+			<enemy x="327" y="246" />
+			<enemy x="292" y="246.599991" />
+			<enemy x="327" y="246.199997" />
+			<enemy x="322" y="246.199997" />
+			<enemy x="288.5" y="246.199997" />
+			<enemy x="312.5" y="246" />
+			<enemy x="320" y="246" />
+			<enemy x="312.5" y="246" />
+			<enemy x="305.5" y="246.199997" />
+		</enemies>
+	</entitymanager>
+	<renderer>
+		<camera x="0" y="0" />
+	</renderer>
+</save>

@@ -47,7 +47,7 @@ public:
     SDL_Texture* screen = nullptr;
 
     GuiButton* backButton;
-    GuiSlider* musicMolume;
+    GuiSlider* musicVolume;
     GuiSlider* fxVolume;
     GuiButton* fullscreenButton;
     GuiButton* vsyncButton;

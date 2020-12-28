@@ -46,12 +46,10 @@ public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
 
-    GuiButton* backButton;
-    GuiSlider* musicMolume;
-    GuiSlider* fxVolume;
-    GuiButton* fullscreenButton;
-    GuiButton* vsyncButton;
-
-};
+    GuiButton* resumeButton;
+    GuiButton* settingsButton;
+    GuiButton* backToTitleButton;
+    GuiButton* exitButton;
+ };
 
 #endif

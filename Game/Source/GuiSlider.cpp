@@ -48,8 +48,10 @@ bool GuiSlider::Update(Input* input, float dt)
                     bounds.x = 145;
                 }
                 
+                NotifyObserver();
 
             }
+            NotifyObserver();
         }
         else state = GuiControlState::NORMAL;
     }

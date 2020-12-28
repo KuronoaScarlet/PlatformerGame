@@ -55,8 +55,11 @@ bool Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	volumeMusic = 100;
+
 	return ret;
 }
+
 
 // Called before quitting
 bool Audio::CleanUp()
@@ -82,6 +85,12 @@ bool Audio::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	return true;
+}
+
+void Audio::Volume(int num)
+{
+	
+	Mix_VolumeMusic(num);
 }
 
 // Play a music file

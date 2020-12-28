@@ -10,6 +10,7 @@
 #include "Animation.h"
 #include "Pause.h"
 #include "FadeToBlack.h"
+#include "Title.h"
 
 
 #include "Defs.h"
@@ -40,27 +41,23 @@ bool Pause::Start()
 
     bool ret = true;
 
-    screen = app->tex->Load("Assets/Textures/options_screen.png");
+    screen = app->tex->Load("Assets/Textures/escape.png");
 
-    backButton = new GuiButton(3, { 10, 10, 20, 16 }, "BACK");
-    backButton->SetObserver((Scene*)this);
-    backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
+    resumeButton = new GuiButton(9, { 160, 67, 100, 24 }, "RESUME");
+    resumeButton->SetObserver((Scene*)this);
+    resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/resume_button.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_pressed.png"));
 
-    musicMolume = new GuiSlider(5, { 143, 118, 20, 16 }, "MUSIC_VOLUME");
-    musicMolume->SetObserver((Scene*)this);
+    settingsButton = new GuiButton(2, { 160, 114, 100, 24 }, "SETTINGS");
+    settingsButton->SetObserver((Scene*)this);
+    settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
 
-    fxVolume = new GuiSlider(6, { 143, 157, 20, 16 }, "FX_VOLUME");
-    fxVolume->SetObserver((Scene*)this);
+    backToTitleButton = new GuiButton(3, { 160, 171, 100, 24 }, "BACK_TO_TITLE");
+    backToTitleButton->SetObserver((Scene*)this);
+    backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
 
-    fullscreenButton = new GuiButton(7, { 210, 184, 20, 16 }, "FULLSCREEN");
-    fullscreenButton->SetObserver((Scene*)this);
-    fullscreenButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
-
-    vsyncButton = new GuiButton(8, { 210, 206, 20, 16 }, "VSYNC");
-    vsyncButton->SetObserver((Scene*)this);
-    //vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"), app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
-
-   
+    exitButton = new GuiButton(4, { 160, 210, 100, 24 }, "EXIT");
+    exitButton->SetObserver((Scene*)this);
+    exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
 
     return ret;
 }
@@ -72,12 +69,15 @@ bool Pause::PreUpdate()
 
 bool Pause::Update(float dt)
 {
-    backButton->Update(app->input, dt);
-    musicMolume->Update(app->input, dt);
-    fxVolume->Update(app->input, dt);
-    fullscreenButton->Update(app->input, dt);
-    vsyncButton->Update(app->input, dt);
-
+    resumeButton->Update(app->input, dt);
+    settingsButton->Update(app->input, dt);
+    backToTitleButton->Update(app->input, dt);
+    exitButton->Update(app->input, dt);
+    
+    if (app->title->exi == true)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -97,12 +97,11 @@ bool Pause::PostUpdate()
     app->render->DrawTexture(screen, 0, 0, NULL);
 
 
-    backButton->Draw(app->render);
-    musicMolume->Draw(app->render);
-    fxVolume->Draw(app->render);
-    fullscreenButton->Draw(app->render);
-    vsyncButton-> Draw(app->render);
-
+    resumeButton->Draw(app->render);
+    settingsButton->Draw(app->render);
+    backToTitleButton->Draw(app->render);
+    exitButton->Draw(app->render);
+    
     return ret;
 }
 

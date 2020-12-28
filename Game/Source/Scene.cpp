@@ -13,6 +13,7 @@
 #include "FadeToBlack.h"
 #include "Fonts.h"
 #include "Pathfinding.h"
+#include "Title.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -42,6 +43,8 @@ bool Scene::Start()
 
 	app->player->Init();
 	app->player->Start();
+	app->render->camera.x = 0;
+	app->render->camera.y = -app->player->playerData.position.y + 50;
 
 	if (app->map->Load("scene1.tmx") == true)
 	{
@@ -71,6 +74,9 @@ bool Scene::Start()
 	
 	firstEntry = false;
 
+	app->title->volumMusic = 0;
+	app->audio->Volume(app->title->volumMusic);
+
 	return true;
 }
 
@@ -83,6 +89,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)

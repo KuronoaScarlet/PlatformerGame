@@ -262,7 +262,13 @@ bool Player::PostUpdate()
 	{
 		app->render->DrawTexture(playerData.livesTexture, ((-app->render->camera.x + 10) + (i * 32)) / 3, (-app->render->camera.y + 20) / 3, NULL);
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->SaveGameRequest();
+		app->fade->Fade((Module*)app->scene, (Module*)app->pause, 1);
+	}
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		
 
