@@ -10,6 +10,7 @@
 #include "Animation.h"
 #include "Options.h"
 #include "FadeToBlack.h"
+#include "Title.h"
 
 
 #include "Defs.h"
@@ -52,11 +53,11 @@ bool Options::Start()
     fxVolume = new GuiSlider(6, { 143, 157, 20, 16 }, "FX_VOLUME");
     fxVolume->SetObserver((Scene*)this);
 
-    fullscreenButton = new GuiButton(7, { 210, 184, 20, 16 }, "FULLSCREEN");
+    fullscreenButton = new GuiCheckBox(7, { 210, 184, 20, 16 }, "FULLSCREEN");
     fullscreenButton->SetObserver((Scene*)this);
     fullscreenButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
 
-    vsyncButton = new GuiButton(8, { 210, 206, 20, 16 }, "VSYNC");
+    vsyncButton = new GuiCheckBox(8, { 210, 206, 20, 16 }, "VSYNC");
     vsyncButton->SetObserver((Scene*)this);
     //vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"), app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
 
@@ -77,6 +78,9 @@ bool Options::Update(float dt)
     fxVolume->Update(app->input, dt);
     fullscreenButton->Update(app->input, dt);
     vsyncButton->Update(app->input, dt);
+
+
+
 
     return true;
 }

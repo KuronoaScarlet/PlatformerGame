@@ -53,12 +53,12 @@ bool GuiCheckBox::Draw(Render* render)
     } break;
     case GuiControlState::NORMAL:
     {
-        if (checked) render->DrawRectangle(bounds,  0, 255, 0, 255 );
-        else render->DrawRectangle(bounds,  0, 255, 0, 255 );
+        if (checked) render->DrawTexture(texturePressed, bounds.x, bounds.y, NULL);
+        else render->DrawTexture(textureIdle, bounds.x, bounds.y, NULL);
     } break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds,  255, 255, 0, 255 );
+    case GuiControlState::FOCUSED: render->DrawTexture(textureFocused, bounds.x, bounds.y, NULL);
         break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds,  0, 255, 255, 255 );
+    case GuiControlState::PRESSED:  render->DrawTexture(texturePressed, bounds.x, bounds.y, NULL);
         break;
     case GuiControlState::SELECTED: render->DrawRectangle(bounds,  0, 255, 0, 255 );
         break;

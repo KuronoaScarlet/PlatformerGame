@@ -10,6 +10,7 @@
 #include "Animation.h"
 #include "Title.h"
 #include "FadeToBlack.h"
+#include "Player.h"
 
 
 #include "Defs.h"
@@ -42,18 +43,28 @@ bool Title::Start()
 
     screen = app->tex->Load("Assets/Textures/title_screen.png");
 
-    start = new GuiButton(1, { 170, 100, 80, 20 }, "START");
-    start->SetObserver((Scene*)this);
-    start->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"),app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
+    play = new GuiButton(1, { 170, 75, 80, 20 }, "START");
+    play->SetObserver((Scene*)this);
+    play->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"),app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
 
-    options = new GuiButton(2, { 170, 125, 80, 20 }, "OPTIONS");
+    continueButton = new GuiButton(12, { 170, 105, 80, 20 }, "START");
+    continueButton->SetObserver((Scene*)this);
+    continueButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/load_button.png"), app->tex->Load("Assets/Textures/Buttons/load_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/load_button_pressed.png"));
+
+    options = new GuiButton(2, { 170, 135, 80, 20 }, "OPTIONS");
     options->SetObserver((Scene*)this);
     options->SetTexture(app->tex->Load("Assets/Textures/Buttons/settings.png"), app->tex->Load("Assets/Textures/Buttons/settings_focused.png"), app->tex->Load("Assets/Textures/Buttons/settings_pressed.png"));
 
-    exit = new GuiButton(4, { 170, 150, 80, 20 }, "EXIT");
+    credits = new GuiButton(13, { 170, 165, 80, 20 }, "OPTIONS");
+    credits->SetObserver((Scene*)this);
+    credits->SetTexture(app->tex->Load("Assets/Textures/Buttons/credits_button.png"), app->tex->Load("Assets/Textures/Buttons/credits_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/credits_button_pressed.png"));
+
+    exit = new GuiButton(4, { 170, 195, 80, 20 }, "EXIT");
     exit->SetObserver((Scene*)this);
     exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit.png"), app->tex->Load("Assets/Textures/Buttons/exit_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_pressed.png"));
 
+   
+    pauseBool = false;
     fullSc = false;
     vsync = true;
     exi = false;
@@ -67,9 +78,12 @@ bool Title::PreUpdate()
 
 bool Title::Update(float dt)
 {
-    start->Update(app->input, dt);
+    play->Update(app->input, dt);
+    continueButton->Update(app->input, dt);
     options->Update(app->input, dt);
+    credits->Update(app->input, dt);
     exit->Update(app->input, dt);
+    
     
 
     return true;
@@ -93,9 +107,12 @@ bool Title::PostUpdate()
 
    // start->Draw(app->render);
    // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
-    start->Draw(app->render);
+    play->Draw(app->render);
+    continueButton->Draw(app->render);
     options->Draw(app->render);
+    credits->Draw(app->render);
     exit->Draw(app->render);
+    
 
     if (exi == true) 
     {
@@ -125,6 +142,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     {
         if (control->id == 1)
         {
+            if(app->player->playerData.currentLevel == 1)
+            app->fade->Fade(this, (Module*)app->scene, 20);
+            if (app->player->playerData.currentLevel == 2)
             app->fade->Fade(this, (Module*)app->scene, 20);
         }
         else if (control->id == 2)
@@ -133,8 +153,21 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 3)
         {
-            app->fade->Fade(this, (Module*)app->title, 10);
+            //Back
+            if (app->title->pauseBool == false)
+            {
+                app->fade->Fade(this, (Module*)app->title, 10);
+            }
+            else
+            {
+                app->fade->Fade(this, (Module*)app->pause, 10);
+            }
         }
+        else if (control->id == 11)
+        {
+           app->fade->Fade(this, (Module*)app->title, 10);           
+        }
+
         else if (control->id == 4)
         {
             app->title->exi = true;
@@ -166,7 +199,14 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 9)
         {
-            app->audio->Volume(100);
+            //resume
+
+        }
+        else if (control->id == 12)
+        {
+            app->fade->Fade(this, (Module*)app->scene, 20);
+
+
         }
     }
     case GuiControlType::SLIDER:
@@ -175,24 +215,46 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         {
             if(control->bounds.x == 143 || control->bounds.x == 156.5f|| control->bounds.x == 170|| control->bounds.x == 183.5f|| control->bounds.x == 197|| control->bounds.x == 210.5f|| control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
-                if (control->bounds.x == 143)
-                {
-                    app->audio->Volume(0);
-                }
-                else
-                {
-                    app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
-                    app->audio->Volume(app->title->volumMusic + 10);
-                }
+                app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
+                app->audio->Volume(app->title->volumMusic + 10, '0');
+                
                 
             }
             
         }
         else if (control->id == 6)
         {
+            if (control->bounds.x == 143 || control->bounds.x == 156.5f || control->bounds.x == 170 || control->bounds.x == 183.5f || control->bounds.x == 197 || control->bounds.x == 210.5f || control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
+            {
+                if (control->bounds.x == 143)
+                {
+                    app->audio->Volume(0, '1');
+                }
+                else
+                {
+                    app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
+                    app->audio->Volume(app->title->volumMusic + 10, '1');
+                }
+
+            }
 
         }
 
+    }
+    case GuiControlType::CHECKBOX:
+    {
+        if (control->id == 7)
+        {
+            if (app->title->fullSc == false)
+            {
+                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+                app->title->fullSc = true;
+            }
+            else
+            {
+                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
+            }
+        }
     }
     default: break;
     }

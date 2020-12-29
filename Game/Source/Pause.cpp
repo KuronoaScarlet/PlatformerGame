@@ -51,7 +51,7 @@ bool Pause::Start()
     settingsButton->SetObserver((Scene*)this);
     settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
 
-    backToTitleButton = new GuiButton(3, { 160, 171, 100, 24 }, "BACK_TO_TITLE");
+    backToTitleButton = new GuiButton(11, { 160, 171, 100, 24 }, "BACK_TO_TITLE");
     backToTitleButton->SetObserver((Scene*)this);
     backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
 

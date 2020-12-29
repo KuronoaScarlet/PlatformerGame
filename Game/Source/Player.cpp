@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "Scene.h"
 #include "Scene2.h"
+#include "Title.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -267,7 +268,11 @@ bool Player::PostUpdate()
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		app->SaveGameRequest();
-		app->fade->Fade((Module*)app->scene, (Module*)app->pause, 1);
+		app->title->pauseBool = true;
+		if(scene1 == true)
+			app->fade->Fade((Module*)app->scene, (Module*)app->pause, 1);
+		if (scene2 == true)
+			app->fade->Fade((Module*)app->scene2, (Module*)app->pause, 1);
 	}
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		

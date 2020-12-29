@@ -6,6 +6,7 @@
 
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 
 class GuiControl;
 
@@ -49,8 +50,8 @@ public:
     GuiButton* backButton;
     GuiSlider* musicVolume;
     GuiSlider* fxVolume;
-    GuiButton* fullscreenButton;
-    GuiButton* vsyncButton;
+    GuiCheckBox* fullscreenButton;
+    GuiCheckBox* vsyncButton;
 
 };
 

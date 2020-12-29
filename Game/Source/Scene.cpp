@@ -75,7 +75,7 @@ bool Scene::Start()
 	firstEntry = false;
 
 	app->title->volumMusic = 0;
-	app->audio->Volume(app->title->volumMusic);
+	app->audio->Volume(app->title->volumMusic, '1');
 
 	return true;
 }

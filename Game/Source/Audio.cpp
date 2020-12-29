@@ -87,10 +87,17 @@ bool Audio::CleanUp()
 	return true;
 }
 
-void Audio::Volume(int num)
+void Audio::Volume(int num, char flag)
 {
+	if (flag == '0')
+	{
+		Mix_VolumeMusic(num);
+	}
+	else if (flag == '1')
+	{
+
+	}
 	
-	Mix_VolumeMusic(num);
 }
 
 // Play a music file

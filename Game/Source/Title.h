@@ -6,6 +6,7 @@
 
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 
 class GuiControl;
 class GuiSlider;
@@ -49,13 +50,17 @@ public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
 
-    GuiButton* start;
+    GuiButton* play;
+    GuiButton* continueButton;
     GuiButton* options;
+    GuiButton* credits;
     GuiButton* exit;
+    
 
     bool fullSc;
     bool vsync;
     bool exi;
+    bool pauseBool;
 
     int volumMusic;
 
