@@ -155,6 +155,10 @@ private:
 	uint32 prevLastSecFrameCnt = 0;
 	uint32 framesSecond = 0;
 	uint32 lastFrameMs = 0;
+	float fps;
+	float frameRate;
+	float tempFps;
+	
 	
 	float timePerfect;
 	float oldLastFrame = 0.0f;

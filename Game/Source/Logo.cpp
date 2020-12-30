@@ -65,7 +65,7 @@ bool Logo::PostUpdate()
 {
     bool ret = true;
     // Draw everything --------------------------------------
-    if (timer > 4 && trans == true)
+    if (timer > 60 && trans == true)
     {
         trans = false;
         app->fade->Fade(this, (Module*)app->intro, 10);

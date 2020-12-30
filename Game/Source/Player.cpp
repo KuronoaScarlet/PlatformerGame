@@ -165,7 +165,7 @@ bool Player::Update(float dt)
 	//PlayerMovement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		playerData.position.x -= 60 * dt;
+		playerData.position.x -= 7 * dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -178,7 +178,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		playerData.position.x += 60 * dt;
+		playerData.position.x +=dt;
 		if (godMode == false)
 		{
 			onGround = false;
@@ -265,8 +265,6 @@ bool Player::PostUpdate()
 	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
 		app->SaveGameRequest();
 		app->title->pauseBool = true;
 		if(scene1 == true)

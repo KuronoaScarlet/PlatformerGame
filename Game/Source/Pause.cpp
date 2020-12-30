@@ -59,6 +59,9 @@ bool Pause::Start()
     exitButton->SetObserver((Scene*)this);
     exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
 
+    app->render->camera.x = 0;
+    app->render->camera.y = 0;
+
     return ret;
 }
 

@@ -142,10 +142,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     {
         if (control->id == 1)
         {
-            if(app->player->playerData.currentLevel == 1)
+            /*if(app->player->playerData.currentLevel == 1)
             app->fade->Fade(this, (Module*)app->scene, 20);
             if (app->player->playerData.currentLevel == 2)
-            app->fade->Fade(this, (Module*)app->scene, 20);
+            app->fade->Fade(this, (Module*)app->scene2, 20);*/
+            app->LoadGameRequest();
         }
         else if (control->id == 2)
         {

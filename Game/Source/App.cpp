@@ -157,6 +157,8 @@ bool App::Start()
 {
 	PERF_START(perfTimer);
 	bool ret = true;
+	frameTime.Start();
+	lastSecond.Start();
 	ListItem<Module*>* item;
 	item = modules.start;
 
@@ -227,7 +229,8 @@ void App::PrepareUpdate()
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
 	dt = frameTime.ReadSec();
-	frameTime.Start();
+	frameRate = (caped) ? 1000 / 30 : 1000 / 60;
+	fps = SDL_GetTicks();
 }
 
 // ---------------------------------------------
@@ -238,68 +241,30 @@ void App::FinishUpdate()
 
 	uint32 lastFrameInMs = 0;
 	uint32 framesOnLastUpdate = 0;
-	if (caped == false)
+	tempFps = SDL_GetTicks() - fps;
+
+	float average = fpsCount / startTime.ReadSec();
+
+	frameSec += dt;
+	if (frameTime.ReadSec() > 1.0f)
 	{
-		float secondsStart = startTime.ReadSec();
-		float average = fpsCount / secondsStart;
-
-		if (frameTime.ReadSec() > 1.0f)
-		{
-			framesSecond = lastSecFrameCnt;
-			lastSecFrameCnt = 0;
-			frameTime.Start();
-		}
-
-		oldLastFrame = lastFrameInMs;
-
-		lastFrameInMs = lastSecond.Read();
-
-		lastSecond.Start();
-
-		int delay = (1000 * (1.0f / frameRate60));
-
-		if (lastFrameInMs < 1000 * (1.0f / frameRate60))
-		{
-			perfTimer.Start();
-			SDL_Delay(delay);
-			timePerfect = perfTimer.ReadMs();
-		}
-		static char titl[256];
-		sprintf_s(titl, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
-			average, framesSecond, lastFrameInMs);
-		app->win->SetTitle(titl);
+		framesSecond = lastSecFrameCnt;
+		lastSecFrameCnt = 0;
+		frameTime.Start();
 	}
-	if (caped == true)
+
+	oldLastFrame = lastFrameInMs;
+	lastFrameInMs = lastSecond.Read();
+	lastSecond.Start();
+
+	if (frameRate > tempFps)
 	{
-		float secondsStart = startTime.ReadSec();
-		float average = fpsCount / secondsStart;
-
-		if (frameTime.ReadSec() > 1.0f)
-		{
-			framesSecond = lastSecFrameCnt;
-			lastSecFrameCnt = 0;
-			frameTime.Start();
-		}
-
-		oldLastFrame = lastFrameInMs;
-
-		lastFrameInMs = lastSecond.Read();
-
-		lastSecond.Start();
-
-		int delay = (1000 * (1.0f / frameRate30));
-
-		if (lastFrameInMs < 1000 * (1.0f / frameRate30))
-		{
-			perfTimer.Start();
-			SDL_Delay(delay);
-			timePerfect = perfTimer.ReadMs();
-		}
-		static char titl[256];
-		sprintf_s(titl, 256, "FPS: %.2f | AVG FPS %0.2f | Last Frame in ms: %0.2f | VSync = off  ",
-			average, framesSecond, lastFrameInMs);
-		app->win->SetTitle(titl);
+		SDL_Delay(frameRate - tempFps);
 	}
+	static char title[256];
+	sprintf_s(title, 256, "FPS: %d | AVG FPS %.2f | Last Frame in ms: %d | VSync = On ",
+		framesSecond, average, lastFrameInMs);
+	app->win->SetTitle(title);
 	
 }
 

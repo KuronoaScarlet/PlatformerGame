@@ -6,15 +6,18 @@
 	<audio />
 	<scene />
 	<player>
-		<position x="179" y="230" />
-		<level l="2" />
+		<position x="145.000031" y="294" />
+		<level l="1" />
 	</player>
 	<entitymanager>
 		<enemies>
-			
+			<enemy x="294.392822" y="246.199997" />
+			<enemy x="296.050537" y="246.599991" />
+			<enemy x="286.248535" y="246.199997" />
+			<enemy x="292.339081" y="246.199997" />
 		</enemies>
 	</entitymanager>
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-1272" y="-198" />
 	</renderer>
 </save>

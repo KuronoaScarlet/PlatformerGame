@@ -64,7 +64,7 @@ bool GroundEnemy::Update(float dt)
 			}
 			else if (nextAuxPositionEnemy.x > position.x)
 			{
-				position.x += 1;
+				position.x += dt;
 			}
 		}
 	}
@@ -73,12 +73,12 @@ bool GroundEnemy::Update(float dt)
 
 		if (timer <= 100)
 		{
-			position.x += 0.5f;
+			position.x += 0.5f*dt;
 			timer++;
 		}
 		if (timer >= 100 && timer <= 200)
 		{
-			position.x -= 0.5f;
+			position.x -= 0.5f*dt;
 			timer++;
 		}
 		if (timer == 200)
