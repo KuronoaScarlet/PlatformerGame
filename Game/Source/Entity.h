@@ -16,7 +16,8 @@ public:
 		GROUND_ENEMY,
 		AIR_ENEMY,
 		HEARTS,
-		COINS
+		COINS,
+		CHECKPOINT
 	};
 
 	Entity(Module* listener, fPoint position, SDL_Texture* texture, Type type) : listener(listener), position(position), texture(texture), type(type)

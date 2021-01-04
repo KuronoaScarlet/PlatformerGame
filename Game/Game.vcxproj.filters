@@ -18,7 +18,6 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
-    <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
@@ -80,6 +79,9 @@
     <ClCompile Include="Source\Pause.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CheckPoint.cpp">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -118,7 +120,6 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
-    <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\Scene.h">
       <Filter>Scenes\Levels</Filter>
     </ClInclude>
@@ -187,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="Source\Pause.h">
       <Filter>Scenes\NoLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CheckPoint.h">
+      <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

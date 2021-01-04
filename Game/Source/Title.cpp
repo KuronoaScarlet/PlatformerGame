@@ -142,14 +142,12 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     {
         if (control->id == 1)
         {
-            /*if(app->player->playerData.currentLevel == 1)
-            app->fade->Fade(this, (Module*)app->scene, 20);
-            if (app->player->playerData.currentLevel == 2)
-            app->fade->Fade(this, (Module*)app->scene2, 20);*/
-            app->LoadGameRequest();
+            //Play
+            app->fade->Fade(this, (Module*)app->scene, 20);          
         }
         else if (control->id == 2)
         {
+            //Options
             app->fade->Fade(this, (Module*)app->options, 10);
         }
         else if (control->id == 3)
@@ -166,28 +164,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 11)
         {
+            //Back to title
            app->fade->Fade(this, (Module*)app->title, 10);           
         }
 
         else if (control->id == 4)
         {
+            //Exit
             app->title->exi = true;
         }
-        else if (control->id == 7)
+       else if (control->id == 8)
         {
-            if (app->title->fullSc == false)
-            {
-                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-                app->title->fullSc = true;
-            }
-            else 
-            {
-                SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
-            }
-            
-        }
-        else if (control->id == 8)
-        {
+            //Vsync
             if (app->title->vsync == true)
             {
                 
@@ -205,15 +193,15 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 12)
         {
-            app->fade->Fade(this, (Module*)app->scene, 20);
-
-
+            //LoadGame
+            app->LoadGameRequest();
         }
     }
     case GuiControlType::SLIDER:
     {
         if (control->id == 5)
         {
+            //Volume
             if(control->bounds.x == 143 || control->bounds.x == 156.5f|| control->bounds.x == 170|| control->bounds.x == 183.5f|| control->bounds.x == 197|| control->bounds.x == 210.5f|| control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
                 app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
@@ -225,6 +213,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 6)
         {
+            //FxVolume
             if (control->bounds.x == 143 || control->bounds.x == 156.5f || control->bounds.x == 170 || control->bounds.x == 183.5f || control->bounds.x == 197 || control->bounds.x == 210.5f || control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
                 if (control->bounds.x == 143)
@@ -246,6 +235,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
     {
         if (control->id == 7)
         {
+            //FullScreen
             if (app->title->fullSc == false)
             {
                 SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
@@ -255,6 +245,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
             {
                 SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
             }
+
+        
         }
     }
     default: break;

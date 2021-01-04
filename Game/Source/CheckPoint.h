@@ -3,63 +3,35 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Entity.h"
 
 struct SDL_Texture;
 struct Collider;
 
-class CheckPoint : public Module
+class CheckPoint : Entity
 {
 public:
 	// Constructor
-	CheckPoint();
+	CheckPoint(Module* listener, fPoint position, SDL_Texture* texture, Type type);
 
-	// Destructor
-	~CheckPoint();
-
-	bool Awake();
-
-	// Called when the module is activated
-	// Loads the necessary textures for the CheckPoint
-	bool Start() override;
-
-	// Called at the middle of the application loop
-	
-	bool PreUpdate();
+	bool Start();
 
 	bool Update(float dt);
 
-	// Called at the end of the application loop
-	// Performs the render call of the CheckPoint sprite
-	bool PostUpdate();
+	bool Draw();
 
-	bool CleanUp();
+	//void Collision(Collider* coll);
 
-	void InitialPos();
+	void CleanUp();
 	
 	bool on = false;
 	
 private:
 
-	// The speed in which we move the player (pixels per frame)
-	int speed = 1;
-
-	// The player spritesheet loaded into an SDL_Texture
-	SDL_Texture* texture = nullptr;
-
-	
-	
 	// A set of animations
-	Animation idleAnim;
-	Animation activated;
-	Animation* currentAnim = nullptr;
-
-
-	fPoint position;
-
-	
-	
-	// The Checkpoint's collider
-	Collider* collider = nullptr;
+	Animation idleAnimation;
+	Animation activatedAnimation;
+	Animation* currentAnimation = nullptr;
 
 };
 

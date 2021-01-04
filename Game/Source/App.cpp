@@ -50,7 +50,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	options = new Options();
 	pause = new Pause();
 	entityManager = new EntityManager();
-	checkpoint = new CheckPoint();
 	fade = new FadeToBlack();
 	collisions = new Collisions(false);
 	deathScreen = new DeathScreen();
@@ -74,7 +73,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(options);
 	AddModule(pause);
 	AddModule(entityManager);
-	AddModule(checkpoint);
 	AddModule(fade);
 	AddModule(deathScreen);
 	AddModule(winScreen);
@@ -93,7 +91,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	options->active = false;
 	pause->active = false;
 	scene2->active = false;
-	checkpoint->active = false;
 	deathScreen->active = false;
 	winScreen->active = false;
 	PERF_PEEK(perfTimer);
@@ -245,7 +242,7 @@ void App::FinishUpdate()
 
 	float average = fpsCount / startTime.ReadSec();
 
-	frameSec += dt;
+	//frameSec += dt;
 	if (frameTime.ReadSec() > 1.0f)
 	{
 		framesSecond = lastSecFrameCnt;

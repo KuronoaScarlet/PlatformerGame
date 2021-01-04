@@ -6,18 +6,32 @@
 	<audio />
 	<scene />
 	<player>
-		<position x="145.000031" y="294" />
-		<level l="1" />
+		<position x="50" y="278" />
+		<level l="2" />
 	</player>
 	<entitymanager>
 		<enemies>
-			<enemy x="294.392822" y="246.199997" />
-			<enemy x="296.050537" y="246.599991" />
-			<enemy x="286.248535" y="246.199997" />
-			<enemy x="292.339081" y="246.199997" />
+			<enemy x="756.562805" y="278" />
+			<enemy x="764" y="112" />
+			<enemy x="1068" y="32" />
+			<enemy x="776.266602" y="278.200012" />
+			<enemy x="795" y="112" />
+			<enemy x="1099" y="32" />
+			<enemy x="756.406555" y="278.200012" />
+			<enemy x="758.5" y="112" />
+			<enemy x="1062.5" y="32" />
+			<enemy x="773.869751" y="278.600006" />
+			<enemy x="801.5" y="112" />
+			<enemy x="1105.5" y="32" />
+			<enemy x="761.243835" y="278.200012" />
+			<enemy x="763.5" y="112" />
+			<enemy x="1067.5" y="32" />
+			<enemy x="756.962585" y="278.600006" />
+			<enemy x="762.5" y="112" />
+			<enemy x="1066.5" y="32" />
 		</enemies>
 	</entitymanager>
 	<renderer>
-		<camera x="-1272" y="-198" />
+		<camera x="0" y="-178" />
 	</renderer>
 </save>

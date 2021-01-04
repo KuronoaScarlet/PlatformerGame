@@ -43,9 +43,6 @@ bool Scene2::Start()
 	app->player->Init();
 	app->player->Start();
 
-	app->checkpoint->Init();
-	app->checkpoint->Start();
-
 	app->collisions->active = true;
 	app->map->active = true;
 	
@@ -85,6 +82,9 @@ bool Scene2::Start()
 
 	//Hearts
 	app->entityManager->AddEntity({ 608.0f, 256.0f }, Entity::Type::HEARTS);
+
+	//Checkpoint
+	app->entityManager->AddEntity({ 464.0f, 257.0f }, Entity::Type::CHECKPOINT);
 	
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
