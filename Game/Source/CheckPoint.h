@@ -20,19 +20,19 @@ public:
 
 	bool Draw();
 
-	//void Collision(Collider* coll);
+	void Collision(Collider* coll);
 
 	void CleanUp();
 	
 	bool on = false;
 	
 private:
-
-	// A set of animations
 	Animation idleAnimation;
 	Animation activatedAnimation;
+
 	Animation* currentAnimation = nullptr;
 
+	uint checkPointFx = 0;
 };
 
 #endif //!__MODULE_PLAYER_H__

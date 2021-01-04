@@ -45,7 +45,7 @@ CheckPoint::CheckPoint(Module* listener, fPoint position, SDL_Texture* texture, 
 	SDL_Rect colCheckPoint = { position.x, position.y, 12, 32 };
 	collider = app->collisions->AddCollider(colCheckPoint, Collider::Type::CHECKPOINT, listener);
 
-
+	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 }
 
 bool CheckPoint::Start()
@@ -67,6 +67,26 @@ bool CheckPoint::Draw()
 	rectCheckPoint = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x,position.y, &rectCheckPoint);
 	return true;
+}
+
+void CheckPoint::Collision(Collider* coll)
+{
+	if (coll == app->player->collider)
+	{
+		if (on == false) {
+			app->SaveGameRequest();
+			app->audio->PlayFx(checkPointFx);
+		}
+		on = true;
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+		{
+			app->player->playerData.position.x = 50.0f;
+			app->player->playerData.position.y = 278.0f;
+
+			app->render->camera.x = 0;
+			app->render->camera.y = (-app->player->playerData.position.y) + 100;
+		}
+	}
 }
 
 void CheckPoint::CleanUp()

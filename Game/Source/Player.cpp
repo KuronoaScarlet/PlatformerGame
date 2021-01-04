@@ -389,23 +389,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 				app->entityManager->CleanUp();
 			}
 		}
-		if (b->type == Collider::Type::CHECKPOINT)
-		{
-			if (app->checkpoint->on == false) {
-				app->SaveGameRequest();
-				app->audio->PlayFx(checkPointFx);
-			}
-			app->checkpoint->on = true;
-			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-			{
-				app->player->playerData.position.x = 50.0f;
-				app->player->playerData.position.y = 278.0f;
-
-				app->render->camera.x = 0;
-				app->render->camera.y = (-app->player->playerData.position.y) + 100;
-			}
-		}
-
 	}
 
 	if (a == playerFoot)
