@@ -110,7 +110,6 @@ App::~App()
 void App::AddModule(Module* module)
 {
 	module->Init();
-
 	modules.Add(module);
 }
 

@@ -14,22 +14,25 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class EntityManager;
+class Map;
+class Collisions;
+class Fonts;
+
+//Scene Manager
 class Logo;
 class Intro;
 class Title;
 class Scene;
 class Scene2;
-class Map;
-class Player;
 class Options;
-class EntityManager;
-class CheckPoint;
 class FadeToBlack;
-class Collisions;
 class DeathScreen;
 class WinScreen;
-class Fonts;
 class PathFinding;
+
+// 
+class Player;
 
 class App
 {
@@ -107,7 +110,6 @@ public:
 	EntityManager* entityManager;
 	Player* player;
 	Options* options;
-	CheckPoint* checkpoint;
 	FadeToBlack* fade;
 	Collisions* collisions;
 	DeathScreen* deathScreen;
