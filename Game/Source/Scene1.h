@@ -1,19 +1,19 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENE1_H__
+#define __SCENE1_H__
 
 #include "Module.h"
 #include "Animation.h"
 
 class GuiControl;
 
-class Scene : public Module
+class Scene1 : public Module
 {
 public:
 
-	Scene();
+	Scene1();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~Scene1();
 
 	// Called before render is available
 	bool Awake();
@@ -50,4 +50,4 @@ private:
 };
 
 
-#endif // __SCENE_H__
+#endif // __SCENE1_H__

@@ -5,7 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Intro.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Map.h"
 #include "Player.h"
 #include "EntityManager.h"
@@ -18,17 +18,17 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene1::Scene1() : Module()
 {
 	name.Create("scene");
 }
 
 // Destructor
-Scene::~Scene()
+Scene1::~Scene1()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene1::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -37,7 +37,7 @@ bool Scene::Awake()
 }
 
 // Called before the first frame
-bool Scene::Start()
+bool Scene1::Start()
 {
 	app->player->scene1 = true;
 
@@ -81,13 +81,13 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool Scene1::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool Scene1::Update(float dt)
 {
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -118,7 +118,7 @@ bool Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool Scene1::PostUpdate()
 {
 	bool ret = true;
 
@@ -130,7 +130,7 @@ bool Scene::PostUpdate()
 }
 
 // Called before quitting
-bool Scene::CleanUp()
+bool Scene1::CleanUp()
 {
 	if (!active)return true;
 
@@ -141,7 +141,7 @@ bool Scene::CleanUp()
 
 	app->player->scene1 = false;
 
-	app->scene->active = false;
+	app->scene1->active = false;
 
 	LOG("Freeing scene");
 	return true;

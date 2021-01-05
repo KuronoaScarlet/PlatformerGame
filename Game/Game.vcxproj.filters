@@ -9,9 +9,6 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>Scenes\Levels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene2.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     <ClCompile Include="Source\Map.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene1.cpp">
+      <Filter>Scenes\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -131,9 +131,6 @@
     </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Scenes\Levels</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene2.h">
       <Filter>Scenes\Levels</Filter>
@@ -245,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="Source\Map.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene1.h">
+      <Filter>Scenes\Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

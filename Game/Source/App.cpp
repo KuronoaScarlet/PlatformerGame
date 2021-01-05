@@ -7,7 +7,7 @@
 #include "Logo.h"
 #include "Intro.h"
 #include "Title.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
@@ -42,7 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	logo = new Logo();
 	title = new Title();
 	intro = new Intro();
-	scene = new Scene();
+	scene1 = new Scene1();
 	scene2 = new Scene2();
 	map = new Map();
 	player = new Player();
@@ -64,7 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(logo);
 	AddModule(intro);
 	AddModule(title);
-	AddModule(scene);
+	AddModule(scene1);
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(player);
@@ -83,7 +83,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	intro->active = false;
 	title->active = false;
-	scene->active = false;
+	scene1->active = false;
 	player->active = false;
 	options->active = false;
 	scene2->active = false;

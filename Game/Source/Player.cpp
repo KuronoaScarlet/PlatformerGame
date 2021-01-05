@@ -10,7 +10,7 @@
 #include "FadeToBlack.h"
 #include "CheckPoint.h"
 #include "EntityManager.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Scene2.h"
 #include "Title.h"
 
@@ -76,19 +76,19 @@ bool Player::Start()
 
 	//Botones
 	resumeButton = new GuiButton(9, { 160, 37, 100, 24 }, "RESUME");
-	resumeButton->SetObserver((Scene*)this);
+	resumeButton->SetObserver((Scene1*)this);
 	resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/resume_button.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_pressed.png"));
 
 	settingsButton = new GuiButton(2, { 160, 84, 100, 24 }, "SETTINGS");
-	settingsButton->SetObserver((Scene*)this);
+	settingsButton->SetObserver((Scene1*)this);
 	settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
 
 	backToTitleButton = new GuiButton(11, { 160, 141, 100, 24 }, "BACK_TO_TITLE");
-	backToTitleButton->SetObserver((Scene*)this);
+	backToTitleButton->SetObserver((Scene1*)this);
 	backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
 
 	exitButton = new GuiButton(4, { 160, 180, 100, 24 }, "EXIT");
-	exitButton->SetObserver((Scene*)this);
+	exitButton->SetObserver((Scene1*)this);
 	exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
 
 
@@ -141,8 +141,8 @@ bool Player::Update(float dt)
 			}
 			if (scene2 == true)
 			{
-				app->scene->firstEntry = true;
-				app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+				app->scene1->firstEntry = true;
+				app->fade->Fade((Module*)app->scene2, (Module*)app->scene1, 60);
 				app->entityManager->CleanUp();
 			}
 		}
@@ -151,7 +151,7 @@ bool Player::Update(float dt)
 			if (scene1 == true)
 			{
 				app->scene2->firstEntry = true;
-				app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+				app->fade->Fade((Module*)app->scene1, (Module*)app->scene2, 60);
 				app->entityManager->CleanUp();
 			}
 			if (scene2 == true)
@@ -350,12 +350,12 @@ bool Player::LoadState(pugi::xml_node& data)
 
 	if (playerData.currentLevel == 1 && scene2 == true)
 	{
-		app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+		app->fade->Fade((Module*)app->scene2, (Module*)app->scene1, 60);
 		app->entityManager->CleanUp();
 	}
 	if (playerData.currentLevel == 2 && scene1 == true)
 	{
-		app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+		app->fade->Fade((Module*)app->scene1, (Module*)app->scene2, 60);
 		app->entityManager->CleanUp();
 	}
 
@@ -428,7 +428,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		{
 			if (scene1 == true)
 			{
-				app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+				app->fade->Fade((Module*)app->scene1, (Module*)app->scene2, 60);
 				winCondition = true;
 				app->entityManager->CleanUp();
 			}
@@ -454,7 +454,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 }
 void Player::InitialPos() 
 {
-	if (scene1 == true && app->scene->firstEntry == true) 
+	if (scene1 == true && app->scene1->firstEntry == true) 
 	{
 		playerData.position.x = 50.0f;
 		playerData.position.y = 260.0f;

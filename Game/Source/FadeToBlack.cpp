@@ -3,7 +3,7 @@
 #include "Window.h"
 #include "App.h"
 #include "Render.h"
-#include "Scene.h"
+#include "Scene1.h"
 
 #include "Defs.h"
 #include "Log.h"

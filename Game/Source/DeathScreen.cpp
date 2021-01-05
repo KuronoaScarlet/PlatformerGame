@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Animation.h"
 #include "DeathScreen.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Scene2.h"
 #include "FadeToBlack.h"
 
@@ -68,7 +68,7 @@ bool DeathScreen::PostUpdate()
     {
         app->player->playerData.playerLives = 3;
         app->fade->Fade(this, (Module*)app->intro, 1);
-        app->scene->firstEntry = true;
+        app->scene1->firstEntry = true;
         app->scene2->firstEntry = true;
     }
     //if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

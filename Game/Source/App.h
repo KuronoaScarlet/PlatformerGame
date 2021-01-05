@@ -23,7 +23,7 @@ class Fonts;
 class Logo;
 class Intro;
 class Title;
-class Scene;
+class Scene1;
 class Scene2;
 class Options;
 class FadeToBlack;
@@ -104,7 +104,7 @@ public:
 	Logo* logo;
 	Intro* intro;
 	Title* title;
-	Scene* scene;
+	Scene1* scene1;
 	Scene2* scene2;
 	Map* map;
 	EntityManager* entityManager;

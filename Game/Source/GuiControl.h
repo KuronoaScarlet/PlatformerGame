@@ -3,7 +3,7 @@
 
 #include "Input.h"
 #include "Render.h"
-#include "Scene.h"
+#include "Scene1.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -69,7 +69,7 @@ public:
         section = { 0, 0, 0, 0 };
     }
 
-    void SetObserver(Scene* module)
+    void SetObserver(Scene1* module)
     {
         observer = module;
     }
@@ -96,7 +96,7 @@ public:
 
     //Font font;              // Text font
 
-    Scene* observer;        // Observer module (it should probably be an array/list)
+    Scene1* observer;        // Observer module (it should probably be an array/list)
 
     //Audio
 

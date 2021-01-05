@@ -44,21 +44,21 @@ bool Options::Start()
     screen = app->tex->Load("Assets/Textures/options_screen.png");
 
     backButton = new GuiButton(3, { 10, 10, 20, 16 }, "BACK");
-    backButton->SetObserver((Scene*)this);
+    backButton->SetObserver((Scene1*)this);
     backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
 
     musicVolume = new GuiSlider(5, { 143, 118, 20, 16 }, "MUSIC_VOLUME");
-    musicVolume->SetObserver((Scene*)this);
+    musicVolume->SetObserver((Scene1*)this);
 
     fxVolume = new GuiSlider(6, { 143, 157, 20, 16 }, "FX_VOLUME");
-    fxVolume->SetObserver((Scene*)this);
+    fxVolume->SetObserver((Scene1*)this);
 
     fullscreenButton = new GuiCheckBox(7, { 210, 184, 20, 16 }, "FULLSCREEN");
-    fullscreenButton->SetObserver((Scene*)this);
+    fullscreenButton->SetObserver((Scene1*)this);
     fullscreenButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
 
     vsyncButton = new GuiCheckBox(8, { 210, 206, 20, 16 }, "VSYNC");
-    vsyncButton->SetObserver((Scene*)this);
+    vsyncButton->SetObserver((Scene1*)this);
     //vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"), app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
     vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
 
@@ -94,7 +94,7 @@ bool Options::PostUpdate()
    // Draw everything --------------------------------------
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
-        app->fade->Fade(this, (Module*)app->scene, 10);
+        app->fade->Fade(this, (Module*)app->scene1, 10);
 
     }
    // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
