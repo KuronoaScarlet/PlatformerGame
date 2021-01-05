@@ -60,6 +60,7 @@ bool Options::Start()
     vsyncButton = new GuiCheckBox(8, { 210, 206, 20, 16 }, "VSYNC");
     vsyncButton->SetObserver((Scene*)this);
     //vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"), app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
+    vsyncButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
 
    
 

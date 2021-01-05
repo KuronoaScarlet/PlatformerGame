@@ -53,6 +53,8 @@ public:
     GuiCheckBox* fullscreenButton;
     GuiCheckBox* vsyncButton;
 
+    bool checked;
+
 };
 
 #endif

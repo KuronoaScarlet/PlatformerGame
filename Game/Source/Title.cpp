@@ -148,7 +148,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 2)
         {
             //Options
-            app->fade->Fade(this, (Module*)app->options, 10);
+            if(app->player->pauseCondition)    app->fade->Fade((Module*)app->scene, (Module*)app->options, 10);
+            else app->fade->Fade(this, (Module*)app->options, 10);
         }
         else if (control->id == 3)
         {

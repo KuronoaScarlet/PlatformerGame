@@ -1,4 +1,5 @@
 #include "GuiCheckBox.h"
+#include "Options.h"
 
 GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::CHECKBOX, id)
 {
@@ -31,8 +32,9 @@ bool GuiCheckBox::Update(Input* input, float dt)
             // If mouse button pressed -> Generate event!
             if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
             {
-                checked = !checked;
                 NotifyObserver();
+                checked = !checked;
+                
             }
         }
         else state = GuiControlState::NORMAL;
