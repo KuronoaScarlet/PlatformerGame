@@ -1,12 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Window.cpp" />
-    <ClCompile Include="Source\Textures.cpp" />
-    <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Input.cpp" />
-    <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Log.cpp">
       <Filter>Utils</Filter>
@@ -14,10 +9,6 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\Collisions.cpp" />
-    <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
@@ -36,11 +27,6 @@
     <ClCompile Include="Source\WinScreen.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PerfTimer.cpp" />
-    <ClCompile Include="Source\Timer.cpp" />
-    <ClCompile Include="Source\EntityManager.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>Entities\Playable</Filter>
     </ClCompile>
@@ -53,11 +39,9 @@
     <ClCompile Include="Source\GroundEnemy.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Fonts.cpp" />
     <ClCompile Include="Source\AirEnemy.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\GuiButton.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -65,9 +49,6 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiSlider.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GuiManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Title.cpp">
@@ -79,14 +60,53 @@
     <ClCompile Include="Source\CheckPoint.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collisions.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToBlack.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Window.h" />
-    <ClInclude Include="Source\Textures.h" />
-    <ClInclude Include="Source\Render.h" />
-    <ClInclude Include="Source\Module.h" />
-    <ClInclude Include="Source\Input.h" />
-    <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
@@ -112,11 +132,6 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h" />
-    <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\Collisions.h" />
-    <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Scene.h">
       <Filter>Scenes\Levels</Filter>
     </ClInclude>
@@ -135,14 +150,7 @@
     <ClInclude Include="Source\WinScreen.h">
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h" />
-    <ClInclude Include="Source\Timer.h" />
-    <ClInclude Include="Source\PQueue.h" />
-    <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Entity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EntityManager.h">
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h">
@@ -157,11 +165,9 @@
     <ClInclude Include="Source\Hearts.h">
       <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\AirEnemy.h">
       <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\GuiSlider.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -174,9 +180,6 @@
     <ClInclude Include="Source\GuiButton.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiManager.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Title.h">
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
@@ -185,6 +188,63 @@
     </ClInclude>
     <ClInclude Include="Source\CheckPoint.h">
       <Filter>Entities\NonPlayable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collisions.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToBlack.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PQueue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Queue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +277,9 @@
     </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{2572ee84-c094-4c2d-9e24-4dc17d6498eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{73ac8df4-26ea-43f3-9292-e69b96185abe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
