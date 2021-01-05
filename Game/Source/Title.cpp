@@ -63,7 +63,12 @@ bool Title::Start()
     exit->SetObserver((Scene*)this);
     exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit.png"), app->tex->Load("Assets/Textures/Buttons/exit_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_pressed.png"));
 
-   
+    backButton = new GuiButton(3, { 10, 10, 20, 16 }, "BACK");
+    backButton->SetObserver((Scene*)this);
+    backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
+
+    creditsScene = app->tex->Load("Assets/Textures/credits_scene.png");
+    creditSceneFlag = false;
     pauseBool = false;
     fullSc = false;
     vsync = true;
@@ -78,12 +83,25 @@ bool Title::PreUpdate()
 
 bool Title::Update(float dt)
 {
-    play->Update(app->input, dt);
-    continueButton->Update(app->input, dt);
-    options->Update(app->input, dt);
-    credits->Update(app->input, dt);
-    exit->Update(app->input, dt);
-    
+    if (creditSceneFlag == false)
+    {
+        play->Update(app->input, dt);
+        continueButton->Update(app->input, dt);
+        options->Update(app->input, dt);
+        credits->Update(app->input, dt);
+        exit->Update(app->input, dt);
+    }
+    if (creditSceneFlag)
+    {
+        app->render->camera.y -= 1;
+        
+        
+    }
+    if (app->render->camera.y == -482) //-2400
+    {
+        creditSceneFlag = false;
+    }
+   
     
 
     return true;
@@ -102,22 +120,36 @@ bool Title::PostUpdate()
     }
    // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     
-    app->render->DrawTexture(screen, 0, 0, NULL);
+    if (creditSceneFlag == true)
+    {
+        app->render->DrawTexture(creditsScene, 0, 0, NULL);
+      
+    }
+
+    if (!creditSceneFlag)
+    
+    {
+        app->render->camera.y = 0;
+        app->render->DrawTexture(screen, 0, 0, NULL);
 
 
-   // start->Draw(app->render);
-   // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
-    play->Draw(app->render);
-    continueButton->Draw(app->render);
-    options->Draw(app->render);
-    credits->Draw(app->render);
-    exit->Draw(app->render);
+        // start->Draw(app->render);
+        // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
+        play->Draw(app->render);
+        continueButton->Draw(app->render);
+        options->Draw(app->render);
+        credits->Draw(app->render);
+        exit->Draw(app->render);
+    }
+   
+    
     
 
     if (exi == true) 
     {
         return false;
     }
+    
     
 
     return ret;
@@ -200,6 +232,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
             //LoadGame
             app->LoadGameRequest();
         }
+        else if (control->id == 13)
+        {
+            app->title->creditSceneFlag = true;
+        }
+ 
     }
     case GuiControlType::SLIDER:
     {

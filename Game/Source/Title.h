@@ -49,12 +49,15 @@ public:
 public:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* screen = nullptr;
+    SDL_Texture* creditsScene = nullptr;
+    bool creditSceneFlag;
 
     GuiButton* play;
     GuiButton* continueButton;
     GuiButton* options;
     GuiButton* credits;
     GuiButton* exit;
+    GuiButton* backButton;
     
 
     bool fullSc;
