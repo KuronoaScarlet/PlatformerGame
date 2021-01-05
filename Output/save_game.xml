@@ -1,20 +1,12 @@
 <?xml version="1.0"?>
 <save>
-	<input />
-	<window />
-	<textures />
-	<audio />
-	<scene />
 	<player>
-		<position x="104.810013" y="294" />
+		<position x="50" y="260" />
 		<level l="1" />
 	</player>
-	<entitymanager>
-		<entities>
-			<enemy x="292.113068" y="246.199997" />
-		</entities>
-	</entitymanager>
-	<renderer>
-		<camera x="0" y="-210" />
-	</renderer>
+	<entities>
+		<enemies>
+			<enemy x="292.021851" y="246.599991" />
+		</enemies>
+	</entities>
 </save>

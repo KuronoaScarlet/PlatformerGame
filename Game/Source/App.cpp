@@ -389,13 +389,30 @@ bool App::LoadGame()
 {
 	bool ret = true;
 
-	ListItem<Module*>* item;
-	item = modules.start;
+	pugi::xml_document savedGame;
 
-	while (item != NULL && ret == true)
+	pugi::xml_parse_result result = savedGame.load_file("save_game.xml");
+
+	if (result == NULL)
 	{
-		ret = item->data->LoadState(saveLoadNode.child(item->data->name.GetString()));
-		item = item->next;
+		LOG("Could not load saved game xml file. Pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+		//General Node
+		pugi::xml_node generalNode = savedGame.child("save");
+
+		//Player
+		pugi::xml_node player = generalNode.child("player");
+
+		//Entities
+		pugi::xml_node entities = generalNode.child("entities");
+
+
+		//LoadRequests
+		app->player->LoadState(player);
+		app->entityManager->LoadState(entities);
 	}
 
 	loadGameRequested = false;
@@ -406,18 +423,25 @@ bool App::LoadGame()
 bool App::SaveGame() const
 {
 	bool ret = true;
+	
+	saveGameRequested = false;
 
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while (item != NULL && ret == true)
-	{
-		ret = item->data->SaveState(saveLoadNode.child(item->data->name.GetString()));
-		item = item->next;
-	}
-	saveLoadFile.save_file("save_game.xml");
+	pugi::xml_document newSave;
+	pugi::xml_node save;
+
+	save = newSave.append_child("save");
+
+	pugi::xml_node player = save.append_child("player");
+	app->player->SaveState(player);
+
+	pugi::xml_node entities = save.append_child("entities");
+	app->entityManager->SaveState(entities);
 	
-	saveGameRequested = false;
+	newSave.save_file("save_game.xml");
+	
 
 	return ret;
 }

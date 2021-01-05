@@ -162,7 +162,7 @@ private:
 	
 	float timePerfect;
 	float oldLastFrame = 0.0f;
-	int    cappedMs = -1;
+	int cappedMs = -1;
 	bool caped;
 };
 

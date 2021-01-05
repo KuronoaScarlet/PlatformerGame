@@ -314,18 +314,18 @@ bool Player::LoadState(pugi::xml_node& data)
 
 bool Player::SaveState(pugi::xml_node& data) const
 {
-	pugi::xml_node play = data.child("position");
-	play.attribute("x").set_value(playerData.position.x);
-	play.attribute("y").set_value(playerData.position.y);
+	pugi::xml_node play = data.append_child("position");
+	play.append_attribute("x").set_value(playerData.position.x);
+	play.append_attribute("y").set_value(playerData.position.y);
 	
-	pugi::xml_node level = data.child("level");
+	pugi::xml_node level = data.append_child("level");
 	if(scene1 == true)
 	{
-		level.attribute("l").set_value("1");
+		level.append_attribute("l").set_value("1");
 	}
 	if (scene2 == true)
 	{
-		level.attribute("l").set_value("2");
+		level.append_attribute("l").set_value("2");
 	}
 
 

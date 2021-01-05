@@ -98,9 +98,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 		if (enemies->type == Entity::Type::GROUND_ENEMY || enemies->type == Entity::Type::AIR_ENEMY)
 		{
 			enemies->position = newPosition;
+			count++;
 		}
-
-		count++;
 	}
 
 	return true;
@@ -108,7 +107,7 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 
 bool EntityManager::SaveState(pugi::xml_node& data) const
 {
-	pugi::xml_node enemies = data.child("enemies");
+	pugi::xml_node enemies = data.append_child("enemies");
 
 	for (int i = 0; i < entityList.Count(); i++)
 	{
