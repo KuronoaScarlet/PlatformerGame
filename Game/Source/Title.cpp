@@ -153,19 +153,21 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 3)
         {
             //Back
-            if (app->title->pauseBool == false)
+            if (app->player->pauseCondition == false)
             {
-                app->fade->Fade(this, (Module*)app->title, 10);
+                app->fade->Fade((Module*)app->options, (Module*)app->title, 10);
             }
             else
             {
-                app->fade->Fade(this, (Module*)app->pause, 10);
+                app->fade->Fade((Module*)app->options, (Module*)app->title, 10);
             }
         }
         else if (control->id == 11)
         {
             //Back to title
-           app->fade->Fade(this, (Module*)app->title, 10);           
+            if(app->player->scene1) app->fade->Fade((Module*)app->scene, (Module*)app->title, 10);
+            if (app->player->scene2) app->fade->Fade((Module*)app->scene2, (Module*)app->title, 10);
+
         }
 
         else if (control->id == 4)
@@ -189,7 +191,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 9)
         {
             //resume
-
+            app->player->pauseCondition = false;
+            
         }
         else if (control->id == 12)
         {

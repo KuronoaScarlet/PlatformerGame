@@ -76,9 +76,6 @@
     <ClCompile Include="Source\Options.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Pause.cpp">
-      <Filter>Scenes\NoLevels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CheckPoint.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
@@ -184,9 +181,6 @@
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
     <ClInclude Include="Source\Options.h">
-      <Filter>Scenes\NoLevels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pause.h">
       <Filter>Scenes\NoLevels</Filter>
     </ClInclude>
     <ClInclude Include="Source\CheckPoint.h">

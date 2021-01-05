@@ -34,58 +34,60 @@ bool AirEnemy::Start()
 
 bool AirEnemy::Update(float dt)
 {
-	if (Sonar(app->player->playerData.position))
+	if (!app->player->pauseCondition)
 	{
-		//If player move
-		fPoint positionEnemy = app->map->WorldToMap(position.x, position.y);
-		fPoint positionPlayer = app->map->WorldToMap(app->player->playerData.position.x, app->player->playerData.position.y);
-
-
-		//Cerate Path
-		CreatePathEnemy(positionEnemy, positionPlayer);
-		int i = GetCurrentPositionInPath(positionEnemy);
-
-		//Move Enemy
-		if (lastPathEnemy->At(i + 1) != NULL)
+		if (Sonar(app->player->playerData.position))
 		{
-			
-			if (app->player->playerData.position.x < position.x)
+			//If player move
+			fPoint positionEnemy = app->map->WorldToMap(position.x, position.y);
+			fPoint positionPlayer = app->map->WorldToMap(app->player->playerData.position.x, app->player->playerData.position.y);
+
+
+			//Cerate Path
+			CreatePathEnemy(positionEnemy, positionPlayer);
+			int i = GetCurrentPositionInPath(positionEnemy);
+
+			//Move Enemy
+			if (lastPathEnemy->At(i + 1) != NULL)
 			{
-				position.x -= 1;
-				if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
-				if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
 
+				if (app->player->playerData.position.x < position.x)
+				{
+					position.x -= 1;
+					if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
+					if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
+
+				}
+				else if (app->player->playerData.position.x > position.x)
+				{
+					position.x += 1;
+					if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
+					if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
+				}
 			}
-			else if (app->player->playerData.position.x > position.x)
+		}
+		else
+		{
+
+			if (timer <= 100)
 			{
-				position.x += 1;
-				if (app->player->playerData.position.y >= position.y)	position.y += 0.5f;
-				if (app->player->playerData.position.y < position.y)	position.y -= 0.5f;
+				position.x += 0.5f;
+				timer++;
 			}
+			if (timer >= 100 && timer <= 200)
+			{
+				position.x -= 0.5f;
+				timer++;
+			}
+			if (timer == 200)
+				timer = 0;
+
 		}
+
+		currentAnimation = &idleAnimation;
+		currentAnimation->Update();
+		collider->SetPos(position.x, position.y);
 	}
-	else
-	{
-
-		if (timer <= 100)
-		{
-			position.x += 0.5f;
-			timer++;
-		}
-		if (timer >= 100 && timer <= 200)
-		{
-			position.x -= 0.5f;
-			timer++;
-		}
-		if (timer == 200)
-			timer = 0;
-
-	}
-
-	currentAnimation = &idleAnimation;
-	currentAnimation->Update();
-	collider->SetPos(position.x, position.y);
-
 	return true;
 }
 

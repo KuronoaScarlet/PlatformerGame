@@ -39,6 +39,7 @@ Player::Player() : Module()
 
 	jumpAnim.PushBack({ 1, 23, 12, 12 });
 	jumpAnim.loop = true;
+	
 }
 
 // Destructor
@@ -48,6 +49,7 @@ Player::~Player()
 // Called before the first frame
 bool Player::Start()
 {
+
 	playerData.texture = app->tex->Load("Assets/Textures/player.png");
 	playerData.currentAnim = &idleAnim;
 
@@ -62,12 +64,34 @@ bool Player::Start()
 	winCondition = false;
 	deathCondition = false;
 
+	pause = app->tex->Load("Assets/Textures/pause_image.png");
+	pauseCondition = false;
+
 	jumpFx = app->audio->LoadFx("Assets/Audio/FX/jump.wav");
 	doubleJumpFx = app->audio->LoadFx("Assets/Audio/FX/double_jump.wav");
 	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
 	InitialPos();
+
+	//Botones
+	resumeButton = new GuiButton(9, { 160, 37, 100, 24 }, "RESUME");
+	resumeButton->SetObserver((Scene*)this);
+	resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/resume_button.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_pressed.png"));
+
+	settingsButton = new GuiButton(2, { 160, 84, 100, 24 }, "SETTINGS");
+	settingsButton->SetObserver((Scene*)this);
+	settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
+
+	backToTitleButton = new GuiButton(11, { 160, 141, 100, 24 }, "BACK_TO_TITLE");
+	backToTitleButton->SetObserver((Scene*)this);
+	backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
+
+	exitButton = new GuiButton(4, { 160, 180, 100, 24 }, "EXIT");
+	exitButton->SetObserver((Scene*)this);
+	exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
+
+
 	return true;
 }
 
@@ -90,165 +114,179 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
-		playerData.currentAnim = &idleAnim;
-	}
-	if(onGround == false)
+	if (!pauseCondition)
 	{
-		playerData.vely += gravity;
-		playerData.position.x += playerData.velx;
-		playerData.position.y += playerData.vely;
-	}
-	if (onGround == true && godMode == false)
-	{
-		playerJumping = true;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
-	{
-		if (scene1 == true)
+		app->render->camera.x = 0;
+		app->render->camera.y = -playerData.position.y + 50;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
+			playerData.currentAnim = &idleAnim;
+		}
+		if (onGround == false)
+		{
+			playerData.vely += gravity;
+			playerData.position.x += playerData.velx;
+			playerData.position.y += playerData.vely;
+		}
+		if (onGround == true && godMode == false)
+		{
+			playerJumping = true;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
+		{
+			if (scene1 == true)
+			{
+				InitialPos();
+			}
+			if (scene2 == true)
+			{
+				app->scene->firstEntry = true;
+				app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
+				app->entityManager->CleanUp();
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			if (scene1 == true)
+			{
+				app->scene2->firstEntry = true;
+				app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
+				app->entityManager->CleanUp();
+			}
+			if (scene2 == true)
+			{
+				InitialPos();
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 		{
 			InitialPos();
 		}
-		if (scene2 == true)
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+			app->SaveGameRequest();
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+			app->LoadGameRequest();
+		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		{
-			app->scene->firstEntry = true;
-			app->fade->Fade((Module*)app->scene2, (Module*)app->scene, 60);
-			app->entityManager->CleanUp();
+			if (debug == false) debug = true;
+			else debug = false;
 		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		if(scene1==true)
-		{
-			app->scene2->firstEntry = true;
-			app->fade->Fade((Module*)app->scene, (Module*)app->scene2, 60);
-			app->entityManager->CleanUp();
-		}
-		if (scene2 == true)
-		{
-			InitialPos();
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
-	{
-		InitialPos();
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		if (debug == false) debug = true;
-		else debug = false;
-	}
-	if (debug == true) {
-		app->collisions->DebugDraw();
-		app->map->DrawPath();
-	
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		if (godMode == true)
-		{
-			godMode = false;
-		}
-		else
-		{
-			godMode = true;
-			collider->SetPos(-100, -100);
-		}
-	}
+		if (debug == true) {
+			app->collisions->DebugDraw();
+			app->map->DrawPath();
 
-	//PlayerMovement
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		playerData.position.x -= 7 * dt;
-		if (godMode == false)
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
-			onGround = false;
-		}
-		if (playerData.currentAnim != &walkAnimLeft) {
-			walkAnimLeft.Reset();
-			playerData.currentAnim = &walkAnimLeft;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		playerData.position.x +=dt;
-		if (godMode == false)
-		{
-			onGround = false;
-		}
-		if (playerData.currentAnim != &walkAnimRight) {
-			walkAnimRight.Reset();
-			playerData.currentAnim = &walkAnimRight;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
-	{
-		playerData.position.y -= 1;
-		app->render->camera.y += 3;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true)
-	{
-		playerData.position.y += 1;
-		app->render->camera.y -= 3;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
-	{
-		
-		if (doubleJump == true && onGround == false) 
-		{
-			app->audio->PlayFx(doubleJumpFx);
-			playerData.vely = -4.5f;
-			doubleJump = false;
-			if (playerData.currentAnim != &jumpAnim) 
+			if (godMode == true)
 			{
-				jumpAnim.Reset();
-				playerData.currentAnim = &jumpAnim;
+				godMode = false;
+			}
+			else
+			{
+				godMode = true;
+				collider->SetPos(-100, -100);
 			}
 		}
-		if (playerJumping == true ) 
+
+		//PlayerMovement
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			app->audio->PlayFx(jumpFx);
-			playerJumping = false;
-			playerData.vely = -5.5f;
-			playerData.position.y += playerData.vely;			
-			doubleJump = true;
-			if (playerData.currentAnim != &jumpAnim)
+			playerData.position.x -= 7 * dt;
+			if (godMode == false)
 			{
-				jumpAnim.Reset();
-				playerData.currentAnim = &jumpAnim;
+				onGround = false;
 			}
-			onGround = false;
+			if (playerData.currentAnim != &walkAnimLeft) {
+				walkAnimLeft.Reset();
+				playerData.currentAnim = &walkAnimLeft;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			playerData.position.x += dt;
+			if (godMode == false)
+			{
+				onGround = false;
+			}
+			if (playerData.currentAnim != &walkAnimRight) {
+				walkAnimRight.Reset();
+				playerData.currentAnim = &walkAnimRight;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
+		{
+			playerData.position.y -= 1;
+			app->render->camera.y += 3;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true)
+		{
+			playerData.position.y += 1;
+			app->render->camera.y -= 3;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
+		{
+
+			if (doubleJump == true && onGround == false)
+			{
+				app->audio->PlayFx(doubleJumpFx);
+				playerData.vely = -4.5f;
+				doubleJump = false;
+				if (playerData.currentAnim != &jumpAnim)
+				{
+					jumpAnim.Reset();
+					playerData.currentAnim = &jumpAnim;
+				}
+			}
+			if (playerJumping == true)
+			{
+				app->audio->PlayFx(jumpFx);
+				playerJumping = false;
+				playerData.vely = -5.5f;
+				playerData.position.y += playerData.vely;
+				doubleJump = true;
+				if (playerData.currentAnim != &jumpAnim)
+				{
+					jumpAnim.Reset();
+					playerData.currentAnim = &jumpAnim;
+				}
+				onGround = false;
+			}
+
+
+
+
+			cameraControl = true;
+
+			
+		}
+		if (godMode == false)
+		{
+			collider->SetPos(playerData.position.x, playerData.position.y + 2);
+			playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
+		}
+
+
+		playerData.currentAnim->Update();
+
+		if (playerData.position.y <= 230 && playerData.position.y >= 20)
+		{
+			app->render->camera.y = -playerData.position.y + 30;
 		}
 	}
-	
-	
-	
-	cameraControl = true;
-
-	if (godMode == false)
+	if (pauseCondition)
 	{
-		collider->SetPos(playerData.position.x, playerData.position.y+2);
-		playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
+		resumeButton->Update(app->input, dt);
+		settingsButton->Update(app->input, dt);
+		backToTitleButton->Update(app->input, dt);
+		exitButton->Update(app->input, dt);
 	}
-
-
-	playerData.currentAnim->Update();
-
-	if (playerData.position.y <= 230 && playerData.position.y >= 20)
-	{
-		app->render->camera.y = -playerData.position.y + 30;
-	}
-
+	if (app->title->exi)	return false;
 	return true;
 }
 
@@ -266,12 +304,24 @@ bool Player::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->SaveGameRequest();
-		app->title->pauseBool = true;
+		/*app->title->pauseBool = true;
 		if(scene1 == true)
 			app->fade->Fade((Module*)app->scene, (Module*)app->pause, 1);
 		if (scene2 == true)
-			app->fade->Fade((Module*)app->scene2, (Module*)app->pause, 1);
+			app->fade->Fade((Module*)app->scene2, (Module*)app->pause, 1);*/
+		pauseCondition = !pauseCondition;
 	}
+	if (pauseCondition)
+	{
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->DrawTexture(pause, 0, -20, NULL);
+		resumeButton->Draw(app->render);
+		settingsButton->Draw(app->render);
+		backToTitleButton->Draw(app->render);
+		exitButton->Draw(app->render);
+	}
+	
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		
 

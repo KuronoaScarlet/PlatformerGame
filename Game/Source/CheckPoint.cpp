@@ -55,10 +55,13 @@ bool CheckPoint::Start()
 
 bool CheckPoint::Update(float dt)
 {
-	if(on == false) currentAnimation = &idleAnimation;
-	else currentAnimation = &activatedAnimation;
-	currentAnimation->Update();
-	return true;
+	if (!app->player->pauseCondition)
+	{
+		if (on == false) currentAnimation = &idleAnimation;
+		else currentAnimation = &activatedAnimation;
+		currentAnimation->Update();
+		return true;
+	}
 }
 
 bool CheckPoint::Draw()

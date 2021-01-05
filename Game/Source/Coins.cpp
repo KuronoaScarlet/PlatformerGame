@@ -42,9 +42,12 @@ bool Coins::Update(float dt)
 
 bool Coins::Draw()
 {
-	SDL_Rect rectCoins;
-	rectCoins = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rectCoins);
+	if (!app->player->pauseCondition)
+	{
+		SDL_Rect rectCoins;
+		rectCoins = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texture, position.x, position.y, &rectCoins);
+	}
 
 	return true;
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <save>
 	<player>
-		<position x="50" y="260" />
+		<position x="50" y="278" />
 		<level l="1" />
 	</player>
 	<entities>
 		<enemies>
-			<enemy x="292.021851" y="246.599991" />
+			<enemy x="283.400085" y="246.599991" />
 		</enemies>
 	</entities>
 </save>

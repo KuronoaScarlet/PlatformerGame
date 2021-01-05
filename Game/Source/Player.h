@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "Animation.h"
 
+#include "GuiButton.h"
+
 
 struct SDL_Texture;
 struct Collider;
@@ -75,6 +77,8 @@ public:
 
 	bool cameraControl = true;
 
+	bool pauseCondition;
+
 	Collider* collider;
 	Collider* playerFoot;
 
@@ -86,6 +90,9 @@ private:
 	Animation jumpAnim;
 	Animation idleAnim;
 	
+	SDL_Texture* pause = nullptr;
+	
+
 	uint jumpFx = 0;
 	uint doubleJumpFx = 0;
 	uint checkPointFx = 0;
@@ -93,6 +100,11 @@ private:
 
 	bool onGround = false;
 	bool debug = false;
+
+	GuiButton* resumeButton;
+	GuiButton* settingsButton;
+	GuiButton* backToTitleButton;
+	GuiButton* exitButton;
 };
 
 
