@@ -48,12 +48,14 @@ private:
 	SDL_Texture* heartsTexture;
 	SDL_Texture* coinsTexture;
 	SDL_Texture* texCheckpoint;
+	SDL_Texture* texBoss;
 
 	Entity* gEnemy;
 	Entity* aEnemy;
 	Entity* heart;
 	Entity* coin;
 	Entity* checkpoint;
+	Entity* boss;
 };
 
 #endif // _ENTITYMANAGER_H_

@@ -26,6 +26,7 @@ class Title;
 class Scene1;
 class Scene2;
 class Scene3;
+class Scene4;
 class Options;
 class FadeToBlack;
 class DeathScreen;
@@ -108,6 +109,7 @@ public:
 	Scene1* scene1;
 	Scene2* scene2;
 	Scene3* scene3;
+	Scene4* scene4;
 	Map* map;
 	EntityManager* entityManager;
 	Player* player;
@@ -169,6 +171,9 @@ private:
 	float oldLastFrame = 0.0f;
 	int cappedMs = -1;
 	bool caped;
+
+	bool fileSaved;
+
 };
 
 extern App* app;

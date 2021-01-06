@@ -10,6 +10,7 @@
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
+#include "Scene4.h"
 #include "Map.h"
 #include "Player.h"
 #include "Options.h"
@@ -46,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene1 = new Scene1();
 	scene2 = new Scene2();
 	scene3 = new Scene3();
+	scene4 = new Scene4();
 	map = new Map();
 	player = new Player();
 	options = new Options();
@@ -69,6 +71,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene1);
 	AddModule(scene2);
 	AddModule(scene3);
+	AddModule(scene4);
 	AddModule(map);
 	AddModule(player);
 	AddModule(options);
@@ -89,6 +92,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene1->active = false;
 	scene2->active = false;
 	scene3->active = false;
+	scene4->active = false;
 	player->active = false;
 	options->active = false;
 	deathScreen->active = false;
@@ -142,9 +146,13 @@ bool App::Awake()
 	if (result != NULL)
 	{
 		saveLoadNode = saveLoadFile.child("save");
+		fileSaved = true;
 	}
-	frameRate60 = configApp.attribute("framerate_cap").as_int(0);
-	frameRate30 = 30;
+	if (result == NULL)
+	{
+		fileSaved = false;
+	}
+
 	
 	return ret;
 }

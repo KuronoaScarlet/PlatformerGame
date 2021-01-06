@@ -68,6 +68,8 @@ bool Scene3::Start()
 	app->collisions->AddCollider({ 240, 384, 240, 16 }, Collider::Type::DEATH, this);
 	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
 
+	
+
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
 	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
@@ -140,7 +142,7 @@ bool Scene3::CleanUp()
 	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
 
-	app->player->scene1 = false;
+	app->player->scene3 = false;
 
 	app->scene1->active = false;
 

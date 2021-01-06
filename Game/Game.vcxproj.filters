@@ -108,6 +108,12 @@
     <ClCompile Include="Source\Scene3.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Boss.cpp">
+      <Filter>Entities\Se me va la oya</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene4.cpp">
+      <Filter>Scenes\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -252,6 +258,12 @@
     <ClInclude Include="Source\Scene3.h">
       <Filter>Scenes\Levels</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Boss.h">
+      <Filter>Entities\Se me va la oya</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene4.h">
+      <Filter>Scenes\Levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -286,6 +298,9 @@
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{73ac8df4-26ea-43f3-9292-e69b96185abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Se me va la oya">
+      <UniqueIdentifier>{ef7be7a0-3bc8-47aa-aea1-82607a9fcaf0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

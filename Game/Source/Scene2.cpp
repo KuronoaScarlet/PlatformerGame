@@ -109,13 +109,15 @@ bool Scene2::Update(float dt)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			app->render->camera.x -= 180 * dt;
+			//app->render->camera.x -= 180 * dt;
+			app->render->camera.x = -(app->player->playerData.position.x - 150);
 			if(app->player->cameraControl == false)
 				app->render->camera.x += 2000 * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			app->render->camera.x += 96 * dt;
+			//app->render->camera.x += 96 * dt;
+			app->render->camera.x = -(app->player->playerData.position.x - 150);
 			if (app->player->cameraControl == false)
 				app->render->camera.x -= 2000 * dt;
 

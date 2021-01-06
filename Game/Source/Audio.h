@@ -39,6 +39,7 @@ private:
 	_Mix_Music* music;
 	List<Mix_Chunk *>	fx;
 
+	int vol = 0;
 	int volumeMusic;
 };
 

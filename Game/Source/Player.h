@@ -72,6 +72,7 @@ public:
 	bool scene1;
 	bool scene2;
 	bool scene3;
+	bool scene4;
 
 	bool winCondition = false;
 	bool deathCondition = false;
@@ -106,6 +107,8 @@ private:
 	GuiButton* settingsButton;
 	GuiButton* backToTitleButton;
 	GuiButton* exitButton;
+
+	SDL_Rect cameraBckUp;
 };
 
 

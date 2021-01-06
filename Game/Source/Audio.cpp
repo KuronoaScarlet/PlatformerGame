@@ -91,14 +91,19 @@ void Audio::Volume(int num, char flag)
 {
 	if (flag == '0')
 	{
-		Mix_VolumeMusic(num);
+		vol = num;
+		Mix_VolumeMusic(vol);
 		
 	}
 	else if (flag == '1')
 	{
 		for (int i = 0; i < fx.Count(); i++)
 		{
-			Mix_VolumeChunk(fx[i], num);
+			/*if (num == 0)
+			{
+			
+			}*/
+			Mix_Volume(-1, vol);
 		}
 	}
 	

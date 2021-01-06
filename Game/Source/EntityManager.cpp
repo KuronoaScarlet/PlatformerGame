@@ -9,6 +9,7 @@
 #include "Coins.h"
 #include "AirEnemy.h"
 #include "CheckPoint.h"
+#include "Boss.h"
 
 EntityManager::EntityManager() : Module()
 {
@@ -27,6 +28,7 @@ bool EntityManager::Start()
 	heartsTexture = app->tex->Load("Assets/Textures/life.png");
 	coinsTexture = app->tex->Load("Assets/Textures/coins.png");
 	texCheckpoint = app->tex->Load("Assets/Textures/check_point.png");
+	texBoss = app->tex->Load("Assets/Textures/boss.png");
 
 	return true;
 }
@@ -150,8 +152,14 @@ void EntityManager::AddEntity(fPoint position, Entity::Type type)
 		checkpoint = (Entity*)(new CheckPoint((Module*)this, position, texCheckpoint, type));
 		entityList.Add(checkpoint);
 		break;
+
+	case Entity::Type::BOSS:
+		boss = (Entity*)(new Boss((Module*)this, position, texBoss, type));
+		entityList.Add(boss);
+		break;
 	}
 }
+
 
 void EntityManager::OnCollision(Collider* a, Collider* b)
 {

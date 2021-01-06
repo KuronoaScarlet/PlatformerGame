@@ -162,6 +162,14 @@ bool Player::Update(float dt)
 				app->entityManager->CleanUp();
 
 			}
+			if (scene3 == true)
+			{
+				//InitialPos();
+				app->scene2->firstEntry = true;
+				app->fade->Fade((Module*)app->scene3, (Module*)app->scene4, 60);
+				app->entityManager->CleanUp();
+
+			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 		{
@@ -308,12 +316,9 @@ bool Player::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->SaveGameRequest();
-		/*app->title->pauseBool = true;
-		if(scene1 == true)
-			app->fade->Fade((Module*)app->scene, (Module*)app->pause, 1);
-		if (scene2 == true)
-			app->fade->Fade((Module*)app->scene2, (Module*)app->pause, 1);*/
+		//cameraBckUp = app->render->camera;
 		pauseCondition = !pauseCondition;
+		
 	}
 	if (pauseCondition)
 	{
@@ -325,6 +330,7 @@ bool Player::PostUpdate()
 		backToTitleButton->Draw(app->render);
 		exitButton->Draw(app->render);
 	}
+	
 	
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		
@@ -438,10 +444,22 @@ void Player::OnCollision(Collider* a, Collider* b)
 			}
 			if (scene2 == true)
 			{
-				app->fade->Fade((Module*)app->scene2, (Module*)app->winScreen, 60);
+				app->fade->Fade((Module*)app->scene2, (Module*)app->scene3, 60);
 				winCondition = true;
 				app->entityManager->CleanUp();
 			}
+			if (scene3 == true)
+			{
+				app->fade->Fade((Module*)app->scene3, (Module*)app->scene4, 60);
+				winCondition = true;
+				app->entityManager->CleanUp();
+			}
+			/*if (scene4 == true)
+			{
+				app->fade->Fade((Module*)app->scene3, (Module*)app->scene4, 60);
+				winCondition = true;
+				app->entityManager->CleanUp();
+			}*/
 		}
 		if (b->type == Collider::Type::DEATH)
 		{

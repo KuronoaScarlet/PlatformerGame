@@ -90,6 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AirEnemy.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Coins.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -119,6 +120,7 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Source\Scene3.cpp" />
+    <ClCompile Include="Source\Scene4.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Title.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="Source\WinScreen.cpp" />
     <ClInclude Include="Source\AirEnemy.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\Coins.h" />
     <ClInclude Include="Source\Collider.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Source\Scene3.h" />
+    <ClInclude Include="Source\Scene4.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Title.h" />
