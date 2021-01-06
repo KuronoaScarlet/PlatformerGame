@@ -116,7 +116,7 @@ bool Player::Update(float dt)
 {
 	if (!pauseCondition)
 	{
-		app->render->camera.x = 0;
+		
 		app->render->camera.y = -playerData.position.y + 50;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 			&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
@@ -156,7 +156,11 @@ bool Player::Update(float dt)
 			}
 			if (scene2 == true)
 			{
-				InitialPos();
+				//InitialPos();
+				app->scene2->firstEntry = true;
+				app->fade->Fade((Module*)app->scene2, (Module*)app->scene3, 60);
+				app->entityManager->CleanUp();
+
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
@@ -193,7 +197,7 @@ bool Player::Update(float dt)
 		//PlayerMovement
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			playerData.position.x -= 7 * dt;
+			playerData.position.x -= 60 * dt;
 			if (godMode == false)
 			{
 				onGround = false;
@@ -206,7 +210,7 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			playerData.position.x += dt;
+			playerData.position.x += 60*dt;
 			if (godMode == false)
 			{
 				onGround = false;
@@ -219,14 +223,14 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode == true)
 		{
-			playerData.position.y -= 1;
-			app->render->camera.y += 3;
+			playerData.position.y -= 120 * dt;
+			app->render->camera.y += 180 * dt;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode == true)
 		{
-			playerData.position.y += 1;
-			app->render->camera.y -= 3;
+			playerData.position.y += 120 * dt;
+			app->render->camera.y -= 180*dt;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && godMode == false)
@@ -439,6 +443,11 @@ void Player::OnCollision(Collider* a, Collider* b)
 				app->entityManager->CleanUp();
 			}
 		}
+		if (b->type == Collider::Type::DEATH)
+		{
+			playerData.playerLives -= 1;
+			InitialPos();
+		}
 	}
 
 	if (a == playerFoot)
@@ -467,6 +476,14 @@ void Player::InitialPos()
 	{
 		app->player->playerData.position.x = 50.0f;
 		app->player->playerData.position.y = 278.0f;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = (-app->player->playerData.position.y) + 100;
+	}
+	if (scene3 == true && app->scene2->firstEntry == true)
+	{
+		app->player->playerData.position.x = 50.0f;
+		app->player->playerData.position.y = 200.0f;
 
 		app->render->camera.x = 0;
 		app->render->camera.y = (-app->player->playerData.position.y) + 100;

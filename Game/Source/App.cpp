@@ -9,6 +9,7 @@
 #include "Title.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene3.h"
 #include "Map.h"
 #include "Player.h"
 #include "Options.h"
@@ -31,7 +32,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	PERF_START(perfTimer);
+	
 	frames = 0;
 
 	input = new Input();
@@ -44,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	intro = new Intro();
 	scene1 = new Scene1();
 	scene2 = new Scene2();
+	scene3 = new Scene3();
 	map = new Map();
 	player = new Player();
 	options = new Options();
@@ -66,6 +68,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(title);
 	AddModule(scene1);
 	AddModule(scene2);
+	AddModule(scene3);
 	AddModule(map);
 	AddModule(player);
 	AddModule(options);
@@ -84,12 +87,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	intro->active = false;
 	title->active = false;
 	scene1->active = false;
+	scene2->active = false;
+	scene3->active = false;
 	player->active = false;
 	options->active = false;
-	scene2->active = false;
 	deathScreen->active = false;
 	winScreen->active = false;
-	PERF_PEEK(perfTimer);
+	
 }
 
 App::~App()
@@ -115,7 +119,7 @@ void App::AddModule(Module* module)
 
 bool App::Awake()
 {
-	PERF_START(perfTimer);
+	
 
 	bool ret = LoadConfig();
 
@@ -141,7 +145,7 @@ bool App::Awake()
 	}
 	frameRate60 = configApp.attribute("framerate_cap").as_int(0);
 	frameRate30 = 30;
-	PERF_PEEK(perfTimer);
+	
 	return ret;
 }
 
@@ -221,8 +225,9 @@ void App::PrepareUpdate()
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
 	dt = frameTime.ReadSec();
-	frameRate = (caped) ? 1000 / 30 : 1000 / 60;
-	fps = SDL_GetTicks();
+	frameTime.Start();
+	
+	startFramesTimeMs = SDL_GetTicks();
 }
 
 // ---------------------------------------------
@@ -233,29 +238,28 @@ void App::FinishUpdate()
 
 	uint32 lastFrameInMs = 0;
 	uint32 framesOnLastUpdate = 0;
-	tempFps = SDL_GetTicks() - fps;
+	//tempFps = SDL_GetTicks() - fps;
 
-	float average = fpsCount / startTime.ReadSec();
+	//float average = fpsCount / startTime.ReadSec();
 
 	//frameSec += dt;
-	if (frameTime.ReadSec() > 1.0f)
+	if (lastSecond.ReadSec() > 1.0f)
 	{
-		framesSecond = lastSecFrameCnt;
+		prevLastSecFrameCnt = lastSecFrameCnt;
 		lastSecFrameCnt = 0;
-		frameTime.Start();
+		lastSecond.Start();
 	}
+	fpsAverageSinceStart = fpsCount / startTime.ReadSec();
 
-	oldLastFrame = lastFrameInMs;
-	lastFrameInMs = lastSecond.Read();
-	lastSecond.Start();
-
-	if (frameRate > tempFps)
+	if (dt < 1000 / 30 && cappedFrameRate)
 	{
-		SDL_Delay(frameRate - tempFps);
+		float delay = 1000 / 30 - dt;
+		SDL_Delay(delay);
 	}
+
 	static char title[256];
-	sprintf_s(title, 256, "FPS: %d | AVG FPS %.2f | Last Frame in ms: %d | VSync = On ",
-		framesSecond, average, lastFrameInMs);
+	sprintf_s(title, 256, "FPS: %d | AVG FPS %.2f | Last Frame in ms: %.1f(dt) | VSync = On ",
+		prevLastSecFrameCnt, fpsAverageSinceStart, dt * 1000.0);
 	app->win->SetTitle(title);
 	
 }

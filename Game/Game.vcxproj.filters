@@ -105,6 +105,9 @@
     <ClCompile Include="Source\Scene1.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene3.cpp">
+      <Filter>Scenes\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -244,6 +247,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene1.h">
+      <Filter>Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene3.h">
       <Filter>Scenes\Levels</Filter>
     </ClInclude>
   </ItemGroup>

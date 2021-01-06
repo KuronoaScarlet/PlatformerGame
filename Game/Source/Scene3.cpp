@@ -5,7 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Intro.h"
-#include "Scene1.h"
+#include "Scene3.h"
 #include "Map.h"
 #include "Player.h"
 #include "EntityManager.h"
@@ -18,17 +18,17 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene1::Scene1() : Module()
+Scene3::Scene3() : Module()
 {
 	name.Create("scene");
 }
 
 // Destructor
-Scene1::~Scene1()
+Scene3::~Scene3()
 {}
 
 // Called before render is available
-bool Scene1::Awake()
+bool Scene3::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -37,16 +37,16 @@ bool Scene1::Awake()
 }
 
 // Called before the first frame
-bool Scene1::Start()
+bool Scene3::Start()
 {
-	app->player->scene1 = true;
+	app->player->scene3 = true;
 
 	app->player->Init();
 	app->player->Start();
 	app->render->camera.x = 0;
 	app->render->camera.y = -app->player->playerData.position.y + 50;
 
-	if (app->map->Load("scene1.tmx") == true)
+	if (app->map->Load("scene3.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -56,16 +56,17 @@ bool Scene1::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	app->entityManager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
+	/*app->entityManager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
 	app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
-	app->entityManager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);*/
 
 	app->collisions->active = true;
 	app->map->active = true;
 
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
-	app->collisions->AddCollider({ 416, 64, 15, 15 }, Collider::Type::WIN, this);
+	app->collisions->AddCollider({ 240, 384, 240, 16 }, Collider::Type::DEATH, this);
+	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
 
 	//Fonts
 	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
@@ -81,18 +82,18 @@ bool Scene1::Start()
 }
 
 // Called each loop iteration
-bool Scene1::PreUpdate()
+bool Scene3::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene1::Update(float dt)
+bool Scene3::Update(float dt)
 {
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
+		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 1089.0f)
 		{
 			app->render->camera.x += 60*dt;
 			
@@ -100,9 +101,9 @@ bool Scene1::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
+		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 1089.0f)
 		{
-			app->render->camera.x -= 120*dt;
+			app->render->camera.x -= 180*dt;
 			
 		}
 	}
@@ -118,7 +119,7 @@ bool Scene1::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene1::PostUpdate()
+bool Scene3::PostUpdate()
 {
 	bool ret = true;
 
@@ -130,7 +131,7 @@ bool Scene1::PostUpdate()
 }
 
 // Called before quitting
-bool Scene1::CleanUp()
+bool Scene3::CleanUp()
 {
 	if (!active)return true;
 

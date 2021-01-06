@@ -25,6 +25,7 @@ class Intro;
 class Title;
 class Scene1;
 class Scene2;
+class Scene3;
 class Options;
 class FadeToBlack;
 class DeathScreen;
@@ -106,6 +107,7 @@ public:
 	Title* title;
 	Scene1* scene1;
 	Scene2* scene2;
+	Scene3* scene3;
 	Map* map;
 	EntityManager* entityManager;
 	Player* player;
@@ -158,6 +160,9 @@ private:
 	float fps;
 	float frameRate;
 	float tempFps;
+	float fpsAverageSinceStart;
+	bool cappedFrameRate;
+	float startFramesTimeMs;
 	
 	
 	float timePerfect;

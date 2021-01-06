@@ -105,22 +105,22 @@ bool Scene2::PreUpdate()
 // Called each loop iteration
 bool Scene2::Update(float dt)
 {
-	/*if (app->player->playerData.position.x >= 213.3f && app->player->playerData.position.x <= 1055.0f && app->player->cameraControl == true)
+	if (app->player->playerData.position.x >= 213.3f && app->player->playerData.position.x <= 1055.0f && app->player->cameraControl == true)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			app->render->camera.x -= 2;
+			app->render->camera.x -= 180 * dt;
 			if(app->player->cameraControl == false)
 				app->render->camera.x += 2000 * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			app->render->camera.x += 1.6;
+			app->render->camera.x += 96 * dt;
 			if (app->player->cameraControl == false)
 				app->render->camera.x -= 2000 * dt;
 
 		}
-	}*/
+	}
 
 	app->map->Draw();
 	app->map->LoadColliders();

@@ -97,7 +97,7 @@ bool Title::Update(float dt)
         
         
     }
-    if (app->render->camera.y == -482) //-2400
+    if (app->render->camera.y == -1000) //-2400
     {
         creditSceneFlag = false;
     }

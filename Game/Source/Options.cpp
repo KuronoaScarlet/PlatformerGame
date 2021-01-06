@@ -47,10 +47,10 @@ bool Options::Start()
     backButton->SetObserver((Scene1*)this);
     backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
 
-    musicVolume = new GuiSlider(5, { 143, 118, 20, 16 }, "MUSIC_VOLUME");
+    musicVolume = new GuiSlider(5, { 250, 118, 20, 16 }, "MUSIC_VOLUME");
     musicVolume->SetObserver((Scene1*)this);
 
-    fxVolume = new GuiSlider(6, { 143, 157, 20, 16 }, "FX_VOLUME");
+    fxVolume = new GuiSlider(6, { 250, 157, 20, 16 }, "FX_VOLUME");
     fxVolume->SetObserver((Scene1*)this);
 
     fullscreenButton = new GuiCheckBox(7, { 210, 184, 20, 16 }, "FULLSCREEN");

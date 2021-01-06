@@ -6,7 +6,7 @@
 	</player>
 	<entities>
 		<enemies>
-			<enemy x="296.304016" y="246.599991" />
+			<enemy x="280.733398" y="246" />
 		</enemies>
 	</entities>
 </save>

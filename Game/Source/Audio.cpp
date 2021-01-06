@@ -92,10 +92,14 @@ void Audio::Volume(int num, char flag)
 	if (flag == '0')
 	{
 		Mix_VolumeMusic(num);
+		
 	}
 	else if (flag == '1')
 	{
-		
+		for (int i = 0; i < fx.Count(); i++)
+		{
+			Mix_VolumeChunk(fx[i], num);
+		}
 	}
 	
 }

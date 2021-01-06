@@ -71,6 +71,7 @@ public:
 	
 	bool scene1;
 	bool scene2;
+	bool scene3;
 
 	bool winCondition = false;
 	bool deathCondition = false;

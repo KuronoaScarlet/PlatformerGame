@@ -70,7 +70,7 @@ bool Intro::PostUpdate()
     app->render->camera.x = 0;
     app->render->camera.y = 0;
     // Draw everything --------------------------------------
-    if (timer > 70 && trans == true)
+    if (timer > 4 && trans == true)
     {
         trans = false;
         app->fade->Fade(this, (Module*)app->title, 10);
