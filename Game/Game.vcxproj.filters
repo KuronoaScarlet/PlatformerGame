@@ -114,6 +114,9 @@
     <ClCompile Include="Source\Scene4.cpp">
       <Filter>Scenes\Levels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MovingPlatform.cpp">
+      <Filter>Entities\NonPlayable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -263,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene4.h">
       <Filter>Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MovingPlatform.h">
+      <Filter>Entities\NonPlayable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

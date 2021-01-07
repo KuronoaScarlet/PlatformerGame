@@ -10,6 +10,7 @@
 #include "AirEnemy.h"
 #include "CheckPoint.h"
 #include "Boss.h"
+#include "MovingPlatform.h"
 
 EntityManager::EntityManager() : Module()
 {
@@ -25,6 +26,7 @@ bool EntityManager::Start()
 {
 	gEnemyTexture = app->tex->Load("Assets/Textures/enemy.png");
 	aEnemyTexture = app->tex->Load("Assets/Textures/enemy.png");
+	movingPlatformTexture = app->tex->Load("Assets/Textures/moving_platform.png");
 	heartsTexture = app->tex->Load("Assets/Textures/life.png");
 	coinsTexture = app->tex->Load("Assets/Textures/coins.png");
 	texCheckpoint = app->tex->Load("Assets/Textures/check_point.png");
@@ -152,11 +154,13 @@ void EntityManager::AddEntity(fPoint position, Entity::Type type)
 		checkpoint = (Entity*)(new CheckPoint((Module*)this, position, texCheckpoint, type));
 		entityList.Add(checkpoint);
 		break;
-
 	case Entity::Type::BOSS:
 		boss = (Entity*)(new Boss((Module*)this, position, texBoss, type));
 		entityList.Add(boss);
 		break;
+	case Entity::Type::MOVINGPLATFORM:
+		movingPlatform = (Entity*)(new MovingPlatform((Module*)this, position, movingPlatformTexture, type));
+		entityList.Add(movingPlatform);
 	}
 }
 

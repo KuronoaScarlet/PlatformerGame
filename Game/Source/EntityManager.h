@@ -49,6 +49,8 @@ private:
 	SDL_Texture* coinsTexture;
 	SDL_Texture* texCheckpoint;
 	SDL_Texture* texBoss;
+	SDL_Texture* movingPlatformTexture;
+
 
 	Entity* gEnemy;
 	Entity* aEnemy;
@@ -56,6 +58,7 @@ private:
 	Entity* coin;
 	Entity* checkpoint;
 	Entity* boss;
+	Entity* movingPlatform;
 };
 
 #endif // _ENTITYMANAGER_H_

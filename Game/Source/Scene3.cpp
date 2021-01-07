@@ -59,6 +59,31 @@ bool Scene3::Start()
 	/*app->entityManager->AddEntity({ 280.0f, 244.0f }, Entity::Type::GROUND_ENEMY);
 	app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
 	app->entityManager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);*/
+	app->entityManager->AddEntity({ 768.0f, 240.0f }, Entity::Type::MOVINGPLATFORM);
+	app->entityManager->AddEntity({ 736.0f, 160.0f }, Entity::Type::CHECKPOINT);
+	app->entityManager->AddEntity({ 96.0f, 240.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 128.0f, 208.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 224.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 384.0f, 64.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 528.0f, 128.0f }, Entity::Type::GROUND_ENEMY);
+	app->entityManager->AddEntity({ 464.0f, 272.0f }, Entity::Type::HEARTS);
+	app->entityManager->AddEntity({ 496.0f, 288.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 512.0f, 288.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 432.0f, 256.0f }, Entity::Type::AIR_ENEMY);
+	app->entityManager->AddEntity({ 800.0f, 224.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1008.0f, 128.0f }, Entity::Type::AIR_ENEMY);
+	app->entityManager->AddEntity({ 912.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 960.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 992.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1008.0f, 160.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1024.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1024.0f, 192.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1024.0f, 208.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1136.0f, 176.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1168.0f, 128.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1136.0f, 64.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 1232.0f, 48.0f }, Entity::Type::HEARTS);
+	app->entityManager->AddEntity({ 1200.0f, 32.0f }, Entity::Type::AIR_ENEMY);
 
 	app->collisions->active = true;
 	app->map->active = true;

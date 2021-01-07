@@ -466,6 +466,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerData.playerLives -= 1;
 			InitialPos();
 		}
+		if (b->type == Collider::Type::MOVINGPLATFORM)
+		{
+			onGround = true;
+			playerData.vely = 0;
+			playerData.position.y = playerData.position.y;
+		}
 	}
 
 	if (a == playerFoot)
