@@ -12,6 +12,8 @@
 #include "EntityManager.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "Title.h"
 
 #include "Defs.h"
@@ -91,7 +93,7 @@ bool Player::Start()
 	exitButton->SetObserver((Scene1*)this);
 	exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
 
-
+	resetCamera = false;
 	return true;
 }
 
@@ -116,8 +118,11 @@ bool Player::Update(float dt)
 {
 	if (!pauseCondition)
 	{
-		
-		app->render->camera.y = -playerData.position.y + 50;
+		if (resetCamera == true)
+		{
+			app->render->camera = cameraBckUp;
+			resetCamera = false;
+		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 			&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 			&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
@@ -142,7 +147,22 @@ bool Player::Update(float dt)
 			if (scene2 == true)
 			{
 				app->scene1->firstEntry = true;
+				app->scene2->firstEntry = true;
 				app->fade->Fade((Module*)app->scene2, (Module*)app->scene1, 60);
+				app->entityManager->CleanUp();
+			}
+			if (scene3 == true)
+			{
+				app->scene1->firstEntry = true;
+				app->scene3->firstEntry = true;
+				app->fade->Fade((Module*)app->scene3, (Module*)app->scene1, 60);
+				app->entityManager->CleanUp();
+			}
+			if (scene4 == true)
+			{
+				app->scene1->firstEntry = true;
+				app->scene4->firstEntry = true;
+				app->fade->Fade((Module*)app->scene4, (Module*)app->scene1, 60);
 				app->entityManager->CleanUp();
 			}
 		}
@@ -315,9 +335,10 @@ bool Player::PostUpdate()
 	}
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		app->SaveGameRequest();
-		//cameraBckUp = app->render->camera;
+		//app->SaveGameRequest();
+		if(pauseCondition == false)	cameraBckUp = app->render->camera;
 		pauseCondition = !pauseCondition;
+		resetCamera = true;
 		
 	}
 	if (pauseCondition)
@@ -417,6 +438,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 			playerData.position.y = b->rect.y - b->rect.h - 9;
 			playerData.vely = 0;
 			playerData.position.y = playerData.position.y;
+			cameraControl = true;
 		}
 		if (b->type == Collider::Type::LEFT_WALL)
 		{
@@ -454,24 +476,34 @@ void Player::OnCollision(Collider* a, Collider* b)
 				winCondition = true;
 				app->entityManager->CleanUp();
 			}
-			/*if (scene4 == true)
+			if (scene4 == true)
 			{
-				app->fade->Fade((Module*)app->scene3, (Module*)app->scene4, 60);
+				app->fade->Fade((Module*)app->scene4, (Module*)app->winScreen, 60);
 				winCondition = true;
 				app->entityManager->CleanUp();
-			}*/
+			}
 		}
-		if (b->type == Collider::Type::DEATH)
+		if (b->type == Collider::Type::DEATH && deathCondition == false)
 		{
 			playerData.playerLives -= 1;
-			InitialPos();
+			if (playerData.playerLives > 0)
+			{
+				deathCondition = true;
+				app->scene3->firstEntry = true;
+				InitialPos();
+			}
+			else
+			{
+				app->scene3->firstEntry = true;
+				InitialPos();
+				app->entityManager->CleanUp();
+				app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 60);
+				app->scene3->CleanUp();
+				
+			}
+
 		}
-		if (b->type == Collider::Type::MOVINGPLATFORM)
-		{
-			onGround = true;
-			playerData.vely = 0;
-			playerData.position.y = playerData.position.y;
-		}
+		
 	}
 
 	if (a == playerFoot)
@@ -487,6 +519,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 }
 void Player::InitialPos() 
 {
+	deathCondition = false;
 	if (scene1 == true && app->scene1->firstEntry == true) 
 	{
 		playerData.position.x = 50.0f;
@@ -499,17 +532,27 @@ void Player::InitialPos()
 	if (scene2 == true && app->scene2->firstEntry == true)
 	{
 		app->player->playerData.position.x = 50.0f;
+		//app->player->playerData.position.x = 1000.0f;
 		app->player->playerData.position.y = 278.0f;
 
 		app->render->camera.x = 0;
 		app->render->camera.y = (-app->player->playerData.position.y) + 100;
 	}
-	if (scene3 == true && app->scene2->firstEntry == true)
+	if (scene3 == true && app->scene3->firstEntry == true)
 	{
-		app->player->playerData.position.x = 50.0f;
-		app->player->playerData.position.y = 200.0f;
+		app->player->playerData.position.x = 32.0f;
+		app->player->playerData.position.y = 277.0f;
 
 		app->render->camera.x = 0;
 		app->render->camera.y = (-app->player->playerData.position.y) + 100;
 	}
+	if (scene4 == true && app->scene4->firstEntry == true)
+	{
+		app->player->playerData.position.x = 32.0f;
+		app->player->playerData.position.y = 277.0f;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = (-app->player->playerData.position.y) + 100;
+	}
+	
 }

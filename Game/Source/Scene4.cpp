@@ -56,7 +56,7 @@ bool Scene4::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	app->entityManager->AddEntity({ 500.0f, 10.0f }, Entity::Type::BOSS);
+	app->entityManager->AddEntity({ 800.0f, 100.0f }, Entity::Type::BOSS);
 
 	app->collisions->active = true;
 	app->map->active = true;
@@ -75,9 +75,7 @@ bool Scene4::Start()
 	
 	firstEntry = false;
 
-	app->title->volumMusic = 0;
-	app->audio->Volume(app->title->volumMusic, '1');
-
+	
 	return true;
 }
 

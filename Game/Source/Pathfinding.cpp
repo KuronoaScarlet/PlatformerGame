@@ -136,8 +136,10 @@ void PathFinding::ComputePathAStar(const fPoint& origin, const fPoint& destinati
 {
 	//ResetPath(origin);
 	int count = 0;
+	int x = 0;
 	while (destinationIsFind == false)
 	{
+		x++;
  		PropagateAStar(destination);
 		for (count; count < visited.Count(); count++)
 		{
@@ -146,6 +148,11 @@ void PathFinding::ComputePathAStar(const fPoint& origin, const fPoint& destinati
 				destinationIsFind = true;
 				break;
 			}
+		}
+		if (x > 1000)
+		{
+			destinationIsFind = true;
+			break;
 		}
 	}
 

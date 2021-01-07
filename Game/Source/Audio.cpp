@@ -56,6 +56,7 @@ bool Audio::Awake(pugi::xml_node& config)
 	}
 
 	volumeMusic = 100;
+	
 
 	return ret;
 }
@@ -89,9 +90,9 @@ bool Audio::CleanUp()
 
 void Audio::Volume(int num, char flag)
 {
+	vol = num;
 	if (flag == '0')
 	{
-		vol = num;
 		Mix_VolumeMusic(vol);
 		
 	}
@@ -99,10 +100,6 @@ void Audio::Volume(int num, char flag)
 	{
 		for (int i = 0; i < fx.Count(); i++)
 		{
-			/*if (num == 0)
-			{
-			
-			}*/
 			Mix_Volume(-1, vol);
 		}
 	}

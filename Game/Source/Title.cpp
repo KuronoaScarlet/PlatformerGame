@@ -11,6 +11,9 @@
 #include "Title.h"
 #include "FadeToBlack.h"
 #include "Player.h"
+#include "Scene1.h"
+
+
 
 
 #include "Defs.h"
@@ -175,7 +178,8 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         if (control->id == 1)
         {
             //Play
-            app->fade->Fade(this, (Module*)app->scene1, 20);          
+            app->fade->Fade((Module*)app->title, (Module*)app->scene1, 20);
+            app->scene1->firstEntry == true;
         }
         else if (control->id == 2)
         {
@@ -198,8 +202,16 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 11)
         {
             //Back to title
-            if(app->player->scene1) app->fade->Fade((Module*)app->scene1, (Module*)app->title, 10);
-            if (app->player->scene2) app->fade->Fade((Module*)app->scene2, (Module*)app->title, 10);
+            if (app->player->scene1)
+            {
+                app->fade->Fade((Module*)app->scene1, (Module*)app->title, 10);
+            }
+            if (app->player->scene2) 
+                app->fade->Fade((Module*)app->scene2, (Module*)app->title, 10);
+            if (app->player->scene3) 
+                app->fade->Fade((Module*)app->scene3, (Module*)app->title, 10);
+            if (app->player->scene4) 
+                app->fade->Fade((Module*)app->scene4, (Module*)app->title, 10);
 
         }
 
@@ -246,7 +258,7 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
             if(control->bounds.x == 143 || control->bounds.x == 156.5f|| control->bounds.x == 170|| control->bounds.x == 183.5f|| control->bounds.x == 197|| control->bounds.x == 210.5f|| control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
                 app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
-                app->audio->Volume(app->title->volumMusic + 10, '0');
+                app->audio->Volume(app->title->volumMusic, '0');
                 
                 
             }
@@ -257,15 +269,9 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
             //FxVolume
             if (control->bounds.x == 143 || control->bounds.x == 156.5f || control->bounds.x == 170 || control->bounds.x == 183.5f || control->bounds.x == 197 || control->bounds.x == 210.5f || control->bounds.x == 224 || control->bounds.x == 237.5f || control->bounds.x == 251 || control->bounds.x == 264.5f || control->bounds.x == 278)
             {
-                if (control->bounds.x == 143)
-                {
-                    app->audio->Volume(0, '1');
-                }
-                else
-                {
-                    app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
-                    app->audio->Volume(app->title->volumMusic + 10, '1');
-                }
+                app->title->volumMusic = ((control->bounds.x - 143) / 13.5) * 10;
+                app->audio->Volume(app->title->volumMusic, '1');
+                
 
             }
 

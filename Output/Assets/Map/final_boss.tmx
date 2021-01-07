@@ -7,10 +7,10 @@
   <image source="meta.png" width="128" height="64"/>
  </tileset>
  <layer id="1" name="Capa de patrones 1" width="60" height="20">
-   <properties>
-     <property name="Nodraw" type="int" value="0"/>
-     <property name="Collisions" type="int" value="0"/>
-   </properties>
+  <properties>
+   <property name="Nodraw" type="int" value="0"/>
+   <property name="Collisions" type="int" value="0"/>
+  </properties>
   <data>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1215,10 +1215,10 @@
   </data>
  </layer>
  <layer id="2" name="collisions" width="60" height="20">
-   <properties>
-     <property name="Collisions" type="int" value="1"/>
-     <property name="Nodraw" type="int" value="1"/>
-   </properties>
+  <properties>
+   <property name="Collisions" type="int" value="1"/>
+   <property name="Nodraw" type="int" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -2060,7 +2060,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="422"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2120,6 +2120,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="422"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2179,6 +2180,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="422"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2238,9 +2240,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="422"/>
    <tile/>
    <tile/>
    <tile/>

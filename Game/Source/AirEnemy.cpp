@@ -7,6 +7,8 @@
 #include "FadeToBlack.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "map.h"
 #include "Player.h"
 #include "Pathfinding.h"
@@ -117,6 +119,14 @@ void AirEnemy::Collision(Collider* coll)
 			if (app->scene2->active == true)
 			{
 				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 1);
+			}
+			if (app->scene3->active == true)
+			{
+				app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 60);
+			}
+			if (app->scene4->active == true)
+			{
+				app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 60);
 			}
 		}
 		if (app->player->playerData.playerLives != 0)

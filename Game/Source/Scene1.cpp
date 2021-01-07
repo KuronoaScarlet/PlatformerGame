@@ -76,8 +76,8 @@ bool Scene1::Start()
 	
 	firstEntry = false;
 
-	app->title->volumMusic = 0;
-	app->audio->Volume(app->title->volumMusic, '1');
+	/*app->title->volumMusic = 0;
+	app->audio->Volume(app->title->volumMusic, '1');*/
 
 	return true;
 }
@@ -96,8 +96,8 @@ bool Scene1::Update(float dt)
 	{
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
-			//app->render->camera.x += 60*dt;
-			app->render->camera.x = -(app->player->playerData.position.x - 150);
+			app->render->camera.x += 60*dt;
+			//app->render->camera.x = -(app->player->playerData.position.x - 150);
 			
 		}
 	}
@@ -105,8 +105,8 @@ bool Scene1::Update(float dt)
 	{
 		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
 		{
-			//app->render->camera.x -= 120*dt;
-			app->render->camera.x = -(app->player->playerData.position.x - 150);
+			app->render->camera.x -= 120*dt;
+			//app->render->camera.x = -(app->player->playerData.position.x - 150);
 			
 		}
 	}

@@ -7,6 +7,8 @@
 #include "FadeToBlack.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "map.h"
 #include "Audio.h"
 #include "Pathfinding.h"
@@ -61,28 +63,28 @@ bool GroundEnemy::Update(float dt)
 				fPoint nextAuxPositionEnemy = app->map->MapToWorld(nextPositionEnemy.x, nextPositionEnemy.y);
 				if (nextAuxPositionEnemy.x < position.x)
 				{
-					position.x -= 1;
+					position.x -= 60*dt;
 				}
 				else if (nextAuxPositionEnemy.x > position.x)
 				{
-					position.x += dt;
+					position.x += 60*dt;
 				}
 			}
 		}
 		else
 		{
 
-			if (timer <= 100)
+			if (timer <= 75)
 			{
-				position.x += 0.5f * dt;
+				position.x += 30.0f * dt;
 				timer++;
 			}
-			if (timer >= 100 && timer <= 200)
+			if (timer >= 75 && timer <= 150)
 			{
-				position.x -= 0.5f * dt;
+				position.x -= 30.0f * dt;
 				timer++;
 			}
-			if (timer == 200)
+			if (timer == 150)
 				timer = 0;
 
 		}
@@ -123,6 +125,14 @@ void GroundEnemy::Collision(Collider* coll)
 			if (app->scene2->active == true)
 			{
 				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
+			}
+			if (app->scene3->active == true)
+			{
+				app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 60);
+			}
+			if (app->scene4->active == true)
+			{
+				app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 60);
 			}
 		}
 		if (app->player->playerData.playerLives != 0)

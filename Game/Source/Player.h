@@ -81,6 +81,8 @@ public:
 
 	bool pauseCondition;
 
+	bool onGround = false;
+
 	Collider* collider;
 	Collider* playerFoot;
 
@@ -100,8 +102,9 @@ private:
 	uint checkPointFx = 0;
 	uint killingEnemyFx = 0;
 
-	bool onGround = false;
+	
 	bool debug = false;
+	bool resetCamera;
 
 	GuiButton* resumeButton;
 	GuiButton* settingsButton;

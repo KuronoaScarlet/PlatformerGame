@@ -66,7 +66,12 @@ bool MovingPlatform::Draw()
 
 void MovingPlatform::Collision(Collider* coll)
 {
-
+	if (coll->type == Collider::Type::PLAYER)
+	{
+		app->player->onGround = true;
+		app->player->playerData.vely = 0;
+		app->player->playerData.position.y = app->player->playerData.position.y;
+	}
 }
 
 void MovingPlatform::CleanUp()

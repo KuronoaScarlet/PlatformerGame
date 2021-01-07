@@ -5,8 +5,7 @@
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
-#include "Scene1.h"
-#include "Scene2.h"
+#include "Scene4.h"
 #include "map.h"
 #include "Audio.h"
 #include "Pathfinding.h"
@@ -84,13 +83,9 @@ void Boss::Collision(Collider* coll)
 
 		if (app->player->playerData.playerLives == 0)
 		{
-			if (app->scene1->active == true)
+			if (app->scene4->active == true)
 			{
-				app->fade->Fade((Module*)app->scene1, (Module*)app->deathScreen, 60);
-			}
-			if (app->scene2->active == true)
-			{
-				app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 60);
+				app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 60);
 			}
 		}
 		if (app->player->playerData.playerLives != 0)
@@ -113,7 +108,7 @@ void Boss::Collision(Collider* coll)
 		app->player->playerData.vely = -5.5f;
 		app->player->playerData.position.y += app->player->playerData.vely;
 	}
-	if (coll->type == Collider::Type::LEFT_WALL)
+	/*if (coll->type == Collider::Type::LEFT_WALL)
 	{
 		position.x -= 1;
 		timer = 100;
@@ -128,7 +123,7 @@ void Boss::Collision(Collider* coll)
 		position.y = coll->rect.y - coll->rect.h - 9;
 		vely = 0;
 		position.y = position.y;
-	}
+	}*/
 }
 
 void Boss::CleanUp()

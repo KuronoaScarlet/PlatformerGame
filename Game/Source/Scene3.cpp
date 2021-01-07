@@ -93,6 +93,8 @@ bool Scene3::Start()
 	app->collisions->AddCollider({ 240, 384, 240, 16 }, Collider::Type::DEATH, this);
 	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
 
+	app->collisions->AddCollider({ 1248, 32, 16, 32 }, Collider::Type::WIN, this);
+
 	
 
 	//Fonts
@@ -102,9 +104,7 @@ bool Scene3::Start()
 	
 	firstEntry = false;
 
-	app->title->volumMusic = 0;
-	app->audio->Volume(app->title->volumMusic, '1');
-
+	
 	return true;
 }
 
