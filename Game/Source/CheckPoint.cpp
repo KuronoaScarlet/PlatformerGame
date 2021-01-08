@@ -9,6 +9,7 @@
 #include "Collisions.h"
 #include "FadeToBlack.h"
 #include "Player.h"
+#include "EntityManager.h"
 
 
 #include "Defs.h"
@@ -74,21 +75,13 @@ bool CheckPoint::Draw()
 
 void CheckPoint::Collision(Collider* coll)
 {
-	if (coll == app->player->collider)
+	if (coll->type == Collider::Type::PLAYER && app->entityManager->playerData.hit == false)
 	{
 		if (on == false) {
 			app->SaveGameRequest();
 			app->audio->PlayFx(checkPointFx);
 		}
 		on = true;
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-		{
-			app->player->playerData.position.x = 50.0f;
-			app->player->playerData.position.y = 278.0f;
-
-			app->render->camera.x = 0;
-			app->render->camera.y = (-app->player->playerData.position.y) + 100;
-		}
 	}
 }
 

@@ -299,17 +299,14 @@ bool Player::Update(float dt)
 		}
 		if (godMode == false)
 		{
-			collider->SetPos(playerData.position.x, playerData.position.y + 2);
-			playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);
+			/*collider->SetPos(playerData.position.x, playerData.position.y + 2);
+			playerFoot->SetPos(playerData.position.x + 1, playerData.position.y + 12);*/
 		}
 
 
 		playerData.currentAnim->Update();
 
-		if (playerData.position.y <= 230 && playerData.position.y >= 20)
-		{
-			app->render->camera.y = -playerData.position.y + 30;
-		}
+
 	}
 	if (pauseCondition)
 	{
@@ -517,6 +514,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 		}
 	}
 }
+
 void Player::InitialPos() 
 {
 	deathCondition = false;

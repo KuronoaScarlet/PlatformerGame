@@ -55,29 +55,14 @@ bool GuiButton::Draw(Render* render)
         render->DrawRectangle(bounds,  100, 100, 100, 255 );
         break;
     case GuiControlState::NORMAL: 
-        if (textureIdle == NULL)
-        {
-            render->DrawRectangle(bounds, 100, 100, 100, 255);
-        }
-        else 
-        {
-            render->DrawTexture(textureIdle, bounds.x, bounds.y, NULL);
-        }
         audio = false;
         break;
     case GuiControlState::FOCUSED: 
         render->DrawTexture(textureFocused, bounds.x, bounds.y, NULL);
-        if(textureIdle == NULL)
+        if (audio == false)
         {
-            render->DrawRectangle(bounds, 100, 100, 100, 255);
-        }
-        else
-        {
-            if (audio == false)
-            {
-                audio = true;
-                app->audio->PlayFx(buttonFx);
-            }
+            audio = true;
+            app->audio->PlayFx(buttonFx);
         }
         break;
     case GuiControlState::PRESSED: 

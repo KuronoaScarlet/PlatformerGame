@@ -39,12 +39,10 @@ bool Scene1::Awake()
 // Called before the first frame
 bool Scene1::Start()
 {
-	app->player->scene1 = true;
+	app->entityManager->AddEntity({ 60.0f, 260.0f }, Entity::Type::PLAYER);
 
-	app->player->Init();
-	app->player->Start();
+	app->render->camera.y = -app->entityManager->playerData.position.y + 30;
 	app->render->camera.x = 0;
-	app->render->camera.y = -app->player->playerData.position.y + 50;
 
 	if (app->map->Load("scene1.tmx") == true)
 	{
@@ -60,8 +58,6 @@ bool Scene1::Start()
 	app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::COINS);
 	app->entityManager->AddEntity({ 282.0f, 116.0f }, Entity::Type::COINS);
 
-	//app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::BOSS);
-
 	app->collisions->active = true;
 	app->map->active = true;
 
@@ -75,9 +71,6 @@ bool Scene1::Start()
 	app->activeFonts++; app->totalFonts++;
 	
 	firstEntry = false;
-
-	/*app->title->volumMusic = 0;
-	app->audio->Volume(app->title->volumMusic, '1');*/
 
 	return true;
 }
@@ -94,20 +87,16 @@ bool Scene1::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
+		if (app->entityManager->playerData.position.x >= 176.0f && app->entityManager->playerData.position.x <= 192.0f)
 		{
-			app->render->camera.x += 60*dt;
-			//app->render->camera.x = -(app->player->playerData.position.x - 150);
-			
+			app->render->camera.x += 60 * dt;
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 192.0f)
+		if (app->entityManager->playerData.position.x >= 176.0f && app->entityManager->playerData.position.x <= 192.0f)
 		{
-			app->render->camera.x -= 120*dt;
-			//app->render->camera.x = -(app->player->playerData.position.x - 150);
-			
+			app->render->camera.x -= 170*dt;
 		}
 	}
 	app->map->Draw();
@@ -126,10 +115,6 @@ bool Scene1::PostUpdate()
 {
 	bool ret = true;
 
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	app->fade->Fade(this, (Module*)app->options, 10);
-	ret = false;*/
-
 	return ret;
 }
 
@@ -138,12 +123,10 @@ bool Scene1::CleanUp()
 {
 	if (!active)return true;
 
-	app->map->CleanUp();
-	app->player->CleanUp();
-	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
-
-	app->player->scene1 = false;
+	app->collisions->CleanUp();
+	app->player->CleanUp();
+	app->map->CleanUp();
 
 	app->scene1->active = false;
 

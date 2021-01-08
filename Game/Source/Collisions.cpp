@@ -8,7 +8,7 @@
 Collisions::Collisions(bool startEnabled) : Module()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-		colliders[i] = nullptr;
+	colliders[i] = nullptr;
 	matrix[Collider::Type::PLAYER][Collider::Type::LEFT_WALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
@@ -20,7 +20,6 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::HEART] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::COIN] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::MOVINGPLATFORM] = true;
 
 	matrix[Collider::Type::LEFT_WALL][Collider::Type::LEFT_WALL] = false;
 	matrix[Collider::Type::LEFT_WALL][Collider::Type::PLAYER] = true;
@@ -78,8 +77,6 @@ Collisions::Collisions(bool startEnabled) : Module()
 	matrix[Collider::Type::PLAYERFOOT][Collider::Type::ENEMY] = true;
 
 	matrix[Collider::Type::HEART][Collider::Type::PLAYER] = true;
-
-	matrix[Collider::Type::MOVINGPLATFORM][Collider::Type::PLAYER] = true;
 
 	matrix[Collider::Type::COIN][Collider::Type::PLAYER] = true;
 

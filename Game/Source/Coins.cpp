@@ -5,6 +5,7 @@
 #include "Collisions.h"
 #include "Intro.h"
 #include "Audio.h"
+#include "EntityManager.h"
 
 
 Coins::Coins(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
@@ -54,10 +55,11 @@ bool Coins::Draw()
 
 void Coins::Collision(Collider* coll)
 {
-	if (coll == app->player->collider)
+	if (coll->type == Collider::Type::PLAYER && app->entityManager->playerData.hit == false)
 	{
+		app->entityManager->playerData.hit = true;
 		app->audio->PlayFx(coinFx);
-		app->intro->score = app->intro->score + 1;
+		app->intro->score = app->intro->score++;
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 	}

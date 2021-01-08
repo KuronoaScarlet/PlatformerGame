@@ -104,9 +104,9 @@ bool Render::LoadState(pugi::xml_node& data)
 
 bool Render::SaveState(pugi::xml_node& data) const
 {
-	pugi::xml_node cam = data.child("camera");
-	cam.attribute("x").set_value(camera.x);
-	cam.attribute("y").set_value(camera.y);
+	pugi::xml_node cam = data.append_child("camera");
+	cam.append_attribute("x").set_value(camera.x);
+	cam.append_attribute("y").set_value(camera.y);
 
 	return true;
 }

@@ -67,6 +67,8 @@ public:
 
     int volumMusic;
 
+    int scoreFont = -1;
+    char scoreText[10] = { "\0" };
 };
 
 #endif

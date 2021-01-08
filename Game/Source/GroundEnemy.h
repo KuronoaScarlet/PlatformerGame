@@ -45,18 +45,17 @@ private:
 	bool isDetected = false;
 	bool returning;
 
-	Timer* checkDestination = new Timer();
-	fPoint destination;
-	fPoint positionInitial;
-
-	DynArray<fPoint>* lastPathEnemy;
-
 	float vely = 0.0f;
 	float velx = 0.0f;
 	float gravity = 0.2f;
 
 	int timer = 0;
 
+	Timer* checkDestination = new Timer();
+	fPoint destination;
+	fPoint positionInitial;
+
+	DynArray<fPoint>* lastPathEnemy;
 };
 
 #endif // _GROUNDENEMY_H_

@@ -40,6 +40,22 @@ public:
 
 	void OnCollision(Collider* a, Collider* b);
 
+	struct PlayerData 
+	{
+		fPoint position;
+		int lives = 3;
+
+		bool hit = false;
+		bool godMode = false;
+
+		fPoint initPositionScene1 = { 50.0f, 260.0f };
+		fPoint initPositionScene2 = { 50.0f, 278.0f };
+		fPoint initPositionScene3 = { 32.0f, 277.0f };
+		fPoint initPositionScene4 = { 32.0f, 277.0f };
+	};
+
+	PlayerData playerData;
+
 private:
 	List<Entity*> entityList;
 
@@ -50,6 +66,7 @@ private:
 	SDL_Texture* texCheckpoint;
 	SDL_Texture* texBoss;
 	SDL_Texture* movingPlatformTexture;
+	SDL_Texture* texPlayer;
 
 
 	Entity* gEnemy;
@@ -59,6 +76,7 @@ private:
 	Entity* checkpoint;
 	Entity* boss;
 	Entity* movingPlatform;
+	Entity* playerEntity;
 };
 
 #endif // _ENTITYMANAGER_H_

@@ -13,6 +13,7 @@ public:
 	enum class Type
 	{
 		UNKNOWN,
+		PLAYER,
 		GROUND_ENEMY,
 		AIR_ENEMY,
 		HEARTS,

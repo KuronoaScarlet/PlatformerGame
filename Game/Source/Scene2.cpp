@@ -38,10 +38,10 @@ bool Scene2::Awake()
 // Called before the first frame
 bool Scene2::Start()
 {
-	app->player->scene2 = true;
+	app->entityManager->AddEntity({ 60.0f, 260.0f }, Entity::Type::PLAYER);
 
-	app->player->Init();
-	app->player->Start();
+	app->render->camera.y = -app->entityManager->playerData.position.y + 50;
+	app->render->camera.x = 0;
 
 	app->collisions->active = true;
 	app->map->active = true;
@@ -105,18 +105,18 @@ bool Scene2::PreUpdate()
 // Called each loop iteration
 bool Scene2::Update(float dt)
 {
-	if (app->player->playerData.position.x >= 213.3f && app->player->playerData.position.x <= 1097.0f && app->player->cameraControl == true)
+	if (app->entityManager->playerData.position.x >= 213.3f && app->entityManager->playerData.position.x <= 1100.0f)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			app->render->camera.x -= 180 * dt;
+			app->render->camera.x -= 200 * dt;
 			//app->render->camera.x = -(app->player->playerData.position.x - 150);
 			if(app->player->cameraControl == false)
 				app->render->camera.x += 2000 * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			app->render->camera.x += 96 * dt;
+			app->render->camera.x += 160 * dt;
 			//app->render->camera.x = -(app->player->playerData.position.x - 150);
 			if (app->player->cameraControl == false)
 				app->render->camera.x -= 2000 * dt;
@@ -151,12 +151,10 @@ bool Scene2::CleanUp()
 {
 	if (!active)return true;
 
-	app->map->CleanUp();
-	app->player->CleanUp();
-	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
-
-	app->player->scene2 = false;
+	app->collisions->CleanUp();
+	app->player->CleanUp();
+	app->map->CleanUp();
 
 	app->scene2->active = false;
 

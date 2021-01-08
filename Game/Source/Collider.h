@@ -24,7 +24,6 @@ struct Collider
 		PLAYERFOOT,
 		HEART,
 		COIN,
-		MOVINGPLATFORM,
 
 		MAX
 	};

@@ -12,6 +12,7 @@
 #include "map.h"
 #include "Audio.h"
 #include "Pathfinding.h"
+#include "EntityManager.h"
 
 GroundEnemy::GroundEnemy(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -39,17 +40,17 @@ bool GroundEnemy::Start()
 
 bool GroundEnemy::Update(float dt)
 {
-	if (!app->player->pauseCondition)
+	if (app->entityManager->playerData.godMode == false)
 	{
 		vely += gravity;
 		position.x += velx;
 		position.y += vely;
 
-		if (Sonar(app->player->playerData.position))
+		if (Sonar(app->entityManager->playerData.position))
 		{
 			//If player move
 			fPoint positionEnemy = app->map->WorldToMap(position.x, position.y);
-			fPoint positionPlayer = app->map->WorldToMap(app->player->playerData.position.x, app->player->playerData.position.y);
+			fPoint positionPlayer = app->map->WorldToMap(app->entityManager->playerData.position.x, app->entityManager->playerData.position.y);
 
 
 			//Cerate Path
@@ -110,13 +111,13 @@ bool GroundEnemy::Draw()
 
 void GroundEnemy::Collision(Collider* coll)
 {
-	if (coll->type == Collider::Type::PLAYER)
+	if (coll->type == Collider::Type::PLAYER && app->entityManager->playerData.hit == false)
 	{
+		app->entityManager->playerData.hit = true;
 		app->audio->PlayFx(hitFx);
-		app->player->deathCondition = true;
-		app->player->playerData.playerLives--;
+		app->entityManager->playerData.lives--;
 
-		if (app->player->playerData.playerLives == 0)
+		if (app->entityManager->playerData.lives == 0)
 		{
 			if (app->scene1->active == true)
 			{
@@ -135,15 +136,15 @@ void GroundEnemy::Collision(Collider* coll)
 				app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 60);
 			}
 		}
-		if (app->player->playerData.playerLives != 0)
+		if (app->entityManager->playerData.lives != 0)
 		{
-			if (position.x > app->player->playerData.position.x)
+			if (position.x > app->entityManager->playerData.position.x)
 			{
-				app->player->playerData.position.x = collider->rect.x - collider->rect.w - 9;
+				position.x = collider->rect.x + collider->rect.w + 6;
 			}
-			if (position.x < app->player->playerData.position.x)
+			if (position.x < app->entityManager->playerData.position.x)
 			{
-				app->player->playerData.position.x = collider->rect.x + collider->rect.w + 6;
+				position.x = collider->rect.x - collider->rect.w - 9;
 			}
 		}
 	}
@@ -171,6 +172,7 @@ void GroundEnemy::Collision(Collider* coll)
 		vely = 0;
 		position.y = position.y;
 	}
+
 }
 
 void GroundEnemy::CleanUp()

@@ -39,12 +39,10 @@ bool Scene3::Awake()
 // Called before the first frame
 bool Scene3::Start()
 {
-	app->player->scene3 = true;
+	app->entityManager->AddEntity({ 60.0f, 260.0f }, Entity::Type::PLAYER);
 
-	app->player->Init();
-	app->player->Start();
+	app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 	app->render->camera.x = 0;
-	app->render->camera.y = -app->player->playerData.position.y + 50;
 
 	if (app->map->Load("scene3.tmx") == true)
 	{
@@ -120,17 +118,17 @@ bool Scene3::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 1089.0f)
+		if (app->entityManager->playerData.position.x >= 176.0f && app->entityManager->playerData.position.x <= 1100.0f)
 		{
-			app->render->camera.x += 60*dt;
+			app->render->camera.x += 160*dt;
 			
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if (app->player->playerData.position.x >= 176.0f && app->player->playerData.position.x <= 1089.0f)
+		if (app->entityManager->playerData.position.x >= 176.0f && app->entityManager->playerData.position.x <= 1100.0f)
 		{
-			app->render->camera.x -= 180*dt;
+			app->render->camera.x -= 200*dt;
 			
 		}
 	}
@@ -150,10 +148,6 @@ bool Scene3::PostUpdate()
 {
 	bool ret = true;
 
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	app->fade->Fade(this, (Module*)app->options, 10);
-	ret = false;*/
-
 	return ret;
 }
 
@@ -162,14 +156,12 @@ bool Scene3::CleanUp()
 {
 	if (!active)return true;
 
-	app->map->CleanUp();
-	app->player->CleanUp();
-	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
+	app->collisions->CleanUp();
+	app->player->CleanUp();
+	app->map->CleanUp();
 
-	app->player->scene3 = false;
-
-	app->scene1->active = false;
+	app->scene3->active = false;
 
 	LOG("Freeing scene");
 	return true;

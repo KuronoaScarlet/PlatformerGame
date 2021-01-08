@@ -12,6 +12,8 @@
 #include "FadeToBlack.h"
 #include "Player.h"
 #include "Scene1.h"
+#include "EntityManager.h"
+#include "Fonts.h"
 
 
 
@@ -48,27 +50,27 @@ bool Title::Start()
 
     play = new GuiButton(1, { 170, 75, 80, 20 }, "START");
     play->SetObserver((Scene1*)this);
-    play->SetTexture(app->tex->Load("Assets/Textures/Buttons/play.png"), app->tex->Load("Assets/Textures/Buttons/play_focused.png"),app->tex->Load("Assets/Textures/Buttons/play_pressed.png"));
-
+    play->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
+    
     continueButton = new GuiButton(12, { 170, 105, 80, 20 }, "START");
     continueButton->SetObserver((Scene1*)this);
-    continueButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/load_button.png"), app->tex->Load("Assets/Textures/Buttons/load_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/load_button_pressed.png"));
-
+    continueButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
+    
     options = new GuiButton(2, { 170, 135, 80, 20 }, "OPTIONS");
     options->SetObserver((Scene1*)this);
-    options->SetTexture(app->tex->Load("Assets/Textures/Buttons/settings.png"), app->tex->Load("Assets/Textures/Buttons/settings_focused.png"), app->tex->Load("Assets/Textures/Buttons/settings_pressed.png"));
+    options->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
     credits = new GuiButton(13, { 170, 165, 80, 20 }, "OPTIONS");
     credits->SetObserver((Scene1*)this);
-    credits->SetTexture(app->tex->Load("Assets/Textures/Buttons/credits_button.png"), app->tex->Load("Assets/Textures/Buttons/credits_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/credits_button_pressed.png"));
+    credits->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
     exit = new GuiButton(4, { 170, 195, 80, 20 }, "EXIT");
     exit->SetObserver((Scene1*)this);
-    exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit.png"), app->tex->Load("Assets/Textures/Buttons/exit_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_pressed.png"));
+    exit->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
     backButton = new GuiButton(3, { 10, 10, 20, 16 }, "BACK");
     backButton->SetObserver((Scene1*)this);
-    backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_button.png"), app->tex->Load("Assets/Textures/Buttons/back_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_button_pressed.png"));
+    backButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
     creditsScene = app->tex->Load("Assets/Textures/credits_scene.png");
     creditSceneFlag = false;
@@ -76,6 +78,11 @@ bool Title::Start()
     fullSc = false;
     vsync = true;
     exi = false;
+
+    char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
+    scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
+    app->activeFonts++; app->totalFonts++;
+
     return ret;
 }
 
@@ -139,10 +146,15 @@ bool Title::PostUpdate()
         // start->Draw(app->render);
         // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
         play->Draw(app->render);
+        app->fonts->BlitText(205, 85, scoreFont, "play");
         continueButton->Draw(app->render);
+        app->fonts->BlitText(190, 115, scoreFont, "continue");
         options->Draw(app->render);
+        app->fonts->BlitText(192, 145, scoreFont, "options");
         credits->Draw(app->render);
+        app->fonts->BlitText(192, 175, scoreFont, "credits");
         exit->Draw(app->render);
+        app->fonts->BlitText(205, 205, scoreFont, "exit");
     }
    
     
@@ -180,6 +192,7 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
             //Play
             app->fade->Fade((Module*)app->title, (Module*)app->scene1, 20);
             app->scene1->firstEntry == true;
+            app->entityManager->playerData.lives = 3;
         }
         else if (control->id == 2)
         {

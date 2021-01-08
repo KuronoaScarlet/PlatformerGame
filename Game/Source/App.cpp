@@ -410,16 +410,15 @@ bool App::LoadGame()
 		//General Node
 		pugi::xml_node generalNode = savedGame.child("save");
 
-		//Player
-		pugi::xml_node player = generalNode.child("player");
-
 		//Entities
 		pugi::xml_node entities = generalNode.child("entities");
 
+		//Render
+		pugi::xml_node render = generalNode.child("render");
 
 		//LoadRequests
-		app->player->LoadState(player);
 		app->entityManager->LoadState(entities);
+		app->render->LoadState(render);
 	}
 
 	loadGameRequested = false;
@@ -441,11 +440,11 @@ bool App::SaveGame() const
 
 	save = newSave.append_child("save");
 
-	pugi::xml_node player = save.append_child("player");
-	app->player->SaveState(player);
-
 	pugi::xml_node entities = save.append_child("entities");
 	app->entityManager->SaveState(entities);
+
+	pugi::xml_node render = save.append_child("render");
+	app->render->SaveState(render);
 	
 	newSave.save_file("save_game.xml");
 	

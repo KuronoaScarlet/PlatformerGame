@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Collisions.h"
 #include "Audio.h"
+#include "EntityManager.h"
 
 Hearts::Hearts(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -40,9 +41,10 @@ bool Hearts::Draw()
 
 void Hearts::Collision(Collider* coll)
 {
-	if (coll == app->player->collider)
+	if (coll->type == Collider::Type::PLAYER && app->entityManager->playerData.hit == false)
 	{
-		app->player->playerData.playerLives++;
+		app->entityManager->playerData.hit = true;
+		app->entityManager->playerData.lives++;
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 		app->audio->PlayFx(heartFx);

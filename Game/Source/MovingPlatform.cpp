@@ -17,7 +17,7 @@ MovingPlatform::MovingPlatform(Module* listener, fPoint position, SDL_Texture* t
 
 	currentAnimation = &idleAnimation;
 
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 47, 12 }), Collider::Type::MOVINGPLATFORM, listener);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 47, 1 }), Collider::Type::FLOOR, listener);
 
 }
 
@@ -66,12 +66,7 @@ bool MovingPlatform::Draw()
 
 void MovingPlatform::Collision(Collider* coll)
 {
-	if (coll->type == Collider::Type::PLAYER)
-	{
-		app->player->onGround = true;
-		app->player->playerData.vely = 0;
-		app->player->playerData.position.y = app->player->playerData.position.y;
-	}
+
 }
 
 void MovingPlatform::CleanUp()
