@@ -132,9 +132,9 @@ bool Scene3::Update(float dt)
 	app->map->LoadColliders();
 
 	//Score
-	app->render->DrawText(app->render->font, "Score:", 600, 240, 60, 5, { 255, 255, 255, 255 });
+	app->render->DrawText(app->render->font, "Score:", 10, 90, 50, 5, { 255, 255, 255, 255 });
 	sprintf_s(scoreText, 10, "%4d", app->intro->score);
-	app->render->DrawText(app->render->font, scoreText, 600, 260, 60, 5, { 255, 255, 255, 255 });
+	app->render->DrawText(app->render->font, scoreText, 150, 90, 50, 5, { 255, 255, 255, 255 });
 
 	return true;
 }

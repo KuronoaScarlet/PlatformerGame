@@ -148,23 +148,23 @@ bool Title::PostUpdate()
         // start->Draw(app->render);
         // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
         play->Draw(app->render);
-        app->render->DrawText(app->render->font, "Play", 600, 240, 60, 5, { 255, 255, 255, 255 });
+        app->render->DrawText(app->render->font, "Play", 600, 239, 60, 5, { 255, 255, 255, 255 });
         if (!app->fileSaved)
         {
-            app->render->DrawText(app->render->font, "Load", 600, 240, 60, 5, { 255, 255, 255, 255 });
+            app->render->DrawText(app->render->font, "Load", 600, 328, 60, 5, { 255, 255, 255, 255 });
             continueButton->Draw(app->render);
         }
         else
         {
             continueButton->Draw(app->render);
-            app->render->DrawText(app->render->font, "Load", 600, 240, 60, 5, { 255, 255, 255, 255 });
+            app->render->DrawText(app->render->font, "Load", 600, 328, 60, 5, { 255, 255, 255, 255 });
         }
         options->Draw(app->render);
-        app->render->DrawText(app->render->font, "Settings", 600, 240, 60, 5, { 255, 255, 255, 255 });
+        app->render->DrawText(app->render->font, "Settings", 550, 418, 60, 5, { 255, 255, 255, 255 });
         credits->Draw(app->render);
-        app->render->DrawText(app->render->font, "Credits", 600, 240, 60, 5, { 255, 255, 255, 255 });
+        app->render->DrawText(app->render->font, "Credits", 560, 508, 60, 5, { 255, 255, 255, 255 });
         exit->Draw(app->render);
-        app->render->DrawText(app->render->font, "Exit", 600, 240, 60, 5, { 255, 255, 255, 255 });
+        app->render->DrawText(app->render->font, "Exit", 610, 597, 60, 5, { 255, 255, 255, 255 });
     }
    
     

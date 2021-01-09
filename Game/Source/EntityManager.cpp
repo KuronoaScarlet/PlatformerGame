@@ -127,13 +127,13 @@ bool EntityManager::PostUpdate()
 		app->render->camera.y = 0;
 		app->render->DrawTexture(playerData.pauseMenu, 0, -20, NULL);
 		playerData.resumeButton->Draw(app->render);
-		app->render->DrawText(app->render->font, "Resume:", 600, 240, 60, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Resume", 530, 120, 60, 5, { 255, 255, 255, 255 });
 		playerData.settingsButton->Draw(app->render);
-		app->render->DrawText(app->render->font, "Settings:", 600, 240, 60, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Settings", 520, 245, 60, 5, { 255, 255, 255, 255 });
 		playerData.backToTitleButton->Draw(app->render);
-		app->render->DrawText(app->render->font, "Back to Title:", 600, 240, 60, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Back to Title", 465, 370, 60, 5, { 255, 255, 255, 255 });
 		playerData.exitButton->Draw(app->render);
-		app->render->DrawText(app->render->font, "Exit Game:", 600, 240, 60, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Exit Game:", 500, 550, 60, 5, { 255, 255, 255, 255 });
 	}
 	
 	for (int i = 0; i < entityList.Count(); i++)

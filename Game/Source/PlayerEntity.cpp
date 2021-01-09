@@ -60,9 +60,9 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
-		//app->fonts->BlitText(3, 30, scoreFont, "timer:");
+		app->render->DrawText(app->render->font, "Timer:", 10, 150, 50, 5, { 255, 255, 255, 255 });
 		sprintf_s(scoreText, 10, "%4d", (int)app->timer);
-		//app->fonts->BlitText(40, 30, scoreFont, scoreText);
+		app->render->DrawText(app->render->font, scoreText, 150, 150, 50, 5, { 255, 255, 255, 255 });
 
 		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers
