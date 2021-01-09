@@ -54,7 +54,7 @@ bool GuiButton::Draw(Render* render)
         switch (state)
         {
         case GuiControlState::DISABLED:
-            render->DrawRectangle(bounds, 100, 100, 100, 255);
+            render->DrawTexture(textureDisable, bounds.x, bounds.y, NULL);
             break;
         case GuiControlState::NORMAL:
             render->DrawTexture(textureIdle, bounds.x, bounds.y, NULL);

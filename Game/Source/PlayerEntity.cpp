@@ -245,7 +245,10 @@ bool PlayerEntity::Update(float dt)
 		}
 		//F5/F6 Save/Load Requests
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		{
 			app->SaveGameRequest();
+			app->fileSaved = true;
+		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 		//F9 DebugDraw

@@ -57,6 +57,11 @@ bool Title::Start()
     
     continueButton = new GuiButton(12, { 170, 105, 80, 20 }, "START");
     continueButton->SetObserver((Scene1*)this);
+    continueButton->SetDisableTexture(app->tex->Load("Assets/Textures/Buttons/states/no.png"));
+    if (!app->fileSaved)
+    {
+        continueButton->state = GuiControlState::DISABLED;
+    }
     continueButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
     
     options = new GuiButton(2, { 170, 135, 80, 20 }, "OPTIONS");
@@ -150,8 +155,16 @@ bool Title::PostUpdate()
         // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
         play->Draw(app->render);
         app->fonts->BlitText(205, 85, scoreFont, "play");
-        continueButton->Draw(app->render);
-        app->fonts->BlitText(190, 115, scoreFont, "continue");
+        if (!app->fileSaved)
+        {
+            app->fonts->BlitText(190, 115, scoreFont, "continue");
+            continueButton->Draw(app->render);
+        }
+        else
+        {
+            continueButton->Draw(app->render);
+            app->fonts->BlitText(190, 115, scoreFont, "continue");
+        }
         options->Draw(app->render);
         app->fonts->BlitText(192, 145, scoreFont, "options");
         credits->Draw(app->render);

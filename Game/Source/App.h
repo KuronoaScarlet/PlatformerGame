@@ -131,6 +131,8 @@ public:
 
 	bool loadingGame = false;
 
+	bool fileSaved;
+
 private:
 
 	int argc;
@@ -178,9 +180,6 @@ private:
 	float oldLastFrame = 0.0f;
 	int cappedMs = -1;
 	bool caped;
-
-	bool fileSaved;
-
 
 };
 

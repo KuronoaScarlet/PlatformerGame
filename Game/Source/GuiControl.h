@@ -69,6 +69,11 @@ public:
         section = { 0, 0, 0, 0 };
     }
 
+    void SetDisableTexture(SDL_Texture* textDisable)
+    {
+        textureDisable = textDisable;
+    }
+
     void SetObserver(Scene1* module)
     {
         observer = module;
@@ -92,6 +97,7 @@ public:
     SDL_Texture* textureIdle;
     SDL_Texture* textureFocused;   // Texture atlas reference
     SDL_Texture* texturePressed;
+    SDL_Texture* textureDisable;
     SDL_Rect section;       // Texture atlas base section
 
     //Font font;              // Text font
