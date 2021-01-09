@@ -47,7 +47,7 @@ PlayerEntity::PlayerEntity(Module* listener, fPoint position, SDL_Texture* textu
 	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
-
+	
 }
 
 bool PlayerEntity::Start()
@@ -59,7 +59,7 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
-
+		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers
 		app->entityManager->playerData.position.x = position.x;
 		app->entityManager->playerData.position.y = position.y;
@@ -67,7 +67,7 @@ bool PlayerEntity::Update(float dt)
 		//Camera Update
 		if (position.y <= 230 && position.y >= 20)
 		{
-			app->render->camera.y = -position.y;
+			app->render->camera.y = -position.y + 50;
 		}
 
 		//Player States
