@@ -590,3 +590,34 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 	return ret;
 }
+
+bool Map::LoadState(pugi::xml_node& data)
+{
+	pugi::xml_node scene = data.child("level");
+	app->currentLevel = scene.attribute("currentlyOn").as_int(0);
+
+	return true;
+}
+
+bool Map::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node scene = data.append_child("level");
+	if (app->scene1->active == true)
+	{
+		scene.append_attribute("currentlyOn").set_value(1);
+	}
+	if (app->scene2->active == true)
+	{
+		scene.append_attribute("currentlyOn").set_value(2);
+	}
+	if (app->scene3->active == true)
+	{
+		scene.append_attribute("currentlyOn").set_value(3);
+	}
+	if (app->scene4->active == true)
+	{
+		scene.append_attribute("currentlyOn").set_value(4);
+	}
+
+	return true;
+}

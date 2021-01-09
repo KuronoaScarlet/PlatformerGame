@@ -97,7 +97,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	options->active = false;
 	deathScreen->active = false;
 	winScreen->active = false;
-	
 }
 
 App::~App()
@@ -417,6 +416,9 @@ bool App::LoadGame()
 		//General Node
 		pugi::xml_node generalNode = savedGame.child("save");
 
+		//Map (Scenes)
+		pugi::xml_node map = generalNode.child("map");
+
 		//Entities
 		pugi::xml_node entities = generalNode.child("entities");
 
@@ -424,6 +426,7 @@ bool App::LoadGame()
 		pugi::xml_node render = generalNode.child("render");
 
 		//LoadRequests
+		app->map->LoadState(map);
 		app->entityManager->LoadState(entities);
 		app->render->LoadState(render);
 	}
@@ -447,6 +450,9 @@ bool App::SaveGame() const
 
 	save = newSave.append_child("save");
 
+	pugi::xml_node map = save.append_child("map");
+	app->map->SaveState(map);
+
 	pugi::xml_node entities = save.append_child("entities");
 	app->entityManager->SaveState(entities);
 
@@ -454,7 +460,6 @@ bool App::SaveGame() const
 	app->render->SaveState(render);
 	
 	newSave.save_file("save_game.xml");
-	
 
 	return ret;
 }

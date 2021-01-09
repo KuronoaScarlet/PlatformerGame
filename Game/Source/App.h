@@ -127,6 +127,9 @@ public:
 	bool debugButton = false;
 
 	float timer;
+	int currentLevel;
+
+	bool loadingGame = false;
 
 private:
 
@@ -177,6 +180,7 @@ private:
 	bool caped;
 
 	bool fileSaved;
+
 
 };
 

@@ -7,6 +7,11 @@
 #include "Point.h"
 #include "DynArray.h"
 
+#include "Scene1.h"
+#include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
+
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -145,6 +150,9 @@ public:
 	int CalculateDistanceToStart(iPoint node);
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 
 private:
 

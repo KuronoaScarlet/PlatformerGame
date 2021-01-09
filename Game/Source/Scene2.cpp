@@ -92,7 +92,11 @@ bool Scene2::Start()
 	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
 	app->activeFonts++; app->totalFonts++;
 
-	firstEntry = false;
+	if (app->loadingGame == true)
+	{
+		app->LoadGameRequest();
+		app->loadingGame = false;
+	}
 
 	return true;
 }

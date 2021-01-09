@@ -263,7 +263,18 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 12)
         {
             //LoadGame
-            app->LoadGameRequest();
+            app->loadingGame = true;
+            pugi::xml_document savedGame;
+            savedGame.load_file("save_game.xml");
+
+            pugi::xml_node generalNode = savedGame.child("save");
+            pugi::xml_node map = generalNode.child("map");
+            app->map->LoadState(map);
+
+            if (app->currentLevel == 1) app->fade->Fade((Module*)app->title, (Module*)app->scene1, 10); 
+            if (app->currentLevel == 2) app->fade->Fade((Module*)app->title, (Module*)app->scene2, 10);
+            if (app->currentLevel == 3) app->fade->Fade((Module*)app->title, (Module*)app->scene3, 10);
+            if (app->currentLevel == 4) app->fade->Fade((Module*)app->title, (Module*)app->scene4, 10);
         }
         else if (control->id == 13)
         {

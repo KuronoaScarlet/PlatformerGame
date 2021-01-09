@@ -406,7 +406,6 @@ bool Player::SaveState(pugi::xml_node& data) const
 		level.append_attribute("l").set_value("2");
 	}
 
-
 	return true;
 }
 
