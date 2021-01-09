@@ -199,10 +199,14 @@ bool App::Update()
 	{
 		caped = !caped;
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		debugButton = !debugButton;
+	}
 	FinishUpdate();
 
-	
- 	return ret;
+	return ret;
 }
 
 bool App::LoadConfig()

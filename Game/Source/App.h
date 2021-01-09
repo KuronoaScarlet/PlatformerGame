@@ -124,6 +124,8 @@ public:
 	uint activeFonts = 0;
 	uint totalFonts = 0;
 
+	bool debugButton = false;
+
 private:
 
 	int argc;

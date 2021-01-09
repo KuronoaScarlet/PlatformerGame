@@ -61,21 +61,43 @@ bool GuiSlider::Update(Input* input, float dt)
 
 bool GuiSlider::Draw(Render* render)
 {
-    // Draw the right button depending on state
-    switch (state)
+    if (!app->debugButton)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds,  100, 100, 100, 255 );
-        break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0,  255, 0, 255 );
-        break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255 );
-        break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds,  0, 255, 255, 255 );
-        break;
-    case GuiControlState::SELECTED: render->DrawRectangle(bounds,  0, 255, 0, 255 );
-        break;
-    default:
-        break;
+
+        // Draw the right button depending on state
+        switch (state)
+        {
+        case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
+            break;
+        case GuiControlState::NORMAL: render->DrawTexture(textureIdle, bounds.x, bounds.y, NULL);
+            break;
+        case GuiControlState::FOCUSED: render->DrawTexture(textureFocused, bounds.x, bounds.y, NULL);;
+            break;
+        case GuiControlState::PRESSED: render->DrawTexture(texturePressed, bounds.x, bounds.y, NULL);
+            break;
+        case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        switch (state)
+        {
+        case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
+            break;
+        case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0, 255, 0, 255);
+            break;
+        case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255);
+            break;
+        case GuiControlState::PRESSED: render->DrawRectangle(bounds, 0, 255, 255, 255);
+            break;
+        case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
+            break;
+        default:
+            break;
+        }
     }
 
     return false;

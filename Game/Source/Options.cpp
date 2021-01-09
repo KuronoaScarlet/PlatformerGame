@@ -49,10 +49,12 @@ bool Options::Start()
 
     musicVolume = new GuiSlider(5, { 250, 118, 20, 16 }, "MUSIC_VOLUME");
     musicVolume->SetObserver((Scene1*)this);
+    musicVolume->SetTexture(app->tex->Load("Assets/Textures/Buttons/slider_normal.png"), app->tex->Load("Assets/Textures/Buttons/slider_normal.png"), app->tex->Load("Assets/Textures/Buttons/slider_not_normal.png"));
 
     fxVolume = new GuiSlider(6, { 250, 157, 20, 16 }, "FX_VOLUME");
     fxVolume->SetObserver((Scene1*)this);
-
+    fxVolume->SetTexture(app->tex->Load("Assets/Textures/Buttons/slider_normal.png"), app->tex->Load("Assets/Textures/Buttons/slider_normal.png"), app->tex->Load("Assets/Textures/Buttons/slider_not_normal.png"));
+    
     fullscreenButton = new GuiCheckBox(7, { 210, 184, 20, 16 }, "FULLSCREEN");
     fullscreenButton->SetObserver((Scene1*)this);
     fullscreenButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/fullscreen_button.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/fullscreen_button_pressed.png"));
