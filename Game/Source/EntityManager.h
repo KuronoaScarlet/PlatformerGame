@@ -93,6 +93,10 @@ private:
 	Entity* boss;
 	Entity* movingPlatform;
 	Entity* playerEntity;
+
+	//Fonts
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
 };
 
 #endif // _ENTITYMANAGER_H_

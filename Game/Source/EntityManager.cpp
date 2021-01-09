@@ -4,6 +4,7 @@
 #include "Log.h"
 #include "Textures.h"
 #include "Render.h"
+#include "Fonts.h"
 
 #include "Scene1.h"
 #include "Scene2.h"
@@ -47,21 +48,25 @@ bool EntityManager::Start()
 	//Botones
 	playerData.resumeButton = new GuiButton(9, { 160, 37, 100, 24 }, "RESUME");
 	playerData.resumeButton->SetObserver((Scene1*)this);
-	playerData.resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/resume_button.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_pressed.png"));
+	playerData.resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
-	playerData.settingsButton = new GuiButton(2, { 160, 84, 100, 24 }, "SETTINGS");
+	playerData.settingsButton = new GuiButton(2, { 160, 79, 100, 24 }, "SETTINGS");
 	playerData.settingsButton->SetObserver((Scene1*)this);
-	playerData.settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
+	playerData.settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
-	playerData.backToTitleButton = new GuiButton(11, { 160, 141, 100, 24 }, "BACK_TO_TITLE");
+	playerData.backToTitleButton = new GuiButton(11, { 160, 120, 100, 24 }, "BACK_TO_TITLE");
 	playerData.backToTitleButton->SetObserver((Scene1*)this);
-	playerData.backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
+	playerData.backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
 	playerData.exitButton = new GuiButton(4, { 160, 180, 100, 24 }, "EXIT");
 	playerData.exitButton->SetObserver((Scene1*)this);
-	playerData.exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
+	playerData.exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/states/play.png"), app->tex->Load("Assets/Textures/Buttons/states/focused.png"), app->tex->Load("Assets/Textures/Buttons/states/pressed.png"));
 
 	playerData.resetCamera = false;
+
+	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
+	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
+	app->activeFonts++; app->totalFonts++;
 
 	return true;
 }
@@ -126,9 +131,13 @@ bool EntityManager::PostUpdate()
 		app->render->camera.y = 0;
 		app->render->DrawTexture(playerData.pauseMenu, 0, -20, NULL);
 		playerData.resumeButton->Draw(app->render);
+		app->fonts->BlitText(189, 47, scoreFont, "resume");
 		playerData.settingsButton->Draw(app->render);
+		app->fonts->BlitText(183, 88, scoreFont, "settings");
 		playerData.backToTitleButton->Draw(app->render);
+		app->fonts->BlitText(164, 129, scoreFont, "back to title");
 		playerData.exitButton->Draw(app->render);
+		app->fonts->BlitText(178, 190, scoreFont, "exit game");
 	}
 	
 	for (int i = 0; i < entityList.Count(); i++)
