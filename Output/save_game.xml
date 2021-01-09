@@ -3,16 +3,16 @@
 	<entities>
 		<entity>
 			<player>
-				<playerdata x="725.902344" y="182" />
+				<playerdata x="725.000366" y="182" />
 			</player>
 			<enemies>
-				<enemy x="596.940063" y="175297.859" />
-				<enemy x="1016.5" y="128" />
-				<enemy x="1220.5" y="32" />
+				<enemy x="604.920227" y="55116.0391" />
+				<enemy x="1007.5" y="128" />
+				<enemy x="1211.5" y="32" />
 			</enemies>
 		</entity>
 	</entities>
 	<render>
-		<camera x="-1646" y="-132" />
+		<camera x="-1679" y="-132" />
 	</render>
 </save>

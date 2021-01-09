@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Audio.h"
 #include "EntityManager.h"
+#include "Fonts.h"
 
 
 PlayerEntity::PlayerEntity(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
@@ -47,6 +48,9 @@ PlayerEntity::PlayerEntity(Module* listener, fPoint position, SDL_Texture* textu
 	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
+	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
+	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
+	app->activeFonts++; app->totalFonts++;
 	
 }
 
@@ -59,6 +63,10 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
+		app->fonts->BlitText(3, 30, scoreFont, "timer:");
+		sprintf_s(scoreText, 10, "%4d", (int)app->timer);
+		app->fonts->BlitText(40, 30, scoreFont, scoreText);
+
 		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers
 		app->entityManager->playerData.position.x = position.x;
@@ -272,8 +280,27 @@ bool PlayerEntity::Update(float dt)
 			collider->SetPos(position.x, position.y);
 			footCollider->SetPos(position.x + 1, position.y + 12);
 		}
+
+		if (app->scene1->active && app->timer == 0)
+		{
+			app->fade->Fade((Module*)app->scene1, (Module*)app->deathScreen, 30);
+		}
+		if (app->scene2->active && app->timer == 0)
+		{
+			app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 30);
+		}
+		if (app->scene3->active && app->timer == 0)
+		{
+			app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 30);
+		}
+		if (app->scene4->active && app->timer == 0)
+		{
+			app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 30);
+		}
+
 		cameraControl = true;
 		currentAnimation->Update();
+
 	}
 	
 

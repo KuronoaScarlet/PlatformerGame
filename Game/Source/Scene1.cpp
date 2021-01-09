@@ -39,6 +39,7 @@ bool Scene1::Awake()
 // Called before the first frame
 bool Scene1::Start()
 {
+	app->timer = 100;
 	app->entityManager->AddEntity({ 60.0f, 260.0f }, Entity::Type::PLAYER);
 
 	app->render->camera.y = -app->entityManager->playerData.position.y + 30;

@@ -126,6 +126,8 @@ public:
 
 	bool debugButton = false;
 
+	float timer;
+
 private:
 
 	int argc;

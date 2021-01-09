@@ -44,6 +44,9 @@ bool DeathScreen::Start()
 
     screen = app->tex->Load("Assets/Textures/death_screen.png");
 
+    timer = 0;
+    trans = true;
+
     return ret;
 }
 
@@ -54,6 +57,7 @@ bool DeathScreen::PreUpdate()
 
 bool DeathScreen::Update(float dt)
 {
+    timer += dt;
     return true;
 }
 
@@ -64,7 +68,7 @@ bool DeathScreen::PostUpdate()
     // Draw everything --------------------------------------
     app->render->camera.x = 0;
     app->render->camera.y = 0;
-    if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+    if (timer > 3 && trans == true)
     {
         app->player->playerData.playerLives = 3;
         app->fade->Fade(this, (Module*)app->intro, 1);

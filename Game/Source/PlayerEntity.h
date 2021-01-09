@@ -54,6 +54,9 @@ private:
 	bool cameraControl = false;
 	bool winCondition = false;
 	bool deathCondition = false;
+
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
 };
 
 #endif // _GROUNDENEMY_H_
