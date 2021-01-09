@@ -37,7 +37,7 @@ bool AirEnemy::Start()
 
 bool AirEnemy::Update(float dt)
 {
-	if (app->entityManager->playerData.godMode == false)
+	if (app->entityManager->playerData.godMode == false || app->entityManager->playerData.pauseCondition == false)
 	{
 		if (Sonar(app->entityManager->playerData.position))
 		{

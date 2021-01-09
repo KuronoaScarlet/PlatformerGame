@@ -43,7 +43,7 @@ bool Coins::Update(float dt)
 
 bool Coins::Draw()
 {
-	if (!app->player->pauseCondition)
+	if (app->entityManager->playerData.pauseCondition == false)
 	{
 		SDL_Rect rectCoins;
 		rectCoins = currentAnimation->GetCurrentFrame();

@@ -12,6 +12,9 @@
 #include "FadeToBlack.h"
 #include "Player.h"
 #include "Scene1.h"
+#include "Scene2.h"
+#include "Scene3.h"
+#include "Scene4.h"
 #include "EntityManager.h"
 #include "Fonts.h"
 
@@ -196,9 +199,15 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 2)
         {
-            //Options
-            if(app->player->pauseCondition)    app->fade->Fade((Module*)app->scene1, (Module*)app->options, 10);
-            else app->fade->Fade(this, (Module*)app->options, 10);
+            //Settings
+            if (app->entityManager->playerData.pauseCondition)
+            {
+                if (app->scene1->active == true) app->fade->Fade((Module*)app->scene1, (Module*)app->options, 10);
+                if (app->scene2->active == true) app->fade->Fade((Module*)app->scene2, (Module*)app->options, 10);
+                if (app->scene3->active == true) app->fade->Fade((Module*)app->scene3, (Module*)app->options, 10);
+                if (app->scene4->active == true) app->fade->Fade((Module*)app->scene4, (Module*)app->options, 10);
+            }
+            else app->fade->Fade(this, (Module*)app->options, 10); app->entityManager->playerData.pauseCondition = false;
         }
         else if (control->id == 3)
         {
@@ -215,17 +224,16 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 11)
         {
             //Back to title
-            if (app->player->scene1)
-            {
+            if (app->scene1->active==true)
                 app->fade->Fade((Module*)app->scene1, (Module*)app->title, 10);
-            }
-            if (app->player->scene2) 
+            if (app->scene2->active == true)
                 app->fade->Fade((Module*)app->scene2, (Module*)app->title, 10);
-            if (app->player->scene3) 
+            if (app->scene3->active == true)
                 app->fade->Fade((Module*)app->scene3, (Module*)app->title, 10);
-            if (app->player->scene4) 
+            if (app->scene4->active == true)
                 app->fade->Fade((Module*)app->scene4, (Module*)app->title, 10);
 
+            app->entityManager->playerData.pauseCondition = false;
         }
 
         else if (control->id == 4)
@@ -249,7 +257,7 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 9)
         {
             //resume
-            app->player->pauseCondition = false;
+            app->entityManager->playerData.pauseCondition = false;
             
         }
         else if (control->id == 12)

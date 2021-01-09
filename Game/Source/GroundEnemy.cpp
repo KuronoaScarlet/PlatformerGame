@@ -40,7 +40,7 @@ bool GroundEnemy::Start()
 
 bool GroundEnemy::Update(float dt)
 {
-	if (app->entityManager->playerData.godMode == false)
+	if (app->entityManager->playerData.godMode == false || app->entityManager->playerData.pauseCondition == false)
 	{
 		vely += gravity;
 		position.x += velx;

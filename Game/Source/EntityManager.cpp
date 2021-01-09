@@ -9,6 +9,7 @@
 #include "Scene2.h"
 #include "Scene3.h"
 #include "Scene4.h"
+#include "Title.h"
 
 #include "GroundEnemy.h"
 #include "Hearts.h"
@@ -40,6 +41,28 @@ bool EntityManager::Start()
 	texBoss = app->tex->Load("Assets/Textures/boss.png");
 	texPlayer = app->tex->Load("Assets/Textures/player.png");
 
+	//Pause Menu
+	playerData.pauseMenu = app->tex->Load("Assets/Textures/pause_image.png");
+	playerData.pauseCondition = false;
+	//Botones
+	playerData.resumeButton = new GuiButton(9, { 160, 37, 100, 24 }, "RESUME");
+	playerData.resumeButton->SetObserver((Scene1*)this);
+	playerData.resumeButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/resume_button.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/resume_button_pressed.png"));
+
+	playerData.settingsButton = new GuiButton(2, { 160, 84, 100, 24 }, "SETTINGS");
+	playerData.settingsButton->SetObserver((Scene1*)this);
+	playerData.settingsButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/settingns_button.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/settingns_button_pressed.png"));
+
+	playerData.backToTitleButton = new GuiButton(11, { 160, 141, 100, 24 }, "BACK_TO_TITLE");
+	playerData.backToTitleButton->SetObserver((Scene1*)this);
+	playerData.backToTitleButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/back_to_title_button.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/back_to_title_button_pressed.png"));
+
+	playerData.exitButton = new GuiButton(4, { 160, 180, 100, 24 }, "EXIT");
+	playerData.exitButton->SetObserver((Scene1*)this);
+	playerData.exitButton->SetTexture(app->tex->Load("Assets/Textures/Buttons/exit_button.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_focused.png"), app->tex->Load("Assets/Textures/Buttons/exit_button_pressed.png"));
+
+	playerData.resetCamera = false;
+
 	return true;
 }
 
@@ -66,12 +89,21 @@ bool EntityManager::Update(float dt)
 		entity = entity->next;
 	}
 
+	if (app->entityManager->playerData.pauseCondition)
+	{
+		playerData.resumeButton->Update(app->input, dt);
+		playerData.settingsButton->Update(app->input, dt);
+		playerData.backToTitleButton->Update(app->input, dt);
+		playerData.exitButton->Update(app->input, dt);
+	}
+	if (app->title->exi)	return false;
+
 	return true;
 }
 
 bool EntityManager::PostUpdate()
 {
-	if (app->scene1->active == true || app->scene2->active == true || app->scene3->active == true || app->scene4->active == true)
+	if ((app->scene1->active == true || app->scene2->active == true || app->scene3->active == true || app->scene4->active == true) && playerData.pauseCondition == false)
 	{
 		SDL_Rect rectPlayer;
 		app->render->DrawTexture(heartsTexture, playerData.position.x, playerData.position.y, &rectPlayer);
@@ -80,7 +112,25 @@ bool EntityManager::PostUpdate()
 			app->render->DrawTexture(heartsTexture, ((-app->render->camera.x + 10) + (i * 32)) / 3, (-app->render->camera.y + 20) / 3, NULL);
 		}
 	}
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (app->scene1->active==true || app->scene2->active == true || app->scene3->active == true || app->scene4->active == true))
+	{
+		//app->SaveGameRequest();
+		if (app->entityManager->playerData.pauseCondition == false)	app->entityManager->playerData.cameraBckUp = app->render->camera;
+		app->entityManager->playerData.pauseCondition = !app->entityManager->playerData.pauseCondition;
+		app->entityManager->playerData.resetCamera = true;
 
+	}
+	if (app->entityManager->playerData.pauseCondition)
+	{
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->DrawTexture(playerData.pauseMenu, 0, -20, NULL);
+		playerData.resumeButton->Draw(app->render);
+		playerData.settingsButton->Draw(app->render);
+		playerData.backToTitleButton->Draw(app->render);
+		playerData.exitButton->Draw(app->render);
+	}
+	
 	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* entity = entityList.At(i);

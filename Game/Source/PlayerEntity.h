@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "DynArray.h"
 
+#include "GuiButton.h"
 
 struct SDL_Texture;
 struct Collider;

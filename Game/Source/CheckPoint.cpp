@@ -56,7 +56,7 @@ bool CheckPoint::Start()
 
 bool CheckPoint::Update(float dt)
 {
-	if (!app->player->pauseCondition)
+	if (app->entityManager->playerData.pauseCondition == false)
 	{
 		if (on == false) currentAnimation = &idleAnimation;
 		else currentAnimation = &activatedAnimation;

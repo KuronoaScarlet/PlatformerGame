@@ -6,6 +6,8 @@
 #include "Point.h"
 #include "Entity.h"
 
+#include "GuiButton.h"
+
 class EntityManager : public Module
 {
 public:
@@ -52,6 +54,20 @@ public:
 		fPoint initPositionScene2 = { 50.0f, 278.0f };
 		fPoint initPositionScene3 = { 32.0f, 277.0f };
 		fPoint initPositionScene4 = { 32.0f, 277.0f };
+
+		//Pause Menu
+		bool pauseCondition = false;
+		bool debug = false;
+		bool resetCamera;
+
+		SDL_Texture* pauseMenu = nullptr;
+
+		GuiButton* resumeButton;
+		GuiButton* settingsButton;
+		GuiButton* backToTitleButton;
+		GuiButton* exitButton;
+
+		SDL_Rect cameraBckUp;
 	};
 
 	PlayerData playerData;

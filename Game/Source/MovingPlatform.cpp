@@ -10,6 +10,7 @@
 #include "map.h"
 #include "Audio.h"
 #include "Pathfinding.h"
+#include "EntityManager.h"
 
 MovingPlatform::MovingPlatform(Module* listener, fPoint position, SDL_Texture* texture, Type type) : Entity(listener, position, texture, type)
 {
@@ -28,7 +29,7 @@ bool MovingPlatform::Start()
 
 bool MovingPlatform::Update(float dt)
 {
-	if (!app->player->pauseCondition)
+	if (app->entityManager->playerData.pauseCondition == false)
 	{
 		if (position.x == 768)
 		{
