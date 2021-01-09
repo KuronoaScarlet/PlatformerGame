@@ -47,9 +47,7 @@ PlayerEntity::PlayerEntity(Module* listener, fPoint position, SDL_Texture* textu
 	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
-	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
-	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
-	app->activeFonts++; app->totalFonts++;
+	
 	
 }
 
@@ -62,9 +60,9 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
-		app->fonts->BlitText(3, 30, scoreFont, "timer:");
+		//app->fonts->BlitText(3, 30, scoreFont, "timer:");
 		sprintf_s(scoreText, 10, "%4d", (int)app->timer);
-		app->fonts->BlitText(40, 30, scoreFont, scoreText);
+		//app->fonts->BlitText(40, 30, scoreFont, scoreText);
 
 		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers

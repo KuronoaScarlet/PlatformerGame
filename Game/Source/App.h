@@ -17,7 +17,6 @@ class Audio;
 class EntityManager;
 class Map;
 class Collisions;
-class Fonts;
 
 //Scenes
 class Logo;
@@ -114,7 +113,6 @@ public:
 	Collisions* collisions;
 	DeathScreen* deathScreen;
 	WinScreen* winScreen;
-	Fonts* fonts;
 	PathFinding* pathFinding;
 
 	uint activeFonts = 0;

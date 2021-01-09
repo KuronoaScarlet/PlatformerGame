@@ -65,12 +65,6 @@ bool Scene4::Start()
 	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
 
 	
-
-	//Fonts
-	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
-	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
-	app->activeFonts++; app->totalFonts++;
-
 	if (app->loadingGame == true)
 	{
 		app->LoadGameRequest();
@@ -110,9 +104,9 @@ bool Scene4::Update(float dt)
 	app->map->LoadColliders();
 
 	//Score
-	app->fonts->BlitText(3, 20, scoreFont, "score:");
+	app->render->DrawText(app->render->font, "Score:", 600, 240, 60, 5, { 255, 255, 255, 255 });
 	sprintf_s(scoreText, 10, "%4d", app->intro->score);
-	app->fonts->BlitText(30, 20, scoreFont, scoreText);
+	app->render->DrawText(app->render->font, scoreText, 600, 260, 60, 5, { 255, 255, 255, 255 });
 
 	return true;
 }

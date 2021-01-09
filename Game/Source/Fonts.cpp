@@ -25,7 +25,7 @@ Fonts::Fonts(const char* rtpFontFile, SDL_Texture* tex)
 		//int atlasWidth = xmlNodeAtlas.attribute("width").as_int();
 		//int atlasHeight = xmlNodeAtlas.attribute("height").as_int();
 
-		texture = app->tex->Load(PATH("Assets/Fonts/", path));
+		texture = app->tex->Load(PATH("Assets/Font/", path));
 
 		charsCount = xmlNodeAtlas.attribute("spriteCount").as_int();
 		baseSize = xmlNodeAtlas.attribute("fontSize").as_int();

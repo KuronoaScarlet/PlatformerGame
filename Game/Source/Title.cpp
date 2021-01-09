@@ -85,11 +85,7 @@ bool Title::Start()
     vsync = true;
     exi = false;
 
-    char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
-    scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
-    app->activeFonts++; app->totalFonts++;
-
-    return ret;
+   return ret;
 }
 
 bool Title::PreUpdate()
@@ -152,23 +148,23 @@ bool Title::PostUpdate()
         // start->Draw(app->render);
         // SDL_Rect rectPlayer = playerData.currentAnim->GetCurrentFrame();
         play->Draw(app->render);
-        app->fonts->BlitText(205, 85, scoreFont, "play");
+        app->render->DrawText(app->render->font, "Play", 600, 240, 60, 5, { 255, 255, 255, 255 });
         if (!app->fileSaved)
         {
-            app->fonts->BlitText(190, 115, scoreFont, "continue");
+            app->render->DrawText(app->render->font, "Load", 600, 240, 60, 5, { 255, 255, 255, 255 });
             continueButton->Draw(app->render);
         }
         else
         {
             continueButton->Draw(app->render);
-            app->fonts->BlitText(190, 115, scoreFont, "continue");
+            app->render->DrawText(app->render->font, "Load", 600, 240, 60, 5, { 255, 255, 255, 255 });
         }
         options->Draw(app->render);
-        app->fonts->BlitText(192, 145, scoreFont, "options");
+        app->render->DrawText(app->render->font, "Settings", 600, 240, 60, 5, { 255, 255, 255, 255 });
         credits->Draw(app->render);
-        app->fonts->BlitText(192, 175, scoreFont, "credits");
+        app->render->DrawText(app->render->font, "Credits", 600, 240, 60, 5, { 255, 255, 255, 255 });
         exit->Draw(app->render);
-        app->fonts->BlitText(205, 205, scoreFont, "exit");
+        app->render->DrawText(app->render->font, "Exit", 600, 240, 60, 5, { 255, 255, 255, 255 });
     }
    
     
