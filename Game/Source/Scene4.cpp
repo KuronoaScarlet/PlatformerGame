@@ -7,7 +7,6 @@
 #include "Intro.h"
 #include "Scene4.h"
 #include "Map.h"
-#include "Player.h"
 #include "EntityManager.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
@@ -137,7 +136,6 @@ bool Scene4::CleanUp()
 
 	app->entityManager->CleanUp();
 	app->collisions->CleanUp();
-	app->player->CleanUp();
 	app->map->CleanUp();
 
 	app->scene4->active = false;

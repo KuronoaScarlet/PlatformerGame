@@ -6,11 +6,9 @@
 #include "Window.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Player.h"
 #include "Animation.h"
 #include "Title.h"
 #include "FadeToBlack.h"
-#include "Player.h"
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
@@ -225,7 +223,7 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 3)
         {
             //Back
-            if (app->player->pauseCondition == false)
+            if (app->entityManager->playerData.pauseCondition == false)
             {
                 app->fade->Fade((Module*)app->options, (Module*)app->title, 10);
             }
@@ -236,17 +234,17 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         }
         else if (control->id == 11)
         {
+            app->entityManager->playerData.pauseCondition = false;
+
             //Back to title
             if (app->scene1->active==true)
-                app->fade->Fade((Module*)app->scene1, (Module*)app->title, 10);
+                app->fade->Fade((Module*)app->scene1, (Module*)app->title, 30);
             if (app->scene2->active == true)
-                app->fade->Fade((Module*)app->scene2, (Module*)app->title, 10);
+                app->fade->Fade((Module*)app->scene2, (Module*)app->title, 30);
             if (app->scene3->active == true)
-                app->fade->Fade((Module*)app->scene3, (Module*)app->title, 10);
+                app->fade->Fade((Module*)app->scene3, (Module*)app->title, 30);
             if (app->scene4->active == true)
-                app->fade->Fade((Module*)app->scene4, (Module*)app->title, 10);
-
-            app->entityManager->playerData.pauseCondition = false;
+                app->fade->Fade((Module*)app->scene4, (Module*)app->title, 30);
         }
 
         else if (control->id == 4)

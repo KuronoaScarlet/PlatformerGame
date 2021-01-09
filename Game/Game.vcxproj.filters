@@ -24,9 +24,6 @@
     <ClCompile Include="Source\WinScreen.cpp">
       <Filter>Scenes\NoLevels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>Entities\Playable</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Coins.cpp">
       <Filter>Entities\NonPlayable</Filter>
     </ClCompile>
@@ -164,9 +161,6 @@
     </ClInclude>
     <ClInclude Include="Source\Entity.h">
       <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>Entities\Playable</Filter>
     </ClInclude>
     <ClInclude Include="Source\Coins.h">
       <Filter>Entities\NonPlayable</Filter>

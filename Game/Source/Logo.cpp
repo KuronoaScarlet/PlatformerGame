@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Player.h"
 #include "Animation.h"
 #include "Logo.h"
 #include "FadeToBlack.h"

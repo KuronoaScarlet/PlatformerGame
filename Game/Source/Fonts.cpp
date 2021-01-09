@@ -1,116 +1,68 @@
-#include "App.h"
-
-#include "Textures.h"
-#include "Render.h"
 #include "Fonts.h"
+#include "Textures.h"
+#include "App.h"
+#include "Textures.h"
+#include "Log.h"
 
-#include<string.h>
+#include "PugiXml/src/pugixml.hpp"
 
-Fonts::Fonts()
+Fonts::Fonts(const char* rtpFontFile, SDL_Texture* tex)
 {
+	fontLoaded = false;
 
+	pugi::xml_document xmlDocFontAtlas;
+	pugi::xml_node xmlNodeAtlas;
+	pugi::xml_node xmlNodeGlyph;
+
+	pugi::xml_parse_result result = xmlDocFontAtlas.load_file(rtpFontFile);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", rtpFontFile, result.description());
+	else xmlNodeAtlas = xmlDocFontAtlas.child("AtlasTexture");
+
+	if (xmlNodeAtlas.empty() == false)
+	{
+		const pugi::char_t* path = xmlNodeAtlas.attribute("imagePath").as_string();
+		//int atlasWidth = xmlNodeAtlas.attribute("width").as_int();
+		//int atlasHeight = xmlNodeAtlas.attribute("height").as_int();
+
+		texture = app->tex->Load(PATH("Assets/Fonts/", path));
+
+		charsCount = xmlNodeAtlas.attribute("spriteCount").as_int();
+		baseSize = xmlNodeAtlas.attribute("fontSize").as_int();
+
+		xmlNodeGlyph = xmlNodeAtlas.child("Sprite");
+
+		for (int index = 0; xmlNodeGlyph; xmlNodeGlyph = xmlNodeGlyph.next_sibling("Sprite"))
+		{
+			index = xmlNodeGlyph.attribute("charValue").as_int();
+			charsRecs[index].x = xmlNodeGlyph.attribute("positionX").as_int();
+			charsRecs[index].y = xmlNodeGlyph.attribute("positionY").as_int();
+			charsRecs[index].w = xmlNodeGlyph.attribute("sourceSizeWidth").as_int();
+			charsRecs[index].h = baseSize;
+		}
+
+		fontLoaded = true;
+	}
 }
 
 Fonts::~Fonts()
 {
-
 }
 
-// Load new texture from file path
-int Fonts::Load(const char* texture_path, const char* characters, uint rows)
+SDL_Texture* Fonts::GetTextureAtlas()
 {
-	int id = -1;
-
-	if (texture_path == nullptr || characters == nullptr || rows == 0)
-	{
-
-		return id;
-	}
-
-	SDL_Texture* tex = app->tex->Load(texture_path);
-
-	if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
-	{
-		return id;
-	}
-
-	id = 0;
-	for (; id < MAX_FONTS; ++id)
-		if (fonts[id].texture == nullptr)
-			break;
-
-	if (id == MAX_FONTS)
-	{
-		return id;
-	}
-
-	Font& font = fonts[id];
-
-	font.texture = tex;
-	font.rows = rows;
-
-	strcpy_s(fonts[id].table, MAX_FONT_CHARS, characters);
-	font.totalLength = strlen(characters);
-	font.columns = fonts[id].totalLength / rows;
-
-	uint tex_w, tex_h;
-	app->tex->GetSize(tex, tex_w, tex_h);
-	font.charw = tex_w / font.columns;
-	font.charh = tex_h / font.rows;
-
-	++fontsCount;
-
-
-	return id;
+	return texture;
 }
 
-void Fonts::UnLoad(int font_id)
+SDL_Rect Fonts::GetCharRec(int value)
 {
-	if (font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr)
-	{
-		app->tex->UnLoad(fonts[font_id].texture);
-		fonts[font_id].texture = nullptr;
-		--fontsCount;
+	SDL_Rect rec = { 0 };
 
+	// Get character rectangle corresponding to introduced value
+	// NOTE: In our current implementation rectangles are ordered following
+	// the character codepoint value but improved implementation would require
+	// a for() loop to look for the corresponding value on a hashmap table
+	rec = charsRecs[value];
 
-	}
-}
-
-void Fonts::BlitText(int x, int y, int font_id, const char* text) const
-{
-	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
-	{
-		return;
-	}
-
-	const Font* font = &fonts[font_id];
-	SDL_Rect spriteRect;
-	uint len = strlen(text);
-
-	spriteRect.w = font->charw;
-	spriteRect.h = font->charh;
-
-	for (uint i = 0; i < len; ++i)
-	{
-		uint charIndex = 0;
-
-		// Find the location of the current character in the lookup table
-		for (uint j = 0; j < font->totalLength; ++j)
-		{
-			if (font->table[j] == text[i])
-			{
-				charIndex = j;
-				break;
-			}
-		}
-
-		// Retrieve the position of the current character in the sprite
-		spriteRect.x = spriteRect.w * (charIndex % font->columns);
-		spriteRect.y = spriteRect.h * (charIndex / font->columns);
-
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, 0.0f, false);
-
-		// Advance the position where we blit the next character
-		x += spriteRect.w;
-	}
+	return rec;
 }

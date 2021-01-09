@@ -64,10 +64,6 @@ bool EntityManager::Start()
 
 	playerData.resetCamera = false;
 
-	char lookupTable[] = { "! @,_./0123456789$:< ?abcdefghijklmnopqrstuvwxyzA" };
-	scoreFont = app->fonts->Load("Assets/Font/rtype_font3.png", lookupTable, 2);
-	app->activeFonts++; app->totalFonts++;
-
 	return true;
 }
 
@@ -186,6 +182,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 			entities->position = newPosition;
 			count++;
 		}
+		int lives = e.attribute("lives").as_int(0);
+		playerData.lives = lives;
 	}
 
 	count = 1;
@@ -222,6 +220,8 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 			x.set_value(e->position.x);
 			pugi::xml_attribute y = eNode.append_attribute("y");
 			y.set_value(e->position.y);
+			pugi::xml_attribute lives = eNode.append_attribute("lives");
+			lives.set_value(playerData.lives);
 			eNode.next_sibling("playerdata");
 		}
 

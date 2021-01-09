@@ -1,7 +1,6 @@
 #include "Coins.h"
 #include "App.h"
 #include "Render.h"
-#include "Player.h"
 #include "Collisions.h"
 #include "Intro.h"
 #include "Audio.h"

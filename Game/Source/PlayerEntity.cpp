@@ -1,7 +1,6 @@
 #include "PlayerEntity.h"
 #include "App.h"
 #include "Render.h"
-#include "Player.h"
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
@@ -392,16 +391,16 @@ void PlayerEntity::Collision(Collider* coll)
 		if (app->entityManager->playerData.lives > 0)
 		{
 			deathCondition = true;
-			app->scene3->firstEntry = true;
-			position = app->entityManager->playerData.initPositionScene3;
+			position.x = app->entityManager->playerData.initPositionScene3.x;
+			position.y = app->entityManager->playerData.initPositionScene3.y;
+			app->render->camera.y = -app->entityManager->playerData.position.y + 50;
+			app->render->camera.x = 0;
 		}
-		else
+		if(app->entityManager->playerData.lives == 0)
 		{
-			app->scene3->firstEntry = true;
-			app->entityManager->CleanUp();
 			app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 60);
-			app->scene3->CleanUp();
 		}
+		deathCondition = false;
 	}
 }
 

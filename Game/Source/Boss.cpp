@@ -1,7 +1,6 @@
 #include "Boss.h"
 #include "App.h"
 #include "Render.h"
-#include "Player.h"
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
@@ -40,26 +39,8 @@ bool Boss::Start()
 
 bool Boss::Update(float dt)
 {
-	
-	if (!app->player->pauseCondition)
-	{
-		if (Sonar(app->player->playerData.position))
-		{
-			counter += dt;
-			if (counter > 50)
-			{
-				counter = 0;
-				//app->entityManager->AddEntity({ 266.0f, 116.0f }, Entity::Type::AIR_ENEMY);
-				
-			}
-			//currentAnimation = &atackAnimation;
-		}
-	}
-	
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
-
-	
 
 	return true;
 }
@@ -75,55 +56,12 @@ bool Boss::Draw()
 
 void Boss::Collision(Collider* coll)
 {
-	if (coll->type == Collider::Type::PLAYER)
-	{
-		app->audio->PlayFx(hitFx);
-		app->player->deathCondition = true;
-		app->player->playerData.playerLives--;
-
-		if (app->player->playerData.playerLives == 0)
-		{
-			if (app->scene4->active == true)
-			{
-				app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 60);
-			}
-		}
-		if (app->player->playerData.playerLives != 0)
-		{
-			if (position.x > app->player->playerData.position.x)
-			{
-				app->player->playerData.position.x = collider->rect.x - collider->rect.w - 9;
-			}
-			if (position.x < app->player->playerData.position.x)
-			{
-				app->player->playerData.position.x = collider->rect.x + collider->rect.w + 6;
-			}
-		}
-	}
 	if (coll->type == Collider::Type::PLAYERFOOT)
 	{
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 
-		app->player->playerData.vely = -5.5f;
-		app->player->playerData.position.y += app->player->playerData.vely;
 	}
-	/*if (coll->type == Collider::Type::LEFT_WALL)
-	{
-		position.x -= 1;
-		timer = 100;
-	}
-	if (coll->type == Collider::Type::RIGHT_WALL)
-	{
-		position.x += 1;
-		timer = 0;
-	}
-	if (coll->type == Collider::Type::FLOOR)
-	{
-		position.y = coll->rect.y - coll->rect.h - 9;
-		vely = 0;
-		position.y = position.y;
-	}*/
 }
 
 void Boss::CleanUp()

@@ -1,7 +1,6 @@
 #include "GroundEnemy.h"
 #include "App.h"
 #include "Render.h"
-#include "Player.h"
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
@@ -153,8 +152,6 @@ void GroundEnemy::Collision(Collider* coll)
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 
-		app->player->playerData.vely = -5.5f;
-		app->player->playerData.position.y += app->player->playerData.vely;
 	}
 	if (coll->type == Collider::Type::LEFT_WALL)
 	{

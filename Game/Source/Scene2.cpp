@@ -7,7 +7,6 @@
 #include "Intro.h"
 #include "Scene2.h"
 #include "Map.h"
-#include "Player.h"
 #include "CheckPoint.h"
 #include "Collisions.h"
 #include "FadeToBlack.h"
@@ -115,17 +114,10 @@ bool Scene2::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			app->render->camera.x -= 200 * dt;
-			//app->render->camera.x = -(app->player->playerData.position.x - 150);
-			if(app->player->cameraControl == false)
-				app->render->camera.x += 2000 * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			app->render->camera.x += 160 * dt;
-			//app->render->camera.x = -(app->player->playerData.position.x - 150);
-			if (app->player->cameraControl == false)
-				app->render->camera.x -= 2000 * dt;
-
 		}
 	}
 
@@ -158,7 +150,6 @@ bool Scene2::CleanUp()
 
 	app->entityManager->CleanUp();
 	app->collisions->CleanUp();
-	app->player->CleanUp();
 	app->map->CleanUp();
 
 	app->scene2->active = false;

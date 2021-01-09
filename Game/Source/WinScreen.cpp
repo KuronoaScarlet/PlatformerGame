@@ -6,12 +6,12 @@
 #include "Window.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Player.h"
 #include "Animation.h"
 #include "WinScreen.h"
 #include "Scene1.h"
 #include "Scene2.h"
 #include "FadeToBlack.h"
+#include "EntityManager.h"
 
 
 #include "Defs.h"
@@ -66,12 +66,9 @@ bool WinScreen::PostUpdate()
     app->render->camera.y = 0;
     if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
-        app->player->playerData.playerLives = 3;
+        app->entityManager->playerData.lives = 3;
         app->fade->Fade(this, (Module*)app->intro, 60);
-        app->scene1->firstEntry = true;
-        app->scene2->firstEntry = true;
     }
-   // if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
         
     app->render->DrawTexture(screen, 0, 0, NULL);
 

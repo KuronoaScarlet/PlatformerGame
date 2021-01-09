@@ -19,7 +19,7 @@ class Map;
 class Collisions;
 class Fonts;
 
-//Scene Manager
+//Scenes
 class Logo;
 class Intro;
 class Title;
@@ -32,9 +32,6 @@ class FadeToBlack;
 class DeathScreen;
 class WinScreen;
 class PathFinding;
-
-// 
-class Player;
 
 class App
 {
@@ -112,7 +109,6 @@ public:
 	Scene4* scene4;
 	Map* map;
 	EntityManager* entityManager;
-	Player* player;
 	Options* options;
 	FadeToBlack* fade;
 	Collisions* collisions;

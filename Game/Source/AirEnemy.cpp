@@ -1,7 +1,6 @@
 #include "AirEnemy.h"
 #include "App.h"
 #include "Render.h"
-#include "Player.h"
 #include "Collisions.h"
 #include "Collider.h"
 #include "FadeToBlack.h"
@@ -10,7 +9,6 @@
 #include "Scene3.h"
 #include "Scene4.h"
 #include "map.h"
-#include "Player.h"
 #include "Pathfinding.h"
 #include "Audio.h"
 #include "EntityManager.h"
@@ -147,8 +145,6 @@ void AirEnemy::Collision(Collider* coll)
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 
-		app->player->playerData.vely = -5.5f;
-		app->player->playerData.position.y += app->player->playerData.vely;
 	}
 	if (coll->type == Collider::Type::FLOOR)
 	{
