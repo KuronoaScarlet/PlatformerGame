@@ -38,6 +38,11 @@ public:
 	bool firstEntry = true;
 
 private:
+	SDL_Texture* coinTexture;
+
+	Animation coinAnimation;
+
+	Animation* currentAnimation;
 };
 
 

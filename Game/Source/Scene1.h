@@ -47,6 +47,11 @@ public:
 
 
 private:
+	SDL_Texture* coinTexture;
+
+	Animation coinAnimation;
+
+	Animation* currentAnimation;
 };
 
 

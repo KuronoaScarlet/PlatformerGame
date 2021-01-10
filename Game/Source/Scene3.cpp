@@ -86,6 +86,22 @@ bool Scene3::Start()
 	app->map->active = true;
 
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	coinTexture = app->tex->Load("Assets/Textures/coins.png");
+
+	coinAnimation.loop = true;
+	coinAnimation.PushBack({ 1, 1, 10, 10 });
+	coinAnimation.PushBack({ 12, 1, 10, 10 });
+	coinAnimation.PushBack({ 21, 1, 10, 10 });
+	coinAnimation.PushBack({ 28, 1, 10, 10 });
+	coinAnimation.PushBack({ 35, 1, 10, 10 });
+	coinAnimation.PushBack({ 1, 13, 10, 10 });
+	coinAnimation.PushBack({ 12, 13, 10, 10 });
+	coinAnimation.PushBack({ 22, 13, 10, 10 });
+
+	coinAnimation.loop = true;
+	coinAnimation.speed = 0.15f;
+
+	currentAnimation = &coinAnimation;
 
 	app->collisions->AddCollider({ 240, 384, 240, 16 }, Collider::Type::DEATH, this);
 	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
@@ -132,9 +148,9 @@ bool Scene3::Update(float dt)
 
 
 	//Score
-	app->render->DrawText(app->render->font, "Coins:", 10, 42, 50, 5, { 100, 100, 100, 255 });
+	currentAnimation->Update();
 	sprintf_s(scoreText, 10, "%4d", app->intro->score);
-	app->render->DrawText(app->render->font, scoreText, 150, 42, 50, 5, { 100, 100, 100, 255 });
+	app->render->DrawText(app->render->font, scoreText, 6, 48, 50, 5, { 100, 100, 100, 255 });
 
 	return true;
 }
@@ -143,6 +159,10 @@ bool Scene3::Update(float dt)
 bool Scene3::PostUpdate()
 {
 	bool ret = true;
+
+	SDL_Rect rectCoins;
+	rectCoins = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(coinTexture, (-app->render->camera.x + 5) / 3, (-app->render->camera.y + 58) / 3, &rectCoins);
 
 	return ret;
 }
