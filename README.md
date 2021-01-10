@@ -18,18 +18,22 @@ We hope you like it!
  - Collectible Coins Implemented!
  - Checkpoints Implemented!
  - Capped Framerate to 60 and 30!
+ - New transitions and animated HUD.
+ - Original GUI with Buttons, Checkboxes and Sliders implemented.
  
 ## Controls
 
  - WASD - Movement controls.
  - Space Bar - Jump.
+ - E - Interact with Items.
  
  The game also supports a debug mode!
- - F1 - Go to Level 1.
- - F2 - Go to Level 2.
+ - F1 - Go to Previous Level.
+ - F2 - Go to Next level.
  - F3 - Start from the beggining of the current Level.
  - F5 - Save the current game state.
  - F6 - Load the previous state.
+ - F8 - View HUD bounds.
  - F9 - View colliders.
  - F10 - God Mode.
  - F11 - Change Framerate Cap.
