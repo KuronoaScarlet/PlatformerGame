@@ -60,9 +60,9 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
-		app->render->DrawText(app->render->font, "Timer:", 10, 150, 50, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Timer:", 1000, 10, 50, 5, { 100, 100, 100, 255 });
 		sprintf_s(scoreText, 10, "%4d", (int)app->timer);
-		app->render->DrawText(app->render->font, scoreText, 150, 150, 50, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, scoreText, 1140, 10, 50, 5, { 100, 100, 100, 255 });
 
 		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers
@@ -158,6 +158,14 @@ bool PlayerEntity::Update(float dt)
 				}
 				onGround = false;
 			}
+		}
+		if (app->entityManager->playerData.footJump == true)
+		{
+			app->audio->PlayFx(jumpFx);
+			playerJumping = false;
+			vely = -5.5f;
+			position.y += vely;
+			app->entityManager->playerData.footJump = false;
 		}
 
 		//Debug Keys

@@ -145,6 +145,8 @@ void AirEnemy::Collision(Collider* coll)
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 
+		app->entityManager->playerData.footJump = true;
+
 	}
 	if (coll->type == Collider::Type::FLOOR)
 	{

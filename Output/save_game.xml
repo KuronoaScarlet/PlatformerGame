@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<save>
+	<map>
+		<level currentlyOn="1" />
+	</map>
+	<entities>
+		<entity>
+			<player>
+				<playerdata x="240.059967" y="246" lives="3" coins="4" />
+			</player>
+			<enemies>
+				<enemy x="375.910858" y="246.599991" />
+			</enemies>
+		</entity>
+	</entities>
+	<render>
+		<camera x="-32" y="-196" />
+	</render>
+</save>

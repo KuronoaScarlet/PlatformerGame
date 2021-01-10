@@ -54,16 +54,24 @@ bool Scene4::Start()
 		RELEASE_ARRAY(data);
 	}
 
+	app->entityManager->AddEntity({ 240.0f, 256.0f }, Entity::Type::GROUND_ENEMY);
+	app->entityManager->AddEntity({ 544.0f, 176.0f }, Entity::Type::AIR_ENEMY);
+	app->entityManager->AddEntity({ 656.0f, 80.0f }, Entity::Type::AIR_ENEMY);
+
+	app->entityManager->AddEntity({ 416.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 432.0f, 144.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 448.0f, 144.0f }, Entity::Type::COINS);	
+	app->entityManager->AddEntity({ 544.0f, 192.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 560.0f, 192.0f }, Entity::Type::COINS);
+	app->entityManager->AddEntity({ 576.0f, 192.0f }, Entity::Type::COINS);
+
+
 	app->entityManager->AddEntity({ 800.0f, 100.0f }, Entity::Type::BOSS);
 
 	app->collisions->active = true;
 	app->map->active = true;
 
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-
-	app->collisions->AddCollider({ 240, 384, 240, 16 }, Collider::Type::DEATH, this);
-	app->collisions->AddCollider({ 544, 384, 688, 16 }, Collider::Type::DEATH, this);
-
 	
 	if (app->loadingGame == true)
 	{
@@ -104,9 +112,9 @@ bool Scene4::Update(float dt)
 	app->map->LoadColliders();
 
 	//Score
-	app->render->DrawText(app->render->font, "Score:", 10, 90, 50, 5, { 255, 255, 255, 255 });
+	app->render->DrawText(app->render->font, "Coins:", 10, 42, 50, 5, { 100, 100, 100, 255 });
 	sprintf_s(scoreText, 10, "%4d", app->intro->score);
-	app->render->DrawText(app->render->font, scoreText, 150, 90, 50, 5, { 255, 255, 255, 255 });
+	app->render->DrawText(app->render->font, scoreText, 150, 42, 50, 5, { 100, 100, 100, 255 });
 
 	return true;
 }

@@ -60,7 +60,7 @@ void Boss::Collision(Collider* coll)
 	{
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
-
+		app->fade->Fade((Module*)app->scene4, (Module*)app->winScreen, 30);
 	}
 }
 

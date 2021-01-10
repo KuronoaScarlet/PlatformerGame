@@ -152,6 +152,7 @@ void GroundEnemy::Collision(Collider* coll)
 		pendingToDelete = true;
 		collider->pendingToDelete = true;
 
+		app->entityManager->playerData.footJump = true;
 	}
 	if (coll->type == Collider::Type::LEFT_WALL)
 	{

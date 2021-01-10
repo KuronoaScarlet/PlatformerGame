@@ -11,6 +11,7 @@
 #include "Scene3.h"
 #include "Scene4.h"
 #include "Title.h"
+#include "Intro.h"
 
 #include "GroundEnemy.h"
 #include "Hearts.h"
@@ -133,7 +134,7 @@ bool EntityManager::PostUpdate()
 		playerData.backToTitleButton->Draw(app->render);
 		app->render->DrawText(app->render->font, "Back to Title", 465, 370, 60, 5, { 255, 255, 255, 255 });
 		playerData.exitButton->Draw(app->render);
-		app->render->DrawText(app->render->font, "Exit Game:", 500, 550, 60, 5, { 255, 255, 255, 255 });
+		app->render->DrawText(app->render->font, "Exit Game", 500, 550, 60, 5, { 255, 255, 255, 255 });
 	}
 	
 	for (int i = 0; i < entityList.Count(); i++)
@@ -184,6 +185,8 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 		}
 		int lives = e.attribute("lives").as_int(0);
 		playerData.lives = lives;
+		int coins = e.attribute("coins").as_int(0);
+		app->intro->score = coins;
 	}
 
 	count = 1;
@@ -222,6 +225,8 @@ bool EntityManager::SaveState(pugi::xml_node& data) const
 			y.set_value(e->position.y);
 			pugi::xml_attribute lives = eNode.append_attribute("lives");
 			lives.set_value(playerData.lives);
+			pugi::xml_attribute coins = eNode.append_attribute("coins");
+			coins.set_value(app->intro->score);
 			eNode.next_sibling("playerdata");
 		}
 
