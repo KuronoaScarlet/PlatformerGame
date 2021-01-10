@@ -64,7 +64,7 @@ bool Scene1::Start()
 	app->collisions->active = true;
 	app->map->active = true;
 
-	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/scene1_music.ogg");
 	coinTexture = app->tex->Load("Assets/Textures/coins.png");
 
 	coinAnimation.loop = true;

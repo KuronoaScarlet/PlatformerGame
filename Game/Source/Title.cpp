@@ -48,6 +48,7 @@ bool Title::Start()
     bool ret = true;
 
     screen = app->tex->Load("Assets/Textures/title_screen.png");
+    app->audio->PlayMusic("Assets/Audio/Music/title_scene_music.ogg");
 
     play = new GuiButton(1, { 170, 75, 80, 20 }, "START");
     play->SetObserver((Scene1*)this);

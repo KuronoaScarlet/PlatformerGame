@@ -86,7 +86,7 @@ bool Scene2::Start()
 	//Checkpoint
 	app->entityManager->AddEntity({ 464.0f, 257.0f }, Entity::Type::CHECKPOINT);
 	
-	app->audio->PlayMusic("Assets/Audio/music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/music/scene2_music.ogg");
 	coinTexture = app->tex->Load("Assets/Textures/coins.png");
 
 	coinAnimation.loop = true;

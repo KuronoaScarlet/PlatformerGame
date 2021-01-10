@@ -43,6 +43,7 @@ bool WinScreen::Start()
     bool ret = true;
 
     screen = app->tex->Load("Assets/Textures/win_screen.png");
+    app->audio->PlayMusic("Assets/Audio/Music/win_scene_music.ogg");
 
     return ret;
 }
