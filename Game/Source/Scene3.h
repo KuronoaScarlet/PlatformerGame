@@ -43,7 +43,9 @@ public:
 	bool firstEntry = true;
 	bool on;
 	
-	
+	Timer timerr;
+	int time = 0;
+	char timeText[64] = { 0 };
 
 
 private:

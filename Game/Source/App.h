@@ -120,7 +120,7 @@ public:
 
 	bool debugButton = false;
 
-	float timer;
+	bool stop = false;
 	int currentLevel;
 
 	bool loadingGame = false;

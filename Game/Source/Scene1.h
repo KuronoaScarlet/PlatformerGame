@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Timer.h"
 
 class GuiControl;
 
@@ -37,21 +38,24 @@ public:
 
 
 	//Fonts
-	int scoreFont = -1;
-	char scoreText[10] = { "\0" };
+	//int scoreFont = -1;
+	char scoreText[64] = { 0 };
+	char timeText[64] = { 0 };
 
 	bool firstEntry = true;
 	bool on;
 	
+	Timer timerr;
+	int time = 0;
 	
-
-
 private:
 	SDL_Texture* coinTexture;
 
 	Animation coinAnimation;
 
 	Animation* currentAnimation;
+
+	
 };
 
 

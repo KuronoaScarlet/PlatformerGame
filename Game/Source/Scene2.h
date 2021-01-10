@@ -33,9 +33,13 @@ public:
 
 	//Fonts
 	int scoreFont = -1;
-	char scoreText[10] = { "\0" };
+	char scoreText[10] = { 0 };
 
 	bool firstEntry = true;
+
+	Timer timerr;
+	int time = 0;
+	char timeText[64] = { 0 };
 
 private:
 	SDL_Texture* coinTexture;

@@ -38,8 +38,10 @@ bool Scene4::Awake()
 // Called before the first frame
 bool Scene4::Start()
 {
-	app->timer = 150;
+	app->stop = false;
+	timerr.Start();
 	app->entityManager->AddEntity({ 60.0f, 260.0f }, Entity::Type::PLAYER);
+	time = 0;
 
 	app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 	app->render->camera.x = 0;
@@ -139,6 +141,11 @@ bool Scene4::Update(float dt)
 bool Scene4::PostUpdate()
 {
 	bool ret = true;
+	time = 150 - timerr.ReadSec();
+
+	app->render->DrawText(app->render->font, "Timer:", 1000, 10, 50, 5, { 100, 100, 100, 255 });
+	sprintf_s(timeText, 10, "%4d", time);
+	app->render->DrawText(app->render->font, timeText, 1140, 10, 50, 5, { 100, 100, 100, 255 });
 
 	SDL_Rect rectCoins;
 	rectCoins = currentAnimation->GetCurrentFrame();

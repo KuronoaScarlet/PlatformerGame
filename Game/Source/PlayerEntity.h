@@ -37,6 +37,8 @@ private:
 
 	Collider* footCollider;
 
+	SDL_Texture* eButton;
+
 	uint jumpFx = 0;
 	uint doubleJumpFx = 0;
 	uint checkPointFx = 0;
@@ -54,6 +56,7 @@ private:
 	bool cameraControl = false;
 	bool winCondition = false;
 	bool deathCondition = false;
+	bool advice;
 
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };

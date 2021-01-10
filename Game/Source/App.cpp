@@ -167,7 +167,6 @@ bool App::Start()
 	}
 	PERF_PEEK(perfTimer);
 	caped = false;
-	timer = 100;
 	return ret;
 }
 
@@ -197,8 +196,8 @@ bool App::Update()
 	{
 		debugButton = !debugButton;
 	}
-	if(scene1->active || scene2->active|| scene3->active || scene4->active)	
-		if(!entityManager->playerData.pauseCondition)	timer -= 0.016f;
+	/*if(scene1->active || scene2->active|| scene3->active || scene4->active)	
+		if(!entityManager->playerData.pauseCondition || stop == false)	timer -= 1;//0.016f*/
 	FinishUpdate();
 
 	return ret;

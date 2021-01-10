@@ -42,12 +42,14 @@ PlayerEntity::PlayerEntity(Module* listener, fPoint position, SDL_Texture* textu
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 12, 11 }), Collider::Type::PLAYER, listener);
 	footCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 1, (int)position.y + 10, 10, 7 }), Collider::Type::PLAYERFOOT, listener);
 	
+	eButton = app->tex->Load("Assets/Textures/e_button.png");
+
 	jumpFx = app->audio->LoadFx("Assets/Audio/FX/jump.wav");
 	doubleJumpFx = app->audio->LoadFx("Assets/Audio/FX/double_jump.wav");
 	checkPointFx = app->audio->LoadFx("Assets/Audio/FX/checkpoint.wav");
 	killingEnemyFx = app->audio->LoadFx("Assets/Audio/FX/enemy_death.wav");
 
-	
+	advice = false;
 	
 }
 
@@ -60,10 +62,6 @@ bool PlayerEntity::Update(float dt)
 {
 	if (!app->entityManager->playerData.pauseCondition)
 	{
-		app->render->DrawText(app->render->font, "Timer:", 1000, 10, 50, 5, { 100, 100, 100, 255 });
-		sprintf_s(scoreText, 10, "%4d", (int)app->timer);
-		app->render->DrawText(app->render->font, scoreText, 1140, 10, 50, 5, { 100, 100, 100, 255 });
-
 		app->render->camera.y = -app->entityManager->playerData.position.y + 50;
 		//PlayerData Info Containers
 		app->entityManager->playerData.position.x = position.x;
@@ -289,21 +287,42 @@ bool PlayerEntity::Update(float dt)
 			footCollider->SetPos(position.x + 1, position.y + 12);
 		}
 
-		if (app->scene1->active && app->timer == 0)
+		if ((app->scene1->active && app->scene1->time <= 0) && app->stop == false)
 		{
+			app->stop = true;
 			app->fade->Fade((Module*)app->scene1, (Module*)app->deathScreen, 30);
 		}
-		if (app->scene2->active && app->timer == 0)
+		if ((app->scene2->active && app->scene2->time <= 0) && app->stop == false)
 		{
+			app->stop = true;
 			app->fade->Fade((Module*)app->scene2, (Module*)app->deathScreen, 30);
 		}
-		if (app->scene3->active && app->timer == 0)
+		if ((app->scene3->active && app->scene3->time <= 0) && app->stop == false)
 		{
+			app->stop = true;
 			app->fade->Fade((Module*)app->scene3, (Module*)app->deathScreen, 30);
 		}
-		if (app->scene4->active && app->timer == 0)
+		if ((app->scene4->active && app->scene4->time <= 0) && app->stop == false)
 		{
+			app->stop = true;
 			app->fade->Fade((Module*)app->scene4, (Module*)app->deathScreen, 30);
+		}
+		if (advice == true)
+		{
+			app->render->DrawText(app->render->font, "Pisa al jefe en la cabeza", 400, 300, 50, 5, { 100, 100, 100, 255 });
+			if ((app->entityManager->playerData.position.x <= 120.0f || app->entityManager->playerData.position.x >= 146.0f))
+			{
+				advice = false;
+			}
+		}
+
+		if (((app->entityManager->playerData.position.x >= 120.0f && app->entityManager->playerData.position.x <= 146.0f) && (app->entityManager->playerData.position.y >= 266.0f && app->entityManager->playerData.position.y <= 278.0f)) && app->scene4->active == true)
+		{
+			app->render->DrawTexture(eButton, app->entityManager->playerData.position.x, app->entityManager->playerData.position.y-20, NULL);
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			{
+				advice = !advice;
+			}
 		}
 
 		cameraControl = true;
