@@ -69,12 +69,11 @@ bool DeathScreen::PostUpdate()
     // Draw everything --------------------------------------
     app->render->camera.x = 0;
     app->render->camera.y = 0;
-    if (timer > 3 && trans == true)
+    if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
         app->entityManager->playerData.lives = 3;
         app->fade->Fade(this, (Module*)app->intro, 1);
     }
-    //if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
     
     app->render->DrawTexture(screen, 0, 0, NULL);
 
