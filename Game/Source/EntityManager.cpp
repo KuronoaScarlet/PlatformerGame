@@ -118,6 +118,7 @@ bool EntityManager::PostUpdate()
 	{
 		//app->SaveGameRequest();
 		if (app->entityManager->playerData.pauseCondition == false)	app->entityManager->playerData.cameraBckUp = app->render->camera;
+		if(app->entityManager->playerData.pauseCondition == true)	app->render->camera = app->entityManager->playerData.cameraBckUp;
 		app->entityManager->playerData.pauseCondition = !app->entityManager->playerData.pauseCondition;
 		app->entityManager->playerData.resetCamera = true;
 

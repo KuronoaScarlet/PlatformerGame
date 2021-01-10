@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 <save>
 	<map>
-		<level currentlyOn="2" />
+		<level currentlyOn="3" />
 	</map>
 	<entities>
 		<entity>
 			<player>
-				<playerdata x="453.89859" y="278" lives="3" coins="6" />
+				<playerdata x="725.000366" y="182" lives="3" coins="4" />
 			</player>
 			<enemies>
-				<enemy x="831.110291" y="278.200012" />
-				<enemy x="785" y="112" />
-				<enemy x="1089" y="32" />
+				<enemy x="628.559875" y="152778.938" />
+				<enemy x="465.5" y="256" />
+				<enemy x="1029.5" y="128" />
+				<enemy x="1233.5" y="32" />
 			</enemies>
 		</entity>
 	</entities>
 	<render>
-		<camera x="-694" y="-228" />
+		<camera x="-1725" y="-132" />
 	</render>
 </save>

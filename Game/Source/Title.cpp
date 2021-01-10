@@ -265,6 +265,7 @@ bool Scene1::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 9)
         {
             //resume
+            app->render->camera = app->entityManager->playerData.cameraBckUp;
             app->entityManager->playerData.pauseCondition = false;
             
         }
